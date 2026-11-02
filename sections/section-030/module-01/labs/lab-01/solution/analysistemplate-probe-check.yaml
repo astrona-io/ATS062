@@ -1,0 +1,51 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: probe-check
+  namespace: starfleet
+spec:
+  metrics:
+  - name: probe-available
+    count: 1
+    provider:
+      job:
+        spec:
+          backoffLimit: 0
+          template:
+            spec:
+              restartPolicy: Never
+              containers:
+              - name: check
+                image: docker.io/library/python:3.13-alpine
+                command:
+                - python
+                - -c
+                args:
+                - import urllib.request; text=urllib.request.urlopen("http://probe:8080/",timeout=4).read().decode();
+                  assert "probe-ready" in text
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisRun
+metadata:
+  name: mission-analysis
+  namespace: starfleet
+spec:
+  metrics:
+  - name: probe-available
+    count: 1
+    provider:
+      job:
+        spec:
+          backoffLimit: 0
+          template:
+            spec:
+              restartPolicy: Never
+              containers:
+              - name: check
+                image: docker.io/library/python:3.13-alpine
+                command:
+                - python
+                - -c
+                args:
+                - import urllib.request; text=urllib.request.urlopen("http://probe:8080/",timeout=4).read().decode();
+                  assert "probe-ready" in text
