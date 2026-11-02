@@ -34,7 +34,7 @@ modules:
 - id: module-010
   title: Understand Argo Rollouts Fundamentals
   description: Developed reading and reasoning for Understand Argo Rollouts Fundamentals.
-  status: alpha
+  maturity: alpha
   content:
   - type: reading
     title: Understand Argo Rollouts Fundamentals
@@ -73,7 +73,7 @@ modules:
   title: Use Common Progressive Rollout Strategies
   description: Developed reading and reasoning for Use Common Progressive Rollout
     Strategies.
-  status: alpha
+  maturity: alpha
   content:
   - type: reading
     title: Use Common Progressive Rollout Strategies
@@ -130,7 +130,7 @@ modules:
   title: Describe Analysis Template and AnalysisRun
   description: Developed reading and reasoning for Describe Analysis Template and
     AnalysisRun.
-  status: alpha
+  maturity: alpha
   content:
   - type: reading
     title: Describe Analysis Template and AnalysisRun
