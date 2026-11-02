@@ -1,9 +1,9 @@
-# Reading-only content; YAML knowledge checks have a separate index.
 training:
   id: ATS062
   title: 'CAPA: Argo Rollouts'
-  description: 'Detailed reading material and reusable YAML knowledge checks for CAPA: Argo Rollouts.
-    Technical content remains draft. No labs or playgrounds.'
+  description: 'Detailed reading material and reusable YAML knowledge checks for CAPA:
+    Argo Rollouts. Technical content remains draft. Private playgrounds and draft
+    independent labs are included.'
   certification:
     name: Certified Argo Project Associate
     code: CAPA
@@ -34,7 +34,7 @@ modules:
 - id: module-010
   title: Understand Argo Rollouts Fundamentals
   description: Developed reading and reasoning for Understand Argo Rollouts Fundamentals.
-  draft: true
+  status: alpha
   content:
   - type: reading
     title: Understand Argo Rollouts Fundamentals
@@ -46,12 +46,34 @@ modules:
     title: Rollout Controller, ReplicaSets And Promotion State
     path: sections/section-010/module-01/course-01-rollout-controller-replicasets-and-promotion-state.md
   - type: reading
+    title: Reconcile A Rollout And Its ReplicaSet — Task
+    path: sections/section-010/module-01/labs/lab-01/question.md
+  - type: lab
+    title: Reconcile A Rollout And Its ReplicaSet
+    path: sections/section-010/module-01/labs/lab-01
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: argo-rollout
+    task_kind: build
+    learning_goals:
+    - Let the Rollouts controller create a healthy workload.
+    tags:
+    - capa
+    - argo-rollout
+  - type: reading
+    title: Reconcile A Rollout And Its ReplicaSet — Solution
+    path: sections/section-010/module-01/labs/lab-01/solution.md
+  - type: reading
+    title: 'Guided Practice: Reconcile A Rollout And Its ReplicaSet'
+    path: sections/section-010/module-01/course-02-guided-practice.md
+  - type: reading
     title: Summary
-    path: sections/section-010/module-01/course-02-summary.md
+    path: sections/section-010/module-01/course-03-summary.md
 - id: module-020
   title: Use Common Progressive Rollout Strategies
-  description: Developed reading and reasoning for Use Common Progressive Rollout Strategies.
-  draft: true
+  description: Developed reading and reasoning for Use Common Progressive Rollout
+    Strategies.
+  status: alpha
   content:
   - type: reading
     title: Use Common Progressive Rollout Strategies
@@ -63,12 +85,52 @@ modules:
     title: Canary Steps And Blue-Green Service Switching
     path: sections/section-020/module-01/course-01-canary-steps-and-blue-green-service-switching.md
   - type: reading
+    title: Separate Blue Green Active And Preview Services — Task
+    path: sections/section-020/module-01/labs/lab-01/question.md
+  - type: lab
+    title: Separate Blue Green Active And Preview Services
+    path: sections/section-020/module-01/labs/lab-01
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: argo-bluegreen
+    task_kind: build
+    learning_goals:
+    - Create active and preview Services managed by a blue-green Rollout.
+    tags:
+    - capa
+    - argo-bluegreen
+  - type: reading
+    title: Separate Blue Green Active And Preview Services — Solution
+    path: sections/section-020/module-01/labs/lab-01/solution.md
+  - type: reading
+    title: Complete A Canary Revision Through Weight And Pause Steps — Task
+    path: sections/section-020/module-01/labs/lab-02/question.md
+  - type: lab
+    title: Complete A Canary Revision Through Weight And Pause Steps
+    path: sections/section-020/module-01/labs/lab-02
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: argo-canary
+    task_kind: build
+    learning_goals:
+    - Advance a real Rollout from revision one to revision two.
+    tags:
+    - capa
+    - argo-canary
+  - type: reading
+    title: Complete A Canary Revision Through Weight And Pause Steps — Solution
+    path: sections/section-020/module-01/labs/lab-02/solution.md
+  - type: reading
+    title: 'Guided Practice: Separate Blue Green Active And Preview Services'
+    path: sections/section-020/module-01/course-02-guided-practice.md
+  - type: reading
     title: Summary
-    path: sections/section-020/module-01/course-02-summary.md
+    path: sections/section-020/module-01/course-03-summary.md
 - id: module-030
   title: Describe Analysis Template and AnalysisRun
-  description: Developed reading and reasoning for Describe Analysis Template and AnalysisRun.
-  draft: true
+  description: Developed reading and reasoning for Describe Analysis Template and
+    AnalysisRun.
+  status: alpha
   content:
   - type: reading
     title: Describe Analysis Template and AnalysisRun
@@ -80,5 +142,26 @@ modules:
     title: AnalysisTemplate Measurements And AnalysisRun Decisions
     path: sections/section-030/module-01/course-01-analysistemplate-measurements-and-analysisrun-decisions.md
   - type: reading
+    title: Execute A Job Based Analysis — Task
+    path: sections/section-030/module-01/labs/lab-01/question.md
+  - type: lab
+    title: Execute A Job Based Analysis
+    path: sections/section-030/module-01/labs/lab-01
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: argo-analysis
+    task_kind: build
+    learning_goals:
+    - Complete an AnalysisRun from a real service-health Job.
+    tags:
+    - capa
+    - argo-analysis
+  - type: reading
+    title: Execute A Job Based Analysis — Solution
+    path: sections/section-030/module-01/labs/lab-01/solution.md
+  - type: reading
+    title: 'Guided Practice: Execute A Job Based Analysis'
+    path: sections/section-030/module-01/course-02-guided-practice.md
+  - type: reading
     title: Summary
-    path: sections/section-030/module-01/course-02-summary.md
+    path: sections/section-030/module-01/course-03-summary.md
