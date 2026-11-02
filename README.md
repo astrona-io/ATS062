@@ -1,18 +1,17 @@
-# ATS062 — CAPA: Argo Rollouts
+# Argo Rollouts (ATS062)
 
-Preparation for the **Argo Rollouts** domain of **Certified Argo Project Associate (CAPA)**.
-The published domain weight is **18%**. This repository belongs to
-the [ATP012 training path](https://github.com/astrona-io/ATP012).
+Certified Argo Project Associate (CAPA): Argo Rollouts, worth 18% of the official curriculum. This course belongs to ATP012.
 
-**Status:** Preparation scaffold; content authoring has not started.
+Developed reading explains mechanisms, responsible components, examples and limits. Every section has an introduction and every module closes with a summary. Reusable YAML checks contain 5–15 questions per bank. Technical content remains draft. No labs or playgrounds are included.
 
-The initial commit reserves the curriculum structure. Lessons, playgrounds,
-labs and assessments are planned and are not ready for learner use.
+## Course Outline
 
-See [CURRICULUM.md](CURRICULUM.md) for the objective map and authoring checklist,
-[astrona.yaml](astrona.yaml) for the course manifest, and
-[CLAUDE.md](CLAUDE.md) for writing and environment rules.
+| Section / module | Module | Teaching files |
+| --- | --- | --- |
+| 010 / 01 | Rollout Controller, ReplicaSets And Promotion State | Rollout Controller, ReplicaSets And Promotion State |
+| 020 / 01 | Canary Steps And Blue-Green Service Switching | Canary Steps And Blue-Green Service Switching |
+| 030 / 01 | AnalysisTemplate Measurements And AnalysisRun Decisions | AnalysisTemplate Measurements And AnalysisRun Decisions |
 
-Curriculum source: [official CAPA page](https://training.linuxfoundation.org/certification/certified-argo-project-associate-capa/), checked 2026-10-10.
-License: [Apache-2.0](LICENSE). Curriculum objectives retain attribution to
-The Linux Foundation and CNCF; see [CNCF curriculum licensing](https://github.com/cncf/curriculum).
+## Author Review
+
+See [curriculum coverage](CURRICULUM.md), [primary sources](SOURCES.md), [question-bank documentation](ASSESSMENTS.md) and [contribution instructions](CONTRIBUTING.md). No runtime execution is claimed.
