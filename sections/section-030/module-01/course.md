@@ -3,22 +3,25 @@ draft: true
 exam_objectives:
 - Describe Analysis Template and AnalysisRun
 ---
-# AnalysisTemplate Measurements And AnalysisRun Decisions
+# AnalysisTemplates And Metric Providers
 
-This module develops analysisTemplate Measurements And AnalysisRun Decisions. Use the explanations to connect intended behavior with responsible components and observable evidence.
+An analysis lets the Rollouts controller decide with measurements whether a release is healthy. This module covers the reusable definition: the `AnalysisTemplate`, its arguments, the fields that control how often and how strictly a metric is measured, and the providers that take the measurement.
 
 ## Learning Goals
 
-- Distinguish reusable analysis definitions from individual executions.
-- Explain metric providers, arguments and success or failure conditions.
-- Interpret missing data, errors and inconclusive results.
-- Relate analysis placement and limits to promotion behavior.
+- Explain the difference between an `AnalysisTemplate`, a `ClusterAnalysisTemplate` and an `AnalysisRun`.
+- Write a template with arguments and a metric with `count`, `interval`, `successCondition` and `failureLimit`.
+- Choose between the `job`, `web` and `prometheus` providers.
+- Predict whether a measurement is `Successful`, `Failed`, `Inconclusive` or `Error`.
 
 ## Before You Start
 
-Examples illustrate declared relationships and reasoning. No execution environment is required or claimed.
+You need to know the `Rollout` resource and the canary steps. The playground has the Argo Rollouts controller and the `probe` Service in the `starfleet` namespace.
 
 ## Reading Order
 
-1. AnalysisTemplate Measurements And AnalysisRun Decisions
-2. Summary
+1. The template, its arguments and its metrics.
+2. Providers and measurement results.
+3. Summary.
+
+<!-- astrona:playground -->

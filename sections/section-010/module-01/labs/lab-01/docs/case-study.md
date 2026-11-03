@@ -5,6 +5,4 @@ exam_objectives:
 ---
 # Starting Environment
 
-The Rollouts controller is installed in argo-rollouts. No learner Rollout or AnalysisRun exists.
-
-Let the Rollouts controller create a healthy workload.
+The Argo Rollouts controller runs in the `argo-rollouts` namespace. The `starfleet` namespace holds the `probe` Service, which answers HTTP requests on port 8080, and the `shuttle` pod. No Rollout exists yet.

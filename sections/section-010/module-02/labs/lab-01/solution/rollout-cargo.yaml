@@ -1,0 +1,14 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: cargo-rollout
+  namespace: starfleet
+spec:
+  replicas: 2
+  workloadRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: cargo
+    scaleDown: onsuccess
+  strategy:
+    canary: {}

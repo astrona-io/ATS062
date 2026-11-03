@@ -5,8 +5,6 @@ if [[ "$(kubectl config current-context)" != "kind-astro-ats-062-lab-020-01-01" 
   exit 1
 fi
 lab_directory="$(cd "$(dirname "$0")/.." && pwd)"
-node_name="astro-ats-062-lab-020-01-01-control-plane"
-worker_name="astro-ats-062-lab-020-01-01-worker"
 kubectl create namespace argo-rollouts --dry-run=client -o yaml | kubectl apply -f -
 manifest_path="$(mktemp)"
 curl --fail --silent --show-error --location --max-time 120 'https://github.com/argoproj/argo-rollouts/releases/download/v1.10.0/install.yaml' -o "$manifest_path"
@@ -21,4 +19,5 @@ kubectl apply -f "$lab_directory/bootstrap/manifests/start.yaml"
 kubectl -n starfleet rollout status deployment/probe --timeout=180s
 kubectl -n starfleet wait --for=condition=Ready pod/shuttle --timeout=120s
 kubectl -n outpost wait --for=condition=Ready pod/drifter --timeout=120s
-
+kubectl apply -f "$lab_directory/bootstrap/manifests/lab-start.yaml"
+kubectl -n starfleet wait --for=jsonpath='{.status.phase}'=Healthy rollout/scout --timeout=240s

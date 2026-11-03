@@ -1,5 +1,6 @@
 version: 1
-approval: CAPA requested 2026-10-11; established reading-only scope
+approval: Maintainer requested PCA, CCA and CAPA playgrounds and graded labs on 2026-10-13,
+  superseding the earlier reading-only scope.
 course:
   id: ATS062
   certification:
@@ -13,70 +14,116 @@ course:
     - Use Common Progressive Rollout Strategies
     - Describe Analysis Template and AnalysisRun
 defaults:
-  playground: false
-  module_lab: false
-  capstone: false
-  section_quiz: false
+  playground: true
+  module_lab: true
+  capstone: true
+  section_quiz: true
   final_quiz: true
-assessment_format: YAML question banks v1, registered in assessments/index.yaml
+assessment_format: YAML question banks v1, listed as type quiz in astrona.yaml
 sections:
 - id: section-010
   title: Understand Argo Rollouts Fundamentals
   curriculum_item: Understand Argo Rollouts Fundamentals
-  capstone: false
-  section_quiz: false
+  capstone: true
+  section_quiz: true
   modules:
   - id: module-01
-    title: Rollout Controller, ReplicaSets And Promotion State
-    objectives:
-    - Distinguish a Rollout resource from a standard Deployment.
-    - Explain controller-managed versions and strategy state.
-    - Separate readiness, promotion and analysis evidence.
-    - Evaluate service integration, ownership and rollback limits.
-    outline:
-    - Rollout Controller, ReplicaSets And Promotion State
-    playground: false
-    module_lab: false
-    sources:
-    - reading: sections/section-010/module-01/course-01-rollout-controller-replicasets-and-promotion-state.md
-      adapted_from: null
+    title: Rollout Resource, ReplicaSets And Revisions
+    playground: true
+    module_lab: true
+    parts:
+    - sections/section-010/module-01/course-01-the-rollout-resource-and-its-controller.md
+    - sections/section-010/module-01/course-02-replicasets-hashes-and-revisions.md
+    labs:
+    - id: lab-01
+      path: sections/section-010/module-01/labs/lab-01
+      status: draft
+      runtime_verification: pending
+  - id: module-02
+    title: Operating Rollouts And Migrating From A Deployment
+    playground: true
+    module_lab: true
+    parts:
+    - sections/section-010/module-02/course-01-reading-status-and-controlling-a-release.md
+    - sections/section-010/module-02/course-02-migrating-a-deployment-and-routing-traffic.md
+    labs:
+    - id: lab-01
+      path: sections/section-010/module-02/labs/lab-01
+      status: draft
+      runtime_verification: pending
+  capstone_lab:
+    path: sections/section-010/capstone/labs/lab-01
+    status: draft
+    runtime_verification: pending
+  quiz: sections/section-010/quiz.yaml
 - id: section-020
   title: Use Common Progressive Rollout Strategies
   curriculum_item: Use Common Progressive Rollout Strategies
-  capstone: false
-  section_quiz: false
+  capstone: true
+  section_quiz: true
   modules:
   - id: module-01
-    title: Canary Steps And Blue-Green Service Switching
-    objectives:
-    - Compare incremental canary exposure with blue-green promotion.
-    - Explain stable, canary, active and preview Service relationships.
-    - Relate pauses, weights and scale to actual request distribution.
-    - Evaluate capacity, connection persistence and abort behavior.
-    outline:
-    - Canary Steps And Blue-Green Service Switching
-    playground: false
-    module_lab: false
-    sources:
-    - reading: sections/section-020/module-01/course-01-canary-steps-and-blue-green-service-switching.md
-      adapted_from: null
+    title: Blue-Green Deployments
+    playground: true
+    module_lab: true
+    parts:
+    - sections/section-020/module-01/course-01-active-and-preview-services.md
+    - sections/section-020/module-01/course-02-promotion-analysis-hooks-and-rollback.md
+    labs:
+    - id: lab-01
+      path: sections/section-020/module-01/labs/lab-01
+      status: draft
+      runtime_verification: pending
+  - id: module-02
+    title: Canary Deployments
+    playground: true
+    module_lab: true
+    parts:
+    - sections/section-020/module-02/course-01-steps-weights-and-replica-counts.md
+    - sections/section-020/module-02/course-02-traffic-routing-and-choosing-a-strategy.md
+    labs:
+    - id: lab-01
+      path: sections/section-020/module-02/labs/lab-01
+      status: draft
+      runtime_verification: pending
+  capstone_lab:
+    path: sections/section-020/capstone/labs/lab-01
+    status: draft
+    runtime_verification: pending
+  quiz: sections/section-020/quiz.yaml
 - id: section-030
   title: Describe Analysis Template and AnalysisRun
   curriculum_item: Describe Analysis Template and AnalysisRun
-  capstone: false
-  section_quiz: false
+  capstone: true
+  section_quiz: true
   modules:
   - id: module-01
-    title: AnalysisTemplate Measurements And AnalysisRun Decisions
-    objectives:
-    - Distinguish reusable analysis definitions from individual executions.
-    - Explain metric providers, arguments and success or failure conditions.
-    - Interpret missing data, errors and inconclusive results.
-    - Relate analysis placement and limits to promotion behavior.
-    outline:
-    - AnalysisTemplate Measurements And AnalysisRun Decisions
-    playground: false
-    module_lab: false
-    sources:
-    - reading: sections/section-030/module-01/course-01-analysistemplate-measurements-and-analysisrun-decisions.md
-      adapted_from: null
+    title: AnalysisTemplates And Metric Providers
+    playground: true
+    module_lab: true
+    parts:
+    - sections/section-030/module-01/course-01-the-template-its-arguments-and-its-metrics.md
+    - sections/section-030/module-01/course-02-providers-and-measurement-results.md
+    labs:
+    - id: lab-01
+      path: sections/section-030/module-01/labs/lab-01
+      status: draft
+      runtime_verification: pending
+  - id: module-02
+    title: AnalysisRuns And Rollout Integration
+    playground: true
+    module_lab: true
+    parts:
+    - sections/section-030/module-02/course-01-the-analysisrun-lifecycle-and-where-a-rollout-runs-it.md
+    - sections/section-030/module-02/course-02-how-a-result-changes-the-rollout-and-experiments.md
+    labs:
+    - id: lab-01
+      path: sections/section-030/module-02/labs/lab-01
+      status: draft
+      runtime_verification: pending
+  capstone_lab:
+    path: sections/section-030/capstone/labs/lab-01
+    status: draft
+    runtime_verification: pending
+  quiz: sections/section-030/quiz.yaml
+final_quiz: sections/final-domain-quiz.yaml

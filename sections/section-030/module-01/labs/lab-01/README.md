@@ -1,10 +1,5 @@
----
-draft: true
-exam_objectives:
-- Describe Analysis Template and AnalysisRun
----
-# Execute A Job Based Analysis
+# Execute A Job-Based Analysis
 
-Complete an AnalysisRun from a real service-health Job.
+Before the next release the team wants a reusable health check for the `probe` Service, and proof that the check passes now.
 
-The task and solution use a separate pinned kind cluster. Run `testing/smoke.sh` with its private kubeconfig to verify initial rejection and reference success. Static validation is not live evidence. Runtime verification remains pending.
+Status: UNTESTED. The files were checked statically only (`astrona validate`, `bash -n`, YAML and JSON parsing). The lab has not been booted, so the grader and the reference solution have not been run against a live cluster. `testing/smoke.sh` checks that the starting state fails grading and that `solution/apply.sh` then passes.

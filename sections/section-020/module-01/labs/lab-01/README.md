@@ -1,10 +1,5 @@
----
-draft: true
-exam_objectives:
-- Use Common Progressive Rollout Strategies
----
-# Separate Blue Green Active And Preview Services
+# Hold A Blue-Green Revision In Preview
 
-Create active and preview Services managed by a blue-green Rollout.
+The `scout` Rollout switches to a new revision as soon as it is ready. The team wants to inspect each new revision through a preview Service before any user reaches it.
 
-The task and solution use a separate pinned kind cluster. Run `testing/smoke.sh` with its private kubeconfig to verify initial rejection and reference success. Static validation is not live evidence. Runtime verification remains pending.
+Status: UNTESTED. The files were checked statically only (`astrona validate`, `bash -n`, YAML and JSON parsing). The lab has not been booted, so the grader and the reference solution have not been run against a live cluster. `testing/smoke.sh` checks that the starting state fails grading and that `solution/apply.sh` then passes.

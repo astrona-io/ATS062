@@ -2,8 +2,8 @@ training:
   id: ATS062
   title: 'CAPA: Argo Rollouts'
   description: 'Detailed reading material and reusable YAML knowledge checks for CAPA:
-    Argo Rollouts. Technical content remains draft. Private playgrounds and draft
-    independent labs are included.'
+    Argo Rollouts. Each module pairs a layered reader with an ungraded playground and a
+    graded lab. Each section closes with a capstone lab and a knowledge check.'
   certification:
     name: Certified Argo Project Associate
     code: CAPA
@@ -32,136 +32,311 @@ modules:
     title: How This Course Is Made
     path: sections/intro/course-03-how-this-course-is-made.md
 - id: module-010
-  title: Understand Argo Rollouts Fundamentals
-  description: Developed reading and reasoning for Understand Argo Rollouts Fundamentals.
-  maturity: alpha
+  title: "Understand Argo Rollouts Fundamentals"
+  description: "Explain what the Rollouts controller adds to a Deployment, how it tracks revisions with ReplicaSets and hashes, how to read and control a release, and how to migrate a Deployment with workloadRef."
+  status: alpha
   content:
   - type: reading
-    title: Understand Argo Rollouts Fundamentals
+    title: "Understand Argo Rollouts Fundamentals"
     path: sections/section-010/README.md
   - type: reading
-    title: Rollout Controller, ReplicaSets And Promotion State
+    title: "Rollout Resource, ReplicaSets And Revisions"
     path: sections/section-010/module-01/course.md
   - type: reading
-    title: Rollout Controller, ReplicaSets And Promotion State
-    path: sections/section-010/module-01/course-01-rollout-controller-replicasets-and-promotion-state.md
+    title: "The Rollout Resource And Its Controller"
+    path: sections/section-010/module-01/course-01-the-rollout-resource-and-its-controller.md
   - type: reading
-    title: Reconcile A Rollout And Its ReplicaSet — Task
+    title: "ReplicaSets, Hashes And Revisions"
+    path: sections/section-010/module-01/course-02-replicasets-hashes-and-revisions.md
+  - type: reading
+    title: "Reconcile A Rollout And Its ReplicaSet - Task"
     path: sections/section-010/module-01/labs/lab-01/question.md
   - type: lab
-    title: Reconcile A Rollout And Its ReplicaSet
+    title: "Reconcile A Rollout And Its ReplicaSet"
     path: sections/section-010/module-01/labs/lab-01
     difficulty: intermediate
     estimated_duration: 25m
     topic: argo-rollout
     task_kind: build
     learning_goals:
-    - Let the Rollouts controller create a healthy workload.
+    - "Create a Rollout and let the controller build its ReplicaSet"
+    - "Read the revision hash, stableRS and revisionHistoryLimit"
     tags:
     - capa
     - argo-rollout
+    - replicaset
+    resources:
+    - name: "Argo Rollouts documentation"
+      url: https://argo-rollouts.readthedocs.io/en/stable/
+    - name: "Rollout specification"
+      url: https://argo-rollouts.readthedocs.io/en/stable/features/specification/
   - type: reading
-    title: Reconcile A Rollout And Its ReplicaSet — Solution
-    path: sections/section-010/module-01/labs/lab-01/solution.md
-  - type: reading
-    title: 'Guided Practice: Reconcile A Rollout And Its ReplicaSet'
-    path: sections/section-010/module-01/course-02-guided-practice.md
-  - type: reading
-    title: Summary
+    title: "Summary"
     path: sections/section-010/module-01/course-03-summary.md
+  - type: reading
+    title: "Operating Rollouts And Migrating From A Deployment"
+    path: sections/section-010/module-02/course.md
+  - type: reading
+    title: "Reading Status And Controlling A Release"
+    path: sections/section-010/module-02/course-01-reading-status-and-controlling-a-release.md
+  - type: reading
+    title: "Migrating A Deployment And Routing Traffic"
+    path: sections/section-010/module-02/course-02-migrating-a-deployment-and-routing-traffic.md
+  - type: reading
+    title: "Migrate A Deployment To A Rollout With workloadRef - Task"
+    path: sections/section-010/module-02/labs/lab-01/question.md
+  - type: lab
+    title: "Migrate A Deployment To A Rollout With workloadRef"
+    path: sections/section-010/module-02/labs/lab-01
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: argo-rollout
+    task_kind: build
+    learning_goals:
+    - "Migrate a running Deployment with workloadRef and scaleDown onsuccess"
+    - "Verify the Rollout is healthy and owns the ReplicaSet"
+    tags:
+    - capa
+    - argo-rollout
+    - workloadref
+    resources:
+    - name: "Migrating to Rollouts"
+      url: https://argo-rollouts.readthedocs.io/en/stable/migrating/
+    - name: "Rollout specification"
+      url: https://argo-rollouts.readthedocs.io/en/stable/features/specification/
+  - type: reading
+    title: "Summary"
+    path: sections/section-010/module-02/course-03-summary.md
+  - type: reading
+    title: "Fundamentals Capstone: Run And Update A Rollout Behind A Service - Task"
+    path: sections/section-010/capstone/labs/lab-01/question.md
+  - type: lab
+    title: "Fundamentals Capstone: Run And Update A Rollout Behind A Service"
+    path: sections/section-010/capstone/labs/lab-01
+    difficulty: advanced
+    estimated_duration: 30m
+    topic: argo-rollout
+    task_kind: build
+    learning_goals:
+    - "Run a service as a Rollout behind an existing Service"
+    - "Release a second revision and reach a healthy state"
+    tags:
+    - capa
+    - argo-rollout
+    - capstone
+    resources:
+    - name: "Argo Rollouts documentation"
+      url: https://argo-rollouts.readthedocs.io/en/stable/
+    - name: "Rollout specification"
+      url: https://argo-rollouts.readthedocs.io/en/stable/features/specification/
+  - type: quiz
+    title: "Knowledge Check: Understand Argo Rollouts Fundamentals"
+    path: sections/section-010/quiz.yaml
+    pass_score: 70
 - id: module-020
-  title: Use Common Progressive Rollout Strategies
-  description: Developed reading and reasoning for Use Common Progressive Rollout
-    Strategies.
-  maturity: alpha
+  title: "Use Common Progressive Rollout Strategies"
+  description: "Release with the blue-green strategy using active and preview Services and promotion settings, and with the canary strategy using steps, weights, pauses and traffic routing."
+  status: alpha
   content:
   - type: reading
-    title: Use Common Progressive Rollout Strategies
+    title: "Use Common Progressive Rollout Strategies"
     path: sections/section-020/README.md
   - type: reading
-    title: Canary Steps And Blue-Green Service Switching
+    title: "Blue-Green Deployments"
     path: sections/section-020/module-01/course.md
   - type: reading
-    title: Canary Steps And Blue-Green Service Switching
-    path: sections/section-020/module-01/course-01-canary-steps-and-blue-green-service-switching.md
+    title: "Active And Preview Services"
+    path: sections/section-020/module-01/course-01-active-and-preview-services.md
   - type: reading
-    title: Separate Blue Green Active And Preview Services — Task
+    title: "Promotion, Analysis Hooks And Rollback"
+    path: sections/section-020/module-01/course-02-promotion-analysis-hooks-and-rollback.md
+  - type: reading
+    title: "Hold A Blue-Green Revision In Preview - Task"
     path: sections/section-020/module-01/labs/lab-01/question.md
   - type: lab
-    title: Separate Blue Green Active And Preview Services
+    title: "Hold A Blue-Green Revision In Preview"
     path: sections/section-020/module-01/labs/lab-01
     difficulty: intermediate
     estimated_duration: 25m
     topic: argo-bluegreen
     task_kind: build
     learning_goals:
-    - Create active and preview Services managed by a blue-green Rollout.
+    - "Hold a blue-green revision in preview without promotion"
+    - "Compare the active and preview Service selectors"
     tags:
     - capa
     - argo-bluegreen
+    - preview
+    resources:
+    - name: "Blue-green strategy"
+      url: https://argo-rollouts.readthedocs.io/en/stable/features/bluegreen/
   - type: reading
-    title: Separate Blue Green Active And Preview Services — Solution
-    path: sections/section-020/module-01/labs/lab-01/solution.md
+    title: "Summary"
+    path: sections/section-020/module-01/course-03-summary.md
   - type: reading
-    title: Complete A Canary Revision Through Weight And Pause Steps — Task
-    path: sections/section-020/module-01/labs/lab-02/question.md
+    title: "Canary Deployments"
+    path: sections/section-020/module-02/course.md
+  - type: reading
+    title: "Steps, Weights And Replica Counts"
+    path: sections/section-020/module-02/course-01-steps-weights-and-replica-counts.md
+  - type: reading
+    title: "Traffic Routing, Controlling A Canary And Choosing A Strategy"
+    path: sections/section-020/module-02/course-02-traffic-routing-and-choosing-a-strategy.md
+  - type: reading
+    title: "Complete A Canary Revision With Weight And Pause Steps - Task"
+    path: sections/section-020/module-02/labs/lab-01/question.md
   - type: lab
-    title: Complete A Canary Revision Through Weight And Pause Steps
-    path: sections/section-020/module-01/labs/lab-02
+    title: "Complete A Canary Revision With Weight And Pause Steps"
+    path: sections/section-020/module-02/labs/lab-01
     difficulty: intermediate
     estimated_duration: 25m
     topic: argo-canary
     task_kind: build
     learning_goals:
-    - Advance a real Rollout from revision one to revision two.
+    - "Write canary steps with setWeight and pause"
+    - "Complete a release through the steps"
     tags:
     - capa
     - argo-canary
+    - steps
+    resources:
+    - name: "Canary strategy"
+      url: https://argo-rollouts.readthedocs.io/en/stable/features/canary/
   - type: reading
-    title: Complete A Canary Revision Through Weight And Pause Steps — Solution
-    path: sections/section-020/module-01/labs/lab-02/solution.md
+    title: "Summary"
+    path: sections/section-020/module-02/course-03-summary.md
   - type: reading
-    title: 'Guided Practice: Separate Blue Green Active And Preview Services'
-    path: sections/section-020/module-01/course-02-guided-practice.md
-  - type: reading
-    title: Summary
-    path: sections/section-020/module-01/course-03-summary.md
+    title: "Strategies Capstone: Preview A Blue-Green Release And Complete A Canary - Task"
+    path: sections/section-020/capstone/labs/lab-01/question.md
+  - type: lab
+    title: "Strategies Capstone: Preview A Blue-Green Release And Complete A Canary"
+    path: sections/section-020/capstone/labs/lab-01
+    difficulty: advanced
+    estimated_duration: 35m
+    topic: argo-strategies
+    task_kind: build
+    learning_goals:
+    - "Hold a blue-green release in preview"
+    - "Complete a canary release with weight and pause steps"
+    tags:
+    - capa
+    - argo-bluegreen
+    - argo-canary
+    - capstone
+    resources:
+    - name: "Blue-green strategy"
+      url: https://argo-rollouts.readthedocs.io/en/stable/features/bluegreen/
+    - name: "Canary strategy"
+      url: https://argo-rollouts.readthedocs.io/en/stable/features/canary/
+  - type: quiz
+    title: "Knowledge Check: Use Common Progressive Rollout Strategies"
+    path: sections/section-020/quiz.yaml
+    pass_score: 70
 - id: module-030
-  title: Describe Analysis Template and AnalysisRun
-  description: Developed reading and reasoning for Describe Analysis Template and
-    AnalysisRun.
-  maturity: alpha
+  title: "Describe Analysis Template and AnalysisRun"
+  description: "Define reusable analysis with AnalysisTemplates and metric providers, and use AnalysisRuns inline, in the background and around blue-green promotion to gate or abort a release."
+  status: alpha
   content:
   - type: reading
-    title: Describe Analysis Template and AnalysisRun
+    title: "Describe Analysis Template and AnalysisRun"
     path: sections/section-030/README.md
   - type: reading
-    title: AnalysisTemplate Measurements And AnalysisRun Decisions
+    title: "AnalysisTemplates And Metric Providers"
     path: sections/section-030/module-01/course.md
   - type: reading
-    title: AnalysisTemplate Measurements And AnalysisRun Decisions
-    path: sections/section-030/module-01/course-01-analysistemplate-measurements-and-analysisrun-decisions.md
+    title: "The Template, Its Arguments And Its Metrics"
+    path: sections/section-030/module-01/course-01-the-template-its-arguments-and-its-metrics.md
   - type: reading
-    title: Execute A Job Based Analysis — Task
+    title: "Providers And Measurement Results"
+    path: sections/section-030/module-01/course-02-providers-and-measurement-results.md
+  - type: reading
+    title: "Execute A Job-Based Analysis - Task"
     path: sections/section-030/module-01/labs/lab-01/question.md
   - type: lab
-    title: Execute A Job Based Analysis
+    title: "Execute A Job-Based Analysis"
     path: sections/section-030/module-01/labs/lab-01
     difficulty: intermediate
     estimated_duration: 25m
     topic: argo-analysis
     task_kind: build
     learning_goals:
-    - Complete an AnalysisRun from a real service-health Job.
+    - "Write an AnalysisTemplate with a job provider"
+    - "Run an AnalysisRun to the Successful phase"
     tags:
     - capa
     - argo-analysis
+    - analysistemplate
+    resources:
+    - name: "Analysis and progressive delivery"
+      url: https://argo-rollouts.readthedocs.io/en/stable/features/analysis/
   - type: reading
-    title: Execute A Job Based Analysis — Solution
-    path: sections/section-030/module-01/labs/lab-01/solution.md
-  - type: reading
-    title: 'Guided Practice: Execute A Job Based Analysis'
-    path: sections/section-030/module-01/course-02-guided-practice.md
-  - type: reading
-    title: Summary
+    title: "Summary"
     path: sections/section-030/module-01/course-03-summary.md
+  - type: reading
+    title: "AnalysisRuns And Rollout Integration"
+    path: sections/section-030/module-02/course.md
+  - type: reading
+    title: "The AnalysisRun Lifecycle And Where A Rollout Runs It"
+    path: sections/section-030/module-02/course-01-the-analysisrun-lifecycle-and-where-a-rollout-runs-it.md
+  - type: reading
+    title: "How A Result Changes The Rollout, And Experiments"
+    path: sections/section-030/module-02/course-02-how-a-result-changes-the-rollout-and-experiments.md
+  - type: reading
+    title: "Gate A Canary Step With An AnalysisRun - Task"
+    path: sections/section-030/module-02/labs/lab-01/question.md
+  - type: lab
+    title: "Gate A Canary Step With An AnalysisRun"
+    path: sections/section-030/module-02/labs/lab-01
+    difficulty: intermediate
+    estimated_duration: 30m
+    topic: argo-analysis
+    task_kind: build
+    learning_goals:
+    - "Add an inline analysis step to a canary"
+    - "Verify the Rollout owns a Successful AnalysisRun"
+    tags:
+    - capa
+    - argo-analysis
+    - analysisrun
+    resources:
+    - name: "Analysis and progressive delivery"
+      url: https://argo-rollouts.readthedocs.io/en/stable/features/analysis/
+    - name: "Experiments"
+      url: https://argo-rollouts.readthedocs.io/en/stable/features/experiment/
+  - type: reading
+    title: "Summary"
+    path: sections/section-030/module-02/course-03-summary.md
+  - type: reading
+    title: "Analysis Capstone: Block A Bad Release With Background Analysis - Task"
+    path: sections/section-030/capstone/labs/lab-01/question.md
+  - type: lab
+    title: "Analysis Capstone: Block A Bad Release With Background Analysis"
+    path: sections/section-030/capstone/labs/lab-01
+    difficulty: advanced
+    estimated_duration: 35m
+    topic: argo-analysis
+    task_kind: build
+    learning_goals:
+    - "Create a ClusterAnalysisTemplate"
+    - "Abort a canary with a failing background analysis"
+    tags:
+    - capa
+    - argo-analysis
+    - capstone
+    resources:
+    - name: "Analysis and progressive delivery"
+      url: https://argo-rollouts.readthedocs.io/en/stable/features/analysis/
+    - name: "Canary strategy"
+      url: https://argo-rollouts.readthedocs.io/en/stable/features/canary/
+  - type: quiz
+    title: "Knowledge Check: Describe Analysis Template and AnalysisRun"
+    path: sections/section-030/quiz.yaml
+    pass_score: 70
+- id: module-final
+  title: Final Domain Check
+  description: A knowledge check across all three sections.
+  content:
+  - type: quiz
+    title: "Final Knowledge Check: Argo Rollouts"
+    path: sections/final-domain-quiz.yaml
+    pass_score: 70

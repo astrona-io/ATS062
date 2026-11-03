@@ -1,0 +1,220 @@
+# Knowledge check for section 020. Listed in astrona.yaml as a `type: quiz` entry after the capstone lab.
+schema_version: 1
+kind: question_bank
+id: ats062-020
+course_id: ATS062
+exam_code: CAPA
+status: draft
+provenance: Original practice material written for this course; not official exam questions.
+scope:
+  type: section
+  id: section-020
+  title: "Use Common Progressive Rollout Strategies"
+questions:
+  - id: ats062-020-q01
+    type: single_choice
+    difficulty: beginner
+    learning_objective: "Explain activeService and previewService"
+    source_readings:
+      - sections/section-020/module-01/course-01-active-and-preview-services.md
+    prompt: "In a blue-green `Rollout`, which Service receives the production traffic?"
+    options:
+      - id: a
+        text: "`previewService`"
+        explanation: "The preview Service reaches the new pods, not production users."
+      - id: b
+        text: "`activeService`"
+        explanation: "Correct. Its selector points at the stable pods, and the controller moves it at promotion."
+      - id: c
+        text: "Both receive production traffic equally."
+        explanation: "The two Services point at different ReplicaSets."
+      - id: d
+        text: "Neither. Traffic goes through the Ingress only."
+        explanation: "The Services are what the controller edits."
+    correct_option: b
+    explanation: "Correct. Its selector points at the stable pods, and the controller moves it at promotion."
+
+  - id: ats062-020-q02
+    type: single_choice
+    difficulty: beginner
+    learning_objective: "Explain autoPromotionEnabled"
+    source_readings:
+      - sections/section-020/module-01/course-01-active-and-preview-services.md
+    prompt: "A blue-green `Rollout` has `autoPromotionEnabled: false`. When does the active Service move to the new pods?"
+    options:
+      - id: a
+        text: "As soon as the new pods are ready."
+        explanation: "That is the behaviour when the field is true."
+      - id: b
+        text: "After `scaleDownDelaySeconds`."
+        explanation: "This field controls the scale down of the old pods, not the switch."
+      - id: c
+        text: "When the Rollout is promoted by a person or by `autoPromotionSeconds`."
+        explanation: "Correct. Without automatic promotion, the Rollout waits in `Paused` for a promotion."
+      - id: d
+        text: "Never. The Services are fixed."
+        explanation: "The controller edits the selector at promotion."
+    correct_option: c
+    explanation: "Correct. Without automatic promotion, the Rollout waits in `Paused` for a promotion."
+
+  - id: ats062-020-q03
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Describe scaleDownDelaySeconds"
+    source_readings:
+      - sections/section-020/module-01/course-02-promotion-analysis-hooks-and-rollback.md
+    prompt: "What is the purpose of `scaleDownDelaySeconds` in a blue-green `Rollout`?"
+    options:
+      - id: a
+        text: "It delays the switch of the active Service."
+        explanation: "The delay starts after the switch."
+      - id: b
+        text: "It keeps the old ReplicaSet running for a time after promotion, so connections end and a fast undo is possible."
+        explanation: "Correct. The default is 30 seconds."
+      - id: c
+        text: "It sets how long the preview Service stays available."
+        explanation: "It does not affect the preview Service."
+      - id: d
+        text: "It limits the time of the analysis run."
+        explanation: "Analysis time is set in the template metrics."
+    correct_option: b
+    explanation: "Correct. The default is 30 seconds."
+
+  - id: ats062-020-q04
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Place analysis in a blue-green release"
+    source_readings:
+      - sections/section-020/module-01/course-02-promotion-analysis-hooks-and-rollback.md
+    prompt: "You want a smoke test on the new pods before any user is switched. Which field do you use?"
+    options:
+      - id: a
+        text: "`postPromotionAnalysis`"
+        explanation: "This runs after the switch."
+      - id: b
+        text: "`strategy.canary.analysis`"
+        explanation: "This belongs to the canary strategy."
+      - id: c
+        text: "`prePromotionAnalysis`"
+        explanation: "Correct. The controller waits for a `Successful` run before it promotes."
+      - id: d
+        text: "`previewReplicaCount`"
+        explanation: "This sets the number of preview pods and runs no analysis."
+    correct_option: c
+    explanation: "Correct. The controller waits for a `Successful` run before it promotes."
+
+  - id: ats062-020-q05
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Predict replica counts of a canary without a router"
+    source_readings:
+      - sections/section-020/module-02/course-01-steps-weights-and-replica-counts.md
+    prompt: "A canary `Rollout` has 4 replicas and no traffic router. A step sets `setWeight: 25`. How many pods does the canary ReplicaSet have?"
+    options:
+      - id: a
+        text: "0"
+        explanation: "At least one pod must run for any weight above 0."
+      - id: b
+        text: "1"
+        explanation: "Correct. The weight is a ratio of the replicas, rounded up, so 25 percent of 4 is 1."
+      - id: c
+        text: "2"
+        explanation: "2 pods would be 50 percent."
+      - id: d
+        text: "4"
+        explanation: "All 4 pods would be 100 percent."
+    correct_option: b
+    explanation: "Correct. The weight is a ratio of the replicas, rounded up, so 25 percent of 4 is 1."
+
+  - id: ats062-020-q06
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Know the defaults of maxSurge and maxUnavailable"
+    source_readings:
+      - sections/section-020/module-02/course-01-steps-weights-and-replica-counts.md
+    prompt: "What are the defaults of `maxSurge` and `maxUnavailable` for a canary `Rollout`?"
+    options:
+      - id: a
+        text: "0 and 0"
+        explanation: "Both cannot be 0, because no pod could start or stop."
+      - id: b
+        text: "25 percent and 25 percent"
+        explanation: "These are the Deployment defaults."
+      - id: c
+        text: "1 and 1"
+        explanation: "Correct. Both default to 1."
+      - id: d
+        text: "100 percent and 0"
+        explanation: "These are not the defaults."
+    correct_option: c
+    explanation: "Correct. Both default to 1."
+
+  - id: ats062-020-q07
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Explain trafficRouting"
+    source_readings:
+      - sections/section-020/module-02/course-02-traffic-routing-and-choosing-a-strategy.md
+    prompt: "What does `trafficRouting` add to a canary `Rollout`?"
+    options:
+      - id: a
+        text: "Exact request weights set in a router, with `stableService` and `canaryService`."
+        explanation: "Correct. The weight no longer depends on pod counts."
+      - id: b
+        text: "A load balancer that the controller installs."
+        explanation: "The router must already exist. The controller does not install it."
+      - id: c
+        text: "Automatic analysis of the traffic."
+        explanation: "Analysis is configured separately."
+      - id: d
+        text: "A second cluster for the canary."
+        explanation: "The canary runs in the same cluster."
+    correct_option: a
+    explanation: "Correct. The weight no longer depends on pod counts."
+
+  - id: ats062-020-q08
+    type: single_choice
+    difficulty: advanced
+    learning_objective: "Choose a strategy"
+    source_readings:
+      - sections/section-020/module-02/course-02-traffic-routing-and-choosing-a-strategy.md
+    prompt: "Two versions of an application cannot use the same database schema at the same time. Which strategy fits?"
+    options:
+      - id: a
+        text: "Canary with 10 percent first."
+        explanation: "Both versions would serve users at once."
+      - id: b
+        text: "Blue-green, because all users move in one switch."
+        explanation: "Correct. Only one version serves users at any time, after the switch."
+      - id: c
+        text: "Canary with a header route."
+        explanation: "Some users would still reach the old version at the same time."
+      - id: d
+        text: "Either one, because the choice has no effect."
+        explanation: "The strategies differ in how long both versions serve users."
+    correct_option: b
+    explanation: "Correct. Only one version serves users at any time, after the switch."
+
+  - id: ats062-020-q09
+    type: single_choice
+    difficulty: advanced
+    learning_objective: "Continue a pause with no duration"
+    source_readings:
+      - sections/section-020/module-02/course-02-traffic-routing-and-choosing-a-strategy.md
+    prompt: "A canary reached a `pause: {}` step. What continues the release?"
+    options:
+      - id: a
+        text: "Waiting. The controller continues after 5 minutes."
+        explanation: "An empty pause has no time limit."
+      - id: b
+        text: "A promotion, which clears the pause condition."
+        explanation: "Correct. A person or a tool clears `status.pauseConditions`."
+      - id: c
+        text: "Deleting the stable ReplicaSet."
+        explanation: "This would break the stable version."
+      - id: d
+        text: "Increasing `replicas`."
+        explanation: "This does not clear the pause."
+    correct_option: b
+    explanation: "Correct. A person or a tool clears `status.pauseConditions`."
+

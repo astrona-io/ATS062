@@ -3,29 +3,32 @@ draft: true
 exam_objectives:
 - Use Common Progressive Rollout Strategies
 ---
-# Separate Blue Green Active And Preview Services
+# Hold A Blue-Green Revision In Preview
 
-Create active and preview Services managed by a blue-green Rollout.
+The `scout` Rollout switches to a new revision as soon as it is ready. The team wants to inspect each new revision through a preview Service before any user reaches it.
 
 ## Starting state
 
-The Rollouts controller is installed in argo-rollouts. No learner Rollout or AnalysisRun exists.
+The Argo Rollouts controller runs in the `argo-rollouts` namespace. The `starfleet` namespace holds the `probe` Service, which answers HTTP requests on port 8080, and the `shuttle` pod. The Rollout `scout` (blue-green, revision `one`) is healthy. The Services `scout-active` and `scout-preview` exist.
 
-Use a host shell with the private kubeconfig for this independent kind environment. A kubeconfig identifies the cluster and credentials used by kubectl, the Kubernetes command-line tool.
+Select the private kubeconfig for this environment:
 
 ```sh
 export KUBECONFIG="$(astrona kubeconfig ats-062-lab-020-01-01)"
 test "$(kubectl config current-context)" = "kind-astro-ats-062-lab-020-01-01" || exit 1
-node_name="astro-ats-062-lab-020-01-01-control-plane"
-worker_name="astro-ats-062-lab-020-01-01-worker"
 ```
-
-Keep this connection selected. Host-level commands name only this environment's node containers. They do not operate on the host operating system.
 
 ## Required result
 
-Use activeService active and previewService preview. The controller must add its pod-template-hash selector to the active service. This task grades initial controller reconciliation; it does not claim to exercise a timed manual promotion.
+- Change the Rollout `scout` so `previewService` is `scout-preview`, `autoPromotionEnabled` is `false` and `scaleDownDelaySeconds` is `60`.
+- Release revision two by setting the environment variable `REVISION` to `two` in the pod template.
+- End state: revision two waits in preview and the Rollout is `Paused`. `scout-active` still selects revision one and `scout-preview` selects revision two.
 
-## Verify The Result
+## Constraints
 
-The grader checks the required object fields and actual observations. Wait for controller convergence before submitting. Preserve the task's namespace, workload names and unrelated components.
+- Update the existing Rollout; do not delete it.
+- Do not promote revision two.
+
+## Verify the result
+
+The grader reads the live cluster: object fields, controller status and the objects the controller created. Wait until the controller has finished before you submit. Do not delete or rename objects that the task does not mention.

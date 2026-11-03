@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cargo
+  namespace: starfleet
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cargo
+  template:
+    metadata:
+      labels:
+        app: cargo
+    spec:
+      containers:
+      - name: cargo
+        image: docker.io/library/python:3.13-alpine
+        ports:
+        - containerPort: 8080
+        command:
+        - python
+        - -m
+        - http.server
+        - '8080'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cargo
+  namespace: starfleet
+spec:
+  selector:
+    app: cargo
+  ports:
+  - port: 8080
+    targetPort: 8080

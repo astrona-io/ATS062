@@ -3,31 +3,16 @@ draft: true
 exam_objectives:
 - Describe Analysis Template and AnalysisRun
 ---
-# Execute A Job Based Analysis Solution
+# Execute A Job-Based Analysis Solution
 
-Use a host shell with the private kubeconfig for this independent kind environment. A kubeconfig identifies the cluster and credentials used by kubectl, the Kubernetes command-line tool.
+Select the private kubeconfig for this environment:
 
 ```sh
 export KUBECONFIG="$(astrona kubeconfig ats-062-lab-030-01-01)"
 test "$(kubectl config current-context)" = "kind-astro-ats-062-lab-030-01-01" || exit 1
-node_name="astro-ats-062-lab-030-01-01-control-plane"
-worker_name="astro-ats-062-lab-030-01-01-worker"
 ```
 
-Keep this connection selected. Host-level commands name only this environment's node containers. They do not operate on the host operating system.
-
-## Inspect And Explain
-
-The Rollouts controller is installed in argo-rollouts. No learner Rollout or AnalysisRun exists.
-
-Inspect the current objects before changing them:
-
-```sh
-kubectl -n starfleet get pods -o wide
-kubectl get nodes -o wide
-```
-
-Create the reusable AnalysisTemplate and a run with the same metric. Job success is the metric result; a template alone does not execute an analysis. This exercise runs analysis independently rather than wiring a rollout gate.
+Write the template and the run in one file. The template is a reusable definition. The run is the object that executes the metric once.
 
 Save this as `analysistemplate-probe-check.yaml`:
 
@@ -55,8 +40,7 @@ spec:
                 - python
                 - -c
                 args:
-                - import urllib.request; text=urllib.request.urlopen("http://probe:8080/",timeout=4).read().decode();
-                  assert "probe-ready" in text
+                - import urllib.request; text=urllib.request.urlopen("http://probe:8080/", timeout=4).read().decode(); assert "probe-ready" in text
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: AnalysisRun
@@ -81,29 +65,30 @@ spec:
                 - python
                 - -c
                 args:
-                - import urllib.request; text=urllib.request.urlopen("http://probe:8080/",timeout=4).read().decode();
-                  assert "probe-ready" in text
+                - import urllib.request; text=urllib.request.urlopen("http://probe:8080/", timeout=4).read().decode(); assert "probe-ready" in text
 ```
 
-Apply the scoped correction:
+Apply it:
 
 ```sh
 kubectl apply -f analysistemplate-probe-check.yaml
 ```
 
-## Verify The Result
-
-Observe the actual result. A denied request returns a nonzero status when the denial works, so run it separately from a shell sequence that stops on error. Status convergence and a successful request establish different parts of the result.
+Then wait for the run. The controller creates a Kubernetes Job for the measurement, and the Job result becomes the measurement result.
 
 ```sh
 kubectl -n starfleet wait --for=jsonpath='{.status.phase}'=Successful analysisrun/mission-analysis --timeout=240s
+kubectl -n starfleet get analysisrun mission-analysis -o jsonpath='{.status.metricResults}'
+kubectl -n starfleet get jobs
 ```
 
-Complete an AnalysisRun from a real service-health Job. The commands above deliberately target one environment. Keep its remaining components available so an unrelated failure cannot stand in for the required denial or correction. No example command output is presented as evidence of a completed run. A matching field alone does not establish that a process used it or that a controller reconciled it.
+## Verify the result
 
-After recording your result, remove the independent lab with `astrona destroy ats-062-lab-030-01-01`.
+The AnalysisRun phase is `Successful`. `status.metricResults[0]` has `successful: 1` and one measurement in phase `Successful`.
+
+When you are done, remove the environment with `astrona destroy ats-062-lab-030-01-01`.
 
 ## Common pitfalls
 
 > [!WARNING]
-> Confirm the private context and exact node names before a change. Check the stated scope and live result. Do not change unrelated components to hide the original fault.
+> An AnalysisTemplate alone runs nothing. Nothing executes until an AnalysisRun, or a Rollout that references the template, creates one.

@@ -3,29 +3,31 @@ draft: true
 exam_objectives:
 - Describe Analysis Template and AnalysisRun
 ---
-# Execute A Job Based Analysis
+# Execute A Job-Based Analysis
 
-Complete an AnalysisRun from a real service-health Job.
+Before the next release the team wants a reusable health check for the `probe` Service, and proof that the check passes now.
 
 ## Starting state
 
-The Rollouts controller is installed in argo-rollouts. No learner Rollout or AnalysisRun exists.
+The Argo Rollouts controller runs in the `argo-rollouts` namespace. The `starfleet` namespace holds the `probe` Service, which answers HTTP requests on port 8080, and the `shuttle` pod. No AnalysisTemplate and no AnalysisRun exist.
 
-Use a host shell with the private kubeconfig for this independent kind environment. A kubeconfig identifies the cluster and credentials used by kubectl, the Kubernetes command-line tool.
+Select the private kubeconfig for this environment:
 
 ```sh
 export KUBECONFIG="$(astrona kubeconfig ats-062-lab-030-01-01)"
 test "$(kubectl config current-context)" = "kind-astro-ats-062-lab-030-01-01" || exit 1
-node_name="astro-ats-062-lab-030-01-01-control-plane"
-worker_name="astro-ats-062-lab-030-01-01-worker"
 ```
-
-Keep this connection selected. Host-level commands name only this environment's node containers. They do not operate on the host operating system.
 
 ## Required result
 
-Create the reusable AnalysisTemplate and a run with the same metric. Job success is the metric result; a template alone does not execute an analysis. This exercise runs analysis independently rather than wiring a rollout gate.
+- Create an AnalysisTemplate `probe-check` in `starfleet` with one metric `probe-available`, `count: 1`, and a `job` provider. The Job pod runs `python -c` with a script that requests `http://probe:8080/` and asserts that the body contains `probe-ready`.
+- Create an AnalysisRun `mission-analysis` with the same metric, and wait until its phase is `Successful`.
 
-## Verify The Result
+## Constraints
 
-The grader checks the required object fields and actual observations. Wait for controller convergence before submitting. Preserve the task's namespace, workload names and unrelated components.
+- The Job needs `backoffLimit: 0` and `restartPolicy: Never`.
+- Do not change the `probe` Service.
+
+## Verify the result
+
+The grader reads the live cluster: object fields, controller status and the objects the controller created. Wait until the controller has finished before you submit. Do not delete or rename objects that the task does not mention.

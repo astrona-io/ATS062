@@ -5,6 +5,4 @@ exam_objectives:
 ---
 # Starting Environment
 
-The Rollouts controller is installed in argo-rollouts. No learner Rollout or AnalysisRun exists.
-
-Create active and preview Services managed by a blue-green Rollout.
+The Argo Rollouts controller runs in the `argo-rollouts` namespace. The `starfleet` namespace holds the `probe` Service, which answers HTTP requests on port 8080, and the `shuttle` pod. The Rollout `scout` (blue-green, revision `one`) is healthy. The Services `scout-active` and `scout-preview` exist.

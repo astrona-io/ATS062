@@ -6,8 +6,5 @@ if [[ "$(kubectl config current-context)" != "kind-astro-ats-062-lab-030-01-01" 
 fi
 lab_directory="$(cd "$(dirname "$0")/.." && pwd)"
 solution_directory="$lab_directory/solution"
-node_name="astro-ats-062-lab-030-01-01-control-plane"
-worker_name="astro-ats-062-lab-030-01-01-worker"
-
 kubectl apply -f "$solution_directory/analysistemplate-probe-check.yaml"
 kubectl -n starfleet wait --for=jsonpath='{.status.phase}'=Successful analysisrun/mission-analysis --timeout=240s

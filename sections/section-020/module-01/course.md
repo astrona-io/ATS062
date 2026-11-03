@@ -3,22 +3,25 @@ draft: true
 exam_objectives:
 - Use Common Progressive Rollout Strategies
 ---
-# Canary Steps And Blue-Green Service Switching
+# Blue-Green Deployments
 
-This module develops canary Steps And Blue-Green Service Switching. Use the explanations to connect intended behavior with responsible components and observable evidence.
+A blue-green release runs the old and the new version at full size next to each other, and then moves all traffic in one step. This module explains how Argo Rollouts does it with two Services, which settings decide when the switch happens, and how a failed release returns to the old version.
 
 ## Learning Goals
 
-- Compare incremental canary exposure with blue-green promotion.
-- Explain stable, canary, active and preview Service relationships.
-- Relate pauses, weights and scale to actual request distribution.
-- Evaluate capacity, connection persistence and abort behavior.
+- Explain the roles of `activeService` and `previewService` and how the controller changes their selectors.
+- Set `autoPromotionEnabled`, `autoPromotionSeconds`, `scaleDownDelaySeconds` and `previewReplicaCount`.
+- Place analysis before and after the switch with `prePromotionAnalysis` and `postPromotionAnalysis`.
+- Describe what happens to the old ReplicaSet after promotion and after an abort.
 
 ## Before You Start
 
-Examples illustrate declared relationships and reasoning. No execution environment is required or claimed.
+You need to know what a Service selector is, what `rollouts-pod-template-hash` labels, and the fields `stableRS` and `currentPodHash`. The playground has the Argo Rollouts controller installed.
 
 ## Reading Order
 
-1. Canary Steps And Blue-Green Service Switching
-2. Summary
+1. Active and preview Services.
+2. Promotion, analysis hooks and rollback.
+3. Summary.
+
+<!-- astrona:playground -->

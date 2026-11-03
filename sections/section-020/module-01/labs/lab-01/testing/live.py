@@ -1,4 +1,4 @@
-import json,subprocess,time,sys,tempfile,os
+import json,subprocess
 
 def call(*args):
  r=subprocess.run(list(args),text=True,capture_output=True,timeout=20)
@@ -6,17 +6,20 @@ def call(*args):
  return r.stdout.strip()
 def obj(kind,name,ns='starfleet'):
  return json.loads(call('kubectl',*(['-n',ns] if ns else []),'get',kind,name,'-o','json'))
-def api(path):
- script='import urllib.request; print(urllib.request.urlopen('+repr('http://prometheus:9090'+path)+',timeout=8).read().decode())'
- return json.loads(call('kubectl','-n','starfleet','exec','shuttle','--','python','-c',script))
-def save(data):
- resource={'apiVersion':'v1','kind':'ConfigMap','metadata':{'name':'evidence','namespace':'starfleet'},'data':{'report.json':json.dumps(data,sort_keys=True)}}
- with tempfile.NamedTemporaryFile(mode='w',suffix='.json',delete=False) as f:json.dump(resource,f);path=f.name
- try:call('kubectl','apply','-f',path)
- finally:os.unlink(path)
+def items(kind,ns='starfleet'):
+ return json.loads(call('kubectl','-n',ns,'get',kind,'-o','json'))['items']
+def owned_by(item,kind,name):
+ return any(o.get('kind')==kind and o.get('name')==name for o in item['metadata'].get('ownerReferences',[]))
+def observed(rollout):
+ return str(rollout['status'].get('observedGeneration'))==str(rollout['metadata']['generation'])
 
-rollout=obj('rollout','mission');status=rollout['status']
-assert status.get('observedGeneration')==str(rollout['metadata']['generation']) or status.get('observedGeneration')==rollout['metadata']['generation'], 'Rollout generation has not been observed'
-assert status.get('readyReplicas')==2 and status.get('updatedReplicas')==2, 'Rollout must reach two updated ready replicas'
-assert status.get('phase')=='Healthy', 'Rollout is not healthy'
-active=obj('service','active');assert active['spec']['selector'].get('rollouts-pod-template-hash')==status['currentPodHash'], 'Active Service must select the current revision'
+r=obj('rollout','scout'); st=r['status']; bg=r['spec']['strategy']['blueGreen']
+assert bg.get('activeService')=='scout-active' and bg.get('previewService')=='scout-preview', 'activeService and previewService are wrong'
+assert bg.get('autoPromotionEnabled') is False and bg.get('scaleDownDelaySeconds')==60, 'autoPromotionEnabled must be false and scaleDownDelaySeconds 60'
+env={e['name']:e.get('value') for e in r['spec']['template']['spec']['containers'][0].get('env',[])}
+assert env.get('REVISION')=='two', 'Revision two must be applied'
+assert observed(r) and st.get('phase')=='Paused', 'Revision two must wait in preview (phase Paused)'
+assert st.get('stableRS') and st['stableRS']!=st.get('currentPodHash'), 'The stable ReplicaSet must still be revision one'
+active=obj('service','scout-active'); preview=obj('service','scout-preview')
+assert active['spec']['selector'].get('rollouts-pod-template-hash')==st['stableRS'], 'Active Service must select the stable ReplicaSet'
+assert preview['spec']['selector'].get('rollouts-pod-template-hash')==st['currentPodHash'], 'Preview Service must select the new ReplicaSet'

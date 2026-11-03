@@ -5,6 +5,7 @@ metadata:
   namespace: starfleet
 spec:
   replicas: 2
+  revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: mission
@@ -16,6 +17,9 @@ spec:
       containers:
       - name: mission
         image: docker.io/library/python:3.13-alpine
+        env:
+        - name: REVISION
+          value: one
         ports:
         - containerPort: 8080
         command:

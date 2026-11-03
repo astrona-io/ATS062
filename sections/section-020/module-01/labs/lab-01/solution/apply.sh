@@ -6,8 +6,6 @@ if [[ "$(kubectl config current-context)" != "kind-astro-ats-062-lab-020-01-01" 
 fi
 lab_directory="$(cd "$(dirname "$0")/.." && pwd)"
 solution_directory="$lab_directory/solution"
-node_name="astro-ats-062-lab-020-01-01-control-plane"
-worker_name="astro-ats-062-lab-020-01-01-worker"
-
-kubectl apply -f "$solution_directory/service-active.yaml"
-kubectl -n starfleet wait --for=jsonpath='{.status.phase}'=Healthy rollout/mission --timeout=240s
+kubectl apply -f "$solution_directory/rollout-scout.yaml"
+sleep 10
+kubectl -n starfleet wait --for=jsonpath='{.status.phase}'=Paused rollout/scout --timeout=240s

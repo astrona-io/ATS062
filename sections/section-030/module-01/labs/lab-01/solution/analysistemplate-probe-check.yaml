@@ -21,8 +21,7 @@ spec:
                 - python
                 - -c
                 args:
-                - import urllib.request; text=urllib.request.urlopen("http://probe:8080/",timeout=4).read().decode();
-                  assert "probe-ready" in text
+                - import urllib.request; text=urllib.request.urlopen("http://probe:8080/", timeout=4).read().decode(); assert "probe-ready" in text
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: AnalysisRun
@@ -47,5 +46,4 @@ spec:
                 - python
                 - -c
                 args:
-                - import urllib.request; text=urllib.request.urlopen("http://probe:8080/",timeout=4).read().decode();
-                  assert "probe-ready" in text
+                - import urllib.request; text=urllib.request.urlopen("http://probe:8080/", timeout=4).read().decode(); assert "probe-ready" in text

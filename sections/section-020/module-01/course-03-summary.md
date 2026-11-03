@@ -5,8 +5,16 @@ exam_objectives:
 ---
 # Summary
 
-Canary delivery increases exposure through supported steps, while blue-green prepares a separate version and changes the active service relationship at promotion. Services and routing integration identify which population receives traffic.
+A blue-green `Rollout` uses an `activeService` that users reach and an optional `previewService` for the new version. The controller adds a `rollouts-pod-template-hash` selector to each Service. A promotion changes the selector of the active Service to the hash of the new ReplicaSet, so no pod restarts and the switch applies to new connections.
 
-Weights, replica counts and observed requests are different evidence. Capacity, connection persistence and external-state compatibility affect promotion and abort, so an earlier version's availability alone does not establish complete recovery.
+The first revision of a `Rollout` becomes active at once. From the second revision on, `autoPromotionEnabled`, `autoPromotionSeconds` and `previewReplicaCount` decide when the switch happens and how much capacity the waiting version uses. The old ReplicaSet runs on for `scaleDownDelaySeconds` (30 seconds by default), so that late connections and a quick rollback still work.
+
+`prePromotionAnalysis` runs before the switch and blocks it when the analysis fails. `postPromotionAnalysis` runs after the switch, and a failure sends the traffic back to the old ReplicaSet. An abort before promotion leaves users on the old version, because the active Service never moved.
+
+Key facts:
+
+- `autoPromotionEnabled` defaults to `true`; `scaleDownDelaySeconds` defaults to 30.
+- Blue-green needs capacity for two full sets of pods.
+- A paused blue-green release shows the pause reason `BlueGreenPause`.
 
 <!-- astrona:playground:destroy -->
