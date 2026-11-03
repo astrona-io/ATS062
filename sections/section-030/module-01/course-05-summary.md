@@ -11,10 +11,14 @@ A template has arguments, written as `{{ args.name }}`, with a default or a requ
 
 `successCondition` and `failureCondition` read the value `result`. With only one of them set, a measurement is good or failed. With both set, a measurement that meets neither is inconclusive. The `job` provider ignores conditions and uses the Job outcome. The `web` provider calls from the controller and needs JSON. The `prometheus` provider returns a vector read as `result[0]`.
 
+A `ClusterAnalysisTemplate` is shared across namespaces and is used with `clusterScope: true`. Arguments can come from a Secret or from a field of the `Rollout`. A failed measurement, an inconclusive one and an error each have their own limit, a dry-run metric records without deciding, and `measurementRetention` caps stored measurements.
+
 Key facts:
 
 - The run phases are `Pending`, `Running`, `Successful`, `Failed`, `Error` and `Inconclusive`.
 - A failed metric fails the run.
 - Missing arguments and empty query results give `Error`.
+- `consecutiveErrorLimit` defaults to 4.
+- `dryRun` metrics cannot fail an `AnalysisRun`.
 
 <!-- astrona:playground:destroy -->

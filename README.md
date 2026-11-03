@@ -2,7 +2,7 @@
 
 Certified Argo Project Associate (CAPA): Argo Rollouts, worth 18% of the official curriculum. This course belongs to ATP012.
 
-Each section has two modules. A module has a landing page, two parts, a summary, an ungraded playground and a graded lab. Each section ends with a capstone lab and a knowledge check, and a final domain quiz covers all three sections. All content is draft.
+Each section has two modules. A module has a landing page, four parts, a summary, an ungraded playground and a graded lab. Each section ends with a capstone lab and a knowledge check, and a final domain quiz covers all three sections. All content is draft.
 
 ## Course Outline
 
@@ -21,7 +21,7 @@ See [curriculum coverage](CURRICULUM.md), [primary sources](SOURCES.md), [questi
 
 ## Hands-On Coverage
 
-This course has 6 ungraded playgrounds, 6 module labs and 3 capstone labs. Each lab task follows the parts it practises, and the solution is not listed as a reading. Static checks (`astrona validate`, `bash -n`, YAML and JSON parsing) are done. No lab or playground has been run on a cluster, so all are untested.
+This course has 6 ungraded playgrounds, 12 module labs (two for each module) and 3 capstone labs. Each lab task follows the parts it practises, and the solution is not listed as a reading. Static checks (`astrona validate`, `bash -n`, YAML and JSON parsing) are done. No lab or playground has been run on a cluster, so all are untested.
 
 | Section / module | Graded lab |
 | --- | --- |

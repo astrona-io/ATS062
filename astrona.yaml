@@ -71,8 +71,34 @@ modules:
     - name: "Rollout specification"
       url: https://argo-rollouts.readthedocs.io/en/stable/features/specification/
   - type: reading
+    title: "Timing, Capacity And History Fields"
+    path: sections/section-010/module-01/course-03-timing-capacity-and-history-fields.md
+  - type: reading
+    title: "Template Changes, Metadata And Placement"
+    path: sections/section-010/module-01/course-04-template-changes-metadata-and-placement.md
+  - type: reading
+    title: "Set Timing Fields And Stable Metadata On A Rollout - Task"
+    path: sections/section-010/module-01/labs/lab-02/question.md
+  - type: lab
+    title: "Set Timing Fields And Stable Metadata On A Rollout"
+    path: sections/section-010/module-01/labs/lab-02
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: argo-rollout
+    task_kind: build
+    learning_goals:
+    - "Set minReadySeconds, progressDeadlineSeconds and stableMetadata"
+    - "Verify the final state in the live cluster"
+    tags:
+    - capa
+    - argo-rollout
+    - rollout-spec
+    resources:
+    - name: "Argo Rollouts documentation"
+      url: https://argo-rollouts.readthedocs.io/en/stable/
+  - type: reading
     title: "Summary"
-    path: sections/section-010/module-01/course-03-summary.md
+    path: sections/section-010/module-01/course-05-summary.md
   - type: reading
     title: "Operating Rollouts And Migrating From A Deployment"
     path: sections/section-010/module-02/course.md
@@ -105,8 +131,34 @@ modules:
     - name: "Rollout specification"
       url: https://argo-rollouts.readthedocs.io/en/stable/features/specification/
   - type: reading
+    title: "Observing A Release: Events, Logs And Metrics"
+    path: sections/section-010/module-02/course-03-observing-a-release-events-logs-and-metrics.md
+  - type: reading
+    title: "Failed Releases And Recovery"
+    path: sections/section-010/module-02/course-04-failed-releases-and-recovery.md
+  - type: reading
+    title: "Set A Progress Deadline With Automatic Abort - Task"
+    path: sections/section-010/module-02/labs/lab-02/question.md
+  - type: lab
+    title: "Set A Progress Deadline With Automatic Abort"
+    path: sections/section-010/module-02/labs/lab-02
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: argo-rollout
+    task_kind: build
+    learning_goals:
+    - "Set progressDeadlineAbort on a canary Rollout"
+    - "Verify the final state in the live cluster"
+    tags:
+    - capa
+    - argo-rollout
+    - rollout-deadline
+    resources:
+    - name: "Argo Rollouts documentation"
+      url: https://argo-rollouts.readthedocs.io/en/stable/
+  - type: reading
     title: "Summary"
-    path: sections/section-010/module-02/course-03-summary.md
+    path: sections/section-010/module-02/course-05-summary.md
   - type: reading
     title: "Fundamentals Capstone: Run And Update A Rollout Behind A Service - Task"
     path: sections/section-010/capstone/labs/lab-01/question.md
@@ -171,8 +223,34 @@ modules:
     - name: "Blue-green strategy"
       url: https://argo-rollouts.readthedocs.io/en/stable/features/bluegreen/
   - type: reading
+    title: "Scale-Down And Preview Behaviour"
+    path: sections/section-020/module-01/course-03-scale-down-and-preview-behaviour.md
+  - type: reading
+    title: "Operating A Blue-Green Rollout"
+    path: sections/section-020/module-01/course-04-operating-a-blue-green-rollout.md
+  - type: reading
+    title: "Run A Blue-Green Rollout With A Small Preview - Task"
+    path: sections/section-020/module-01/labs/lab-02/question.md
+  - type: lab
+    title: "Run A Blue-Green Rollout With A Small Preview"
+    path: sections/section-020/module-01/labs/lab-02
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: argo-rollout
+    task_kind: build
+    learning_goals:
+    - "Use previewReplicaCount, scaleDownDelaySeconds and activeMetadata"
+    - "Verify the final state in the live cluster"
+    tags:
+    - capa
+    - argo-rollout
+    - bluegreen
+    resources:
+    - name: "Argo Rollouts documentation"
+      url: https://argo-rollouts.readthedocs.io/en/stable/
+  - type: reading
     title: "Summary"
-    path: sections/section-020/module-01/course-03-summary.md
+    path: sections/section-020/module-01/course-05-summary.md
   - type: reading
     title: "Canary Deployments"
     path: sections/section-020/module-02/course.md
@@ -203,8 +281,34 @@ modules:
     - name: "Canary strategy"
       url: https://argo-rollouts.readthedocs.io/en/stable/features/canary/
   - type: reading
+    title: "Canary Scale Control"
+    path: sections/section-020/module-02/course-03-canary-scale-control.md
+  - type: reading
+    title: "Header Routing And Mirroring"
+    path: sections/section-020/module-02/course-04-header-routing-and-mirroring.md
+  - type: reading
+    title: "Limit Surge And Unavailability In A Canary - Task"
+    path: sections/section-020/module-02/labs/lab-02/question.md
+  - type: lab
+    title: "Limit Surge And Unavailability In A Canary"
+    path: sections/section-020/module-02/labs/lab-02
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: argo-rollout
+    task_kind: build
+    learning_goals:
+    - "Set maxSurge and maxUnavailable on a canary"
+    - "Verify the final state in the live cluster"
+    tags:
+    - capa
+    - argo-rollout
+    - canary
+    resources:
+    - name: "Argo Rollouts documentation"
+      url: https://argo-rollouts.readthedocs.io/en/stable/
+  - type: reading
     title: "Summary"
-    path: sections/section-020/module-02/course-03-summary.md
+    path: sections/section-020/module-02/course-05-summary.md
   - type: reading
     title: "Strategies Capstone: Preview A Blue-Green Release And Complete A Canary - Task"
     path: sections/section-020/capstone/labs/lab-01/question.md
@@ -270,8 +374,34 @@ modules:
     - name: "Analysis and progressive delivery"
       url: https://argo-rollouts.readthedocs.io/en/stable/features/analysis/
   - type: reading
+    title: "Cluster Templates And Argument Sources"
+    path: sections/section-030/module-01/course-03-cluster-templates-and-argument-sources.md
+  - type: reading
+    title: "Dry Run, Retention And Error Handling"
+    path: sections/section-030/module-01/course-04-dry-run-retention-and-error-handling.md
+  - type: reading
+    title: "Try A Metric In Dry Run - Task"
+    path: sections/section-030/module-01/labs/lab-02/question.md
+  - type: lab
+    title: "Try A Metric In Dry Run"
+    path: sections/section-030/module-01/labs/lab-02
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: argo-rollout
+    task_kind: build
+    learning_goals:
+    - "Use dryRun and measurementRetention in a template and a run"
+    - "Verify the final state in the live cluster"
+    tags:
+    - capa
+    - argo-rollout
+    - dry-run
+    resources:
+    - name: "Argo Rollouts documentation"
+      url: https://argo-rollouts.readthedocs.io/en/stable/
+  - type: reading
     title: "Summary"
-    path: sections/section-030/module-01/course-03-summary.md
+    path: sections/section-030/module-01/course-05-summary.md
   - type: reading
     title: "AnalysisRuns And Rollout Integration"
     path: sections/section-030/module-02/course.md
@@ -304,8 +434,34 @@ modules:
     - name: "Experiments"
       url: https://argo-rollouts.readthedocs.io/en/stable/features/experiment/
   - type: reading
+    title: "Passing Rollout Data Into An Analysis"
+    path: sections/section-030/module-02/course-03-passing-rollout-data-into-an-analysis.md
+  - type: reading
+    title: "Reading And Debugging An AnalysisRun"
+    path: sections/section-030/module-02/course-04-reading-and-debugging-an-analysisrun.md
+  - type: reading
+    title: "Run An AnalysisRun With An Argument - Task"
+    path: sections/section-030/module-02/labs/lab-02/question.md
+  - type: lab
+    title: "Run An AnalysisRun With An Argument"
+    path: sections/section-030/module-02/labs/lab-02
+    difficulty: intermediate
+    estimated_duration: 25m
+    topic: argo-rollout
+    task_kind: build
+    learning_goals:
+    - "Pass an argument into an AnalysisRun created by hand"
+    - "Verify the final state in the live cluster"
+    tags:
+    - capa
+    - argo-rollout
+    - analysisrun
+    resources:
+    - name: "Argo Rollouts documentation"
+      url: https://argo-rollouts.readthedocs.io/en/stable/
+  - type: reading
     title: "Summary"
-    path: sections/section-030/module-02/course-03-summary.md
+    path: sections/section-030/module-02/course-05-summary.md
   - type: reading
     title: "Analysis Capstone: Block A Bad Release With Background Analysis - Task"
     path: sections/section-030/capstone/labs/lab-01/question.md

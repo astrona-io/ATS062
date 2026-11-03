@@ -22,6 +22,8 @@ You need to know what a `Rollout`, `stableRS` and `currentPodHash` are, and how 
 
 1. Steps, weights and replica counts.
 2. Traffic routing, controlling a canary and choosing a strategy.
-3. Summary.
+3. Canary scale control.
+4. Header routing and mirroring.
+5. Summary.
 
 <!-- astrona:playground -->

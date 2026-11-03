@@ -11,10 +11,14 @@ A Rollout runs analysis in three ways. An inline `analysis` step blocks the cana
 
 A `Successful` run continues the release. A `Failed` or `Error` run aborts it and sets `status.abort`. An `Inconclusive` run pauses it for a person. The reason is in `status.metricResults`, the measurements, and for a `job` provider the Job logs. An `Experiment` runs temporary ReplicaSets, such as the stable and the canary specs, and analyses them for a set duration.
 
+The `Rollout` passes release data into the analysis through arguments, including the hash of the latest or the stable ReplicaSet, and it owns the `AnalysisRun` objects it creates. An operator can also create a run by hand and stop it with `terminate`. To find the cause of an abort, read the message of the `Rollout`, then the run, then the metric result and then the measurement.
+
 Key facts:
 
 - An abort returns the weight to 0 and the phase becomes `Degraded`.
 - `consecutiveErrorLimit` protects against short outages of a metric server.
 - A `ClusterAnalysisTemplate` needs `clusterScope: true` in the reference.
+- A run is `Failed`, `Error` or `Inconclusive` depending on its metrics.
+- `Error` means the measurement itself broke.
 
 <!-- astrona:playground:destroy -->

@@ -218,3 +218,209 @@ questions:
     correct_option: b
     explanation: "Correct. A person or a tool clears `status.pauseConditions`."
 
+  - id: ats062-020-q101
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "It lowers the cost of the preview"
+    source_readings:
+      - sections/section-020/module-01/course-03-scale-down-and-preview-behaviour.md
+    prompt: "What does `previewReplicaCount` set?"
+    options:
+      - id: a
+        text: "The number of Services in preview."
+        explanation: "Not correct. It lowers the cost of the preview."
+      - id: b
+        text: "The number of pods the new ReplicaSet runs while it waits in preview."
+        explanation: "Correct. It lowers the cost of the preview."
+      - id: c
+        text: "The number of old ReplicaSets that are kept."
+        explanation: "Not correct. It lowers the cost of the preview."
+      - id: d
+        text: "The seconds before a promotion."
+        explanation: "Not correct. It lowers the cost of the preview."
+    correct_option: b
+    explanation: "Correct. It lowers the cost of the preview."
+
+  - id: ats062-020-q102
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "The old ReplicaSet stays 30 seconds after the switch"
+    source_readings:
+      - sections/section-020/module-01/course-03-scale-down-and-preview-behaviour.md
+    prompt: "What is the default of `scaleDownDelaySeconds` in blue-green?"
+    options:
+      - id: a
+        text: "30 seconds"
+        explanation: "Correct. The old ReplicaSet stays 30 seconds after the switch."
+      - id: b
+        text: "600 seconds"
+        explanation: "Not correct. The old ReplicaSet stays 30 seconds after the switch."
+      - id: c
+        text: "5 seconds"
+        explanation: "Not correct. The old ReplicaSet stays 30 seconds after the switch."
+      - id: d
+        text: "0 seconds"
+        explanation: "Not correct. The old ReplicaSet stays 30 seconds after the switch."
+    correct_option: a
+    explanation: "Correct. The old ReplicaSet stays 30 seconds after the switch."
+
+  - id: ats062-020-q103
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "The switch happens only after the new pods are available"
+    source_readings:
+      - sections/section-020/module-01/course-03-scale-down-and-preview-behaviour.md
+    prompt: "In what order does the controller promote a blue-green revision?"
+    options:
+      - id: a
+        text: "Scale down the old ReplicaSet first, then switch."
+        explanation: "Not correct. The switch happens only after the new pods are available."
+      - id: b
+        text: "Scale up, switch the active Service, wait, scale the old ReplicaSet down."
+        explanation: "Correct. The switch happens only after the new pods are available."
+      - id: c
+        text: "Delete the old ReplicaSet, then scale up."
+        explanation: "Not correct. The switch happens only after the new pods are available."
+      - id: d
+        text: "Switch the active Service, scale up, scale down."
+        explanation: "Not correct. The switch happens only after the new pods are available."
+    correct_option: b
+    explanation: "Correct. The switch happens only after the new pods are available."
+
+  - id: ats062-020-q104
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "The label `rollouts-pod-template-hash` in the selector decides the endpoints"
+    source_readings:
+      - sections/section-020/module-01/course-04-operating-a-blue-green-rollout.md
+    prompt: "How does the controller switch traffic in blue-green?"
+    options:
+      - id: a
+        text: "It writes the ReplicaSet hash into the selector of the active Service."
+        explanation: "Correct. The label `rollouts-pod-template-hash` in the selector decides the endpoints."
+      - id: b
+        text: "It deletes the old Service."
+        explanation: "Not correct. The label `rollouts-pod-template-hash` in the selector decides the endpoints."
+      - id: c
+        text: "It changes the image of the old pods."
+        explanation: "Not correct. The label `rollouts-pod-template-hash` in the selector decides the endpoints."
+      - id: d
+        text: "It edits the Ingress."
+        explanation: "Not correct. The label `rollouts-pod-template-hash` in the selector decides the endpoints."
+    correct_option: a
+    explanation: "Correct. The label `rollouts-pod-template-hash` in the selector decides the endpoints."
+
+  - id: ats062-020-q105
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "The preview selector points at the new ReplicaSet, whose pods are not ready"
+    source_readings:
+      - sections/section-020/module-01/course-04-operating-a-blue-green-rollout.md
+    prompt: "What does an empty endpoints list for the preview Service show?"
+    options:
+      - id: a
+        text: "The old ReplicaSet was deleted."
+        explanation: "Not correct. The preview selector points at the new ReplicaSet, whose pods are not ready."
+      - id: b
+        text: "The Rollout has no strategy."
+        explanation: "Not correct. The preview selector points at the new ReplicaSet, whose pods are not ready."
+      - id: c
+        text: "The active Service is broken."
+        explanation: "Not correct. The preview selector points at the new ReplicaSet, whose pods are not ready."
+      - id: d
+        text: "No pod of the new revision is ready."
+        explanation: "Correct. The preview selector points at the new ReplicaSet, whose pods are not ready."
+    correct_option: d
+    explanation: "Correct. The preview selector points at the new ReplicaSet, whose pods are not ready."
+
+  - id: ats062-020-q106
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "It needs `trafficRouting`"
+    source_readings:
+      - sections/section-020/module-02/course-03-canary-scale-control.md
+    prompt: "Which step sets the canary pod count apart from the traffic weight?"
+    options:
+      - id: a
+        text: "`setCanaryScale`"
+        explanation: "Correct. It needs `trafficRouting`."
+      - id: b
+        text: "`analysis`"
+        explanation: "Not correct. It needs `trafficRouting`."
+      - id: c
+        text: "`setHeaderRoute`"
+        explanation: "Not correct. It needs `trafficRouting`."
+      - id: d
+        text: "`pause`"
+        explanation: "Not correct. It needs `trafficRouting`."
+    correct_option: a
+    explanation: "Correct. It needs `trafficRouting`."
+
+  - id: ats062-020-q107
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "It keeps the total close to `spec.replicas`"
+    source_readings:
+      - sections/section-020/module-02/course-03-canary-scale-control.md
+    prompt: "What does `dynamicStableScale` do?"
+    options:
+      - id: a
+        text: "It removes the stable Service."
+        explanation: "Not correct. It keeps the total close to `spec.replicas`."
+      - id: b
+        text: "It scales the canary to zero."
+        explanation: "Not correct. It keeps the total close to `spec.replicas`."
+      - id: c
+        text: "It scales both to the same size."
+        explanation: "Not correct. It keeps the total close to `spec.replicas`."
+      - id: d
+        text: "It scales the stable ReplicaSet down as the canary scales up."
+        explanation: "Correct. It keeps the total close to `spec.replicas`."
+    correct_option: d
+    explanation: "Correct. It keeps the total close to `spec.replicas`."
+
+  - id: ats062-020-q108
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "The mirrored answer is dropped"
+    source_readings:
+      - sections/section-020/module-02/course-04-header-routing-and-mirroring.md
+    prompt: "What does `setMirrorRoute` do?"
+    options:
+      - id: a
+        text: "It sends all requests to the canary."
+        explanation: "Not correct. The mirrored answer is dropped."
+      - id: b
+        text: "It copies live requests to the canary while users get the stable answer."
+        explanation: "Correct. The mirrored answer is dropped."
+      - id: c
+        text: "It deletes the canary."
+        explanation: "Not correct. The mirrored answer is dropped."
+      - id: d
+        text: "It pauses the Rollout."
+        explanation: "Not correct. The mirrored answer is dropped."
+    correct_option: b
+    explanation: "Correct. The mirrored answer is dropped."
+
+  - id: ats062-020-q109
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "The controller touches only routes in `managedRoutes`"
+    source_readings:
+      - sections/section-020/module-02/course-04-header-routing-and-mirroring.md
+    prompt: "Which field lists the routes the controller may create and remove?"
+    options:
+      - id: a
+        text: "`managedRoutes`"
+        explanation: "Correct. The controller touches only routes in `managedRoutes`."
+      - id: b
+        text: "`canaryMetadata`"
+        explanation: "Not correct. The controller touches only routes in `managedRoutes`."
+      - id: c
+        text: "`routes`"
+        explanation: "Not correct. The controller touches only routes in `managedRoutes`."
+      - id: d
+        text: "`steps`"
+        explanation: "Not correct. The controller touches only routes in `managedRoutes`."
+    correct_option: a
+    explanation: "Correct. The controller touches only routes in `managedRoutes`."

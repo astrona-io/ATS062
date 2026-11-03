@@ -6,9 +6,9 @@ The banks contain answer keys and are public learning material, so they are not 
 
 | Bank | Path | Questions |
 | --- | --- | --- |
-| ats062-010 | sections/section-010/quiz.yaml | 8 |
-| ats062-020 | sections/section-020/quiz.yaml | 9 |
-| ats062-030 | sections/section-030/quiz.yaml | 9 |
-| ats062-final | sections/final-domain-quiz.yaml | 12 |
+| ats062-010 | sections/section-010/quiz.yaml | 18 |
+| ats062-020 | sections/section-020/quiz.yaml | 18 |
+| ats062-030 | sections/section-030/quiz.yaml | 17 |
+| ats062-final | sections/final-domain-quiz.yaml | 30 |
 
-The final bank reuses 12 questions from the section banks under new IDs.
+The final bank reuses 12 older and 18 newer questions from the section banks under new IDs.

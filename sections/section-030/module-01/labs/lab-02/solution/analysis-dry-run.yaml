@@ -1,0 +1,74 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: probe-dry
+  namespace: starfleet
+spec:
+  dryRun:
+  - metricName: experimental-.*
+  measurementRetention:
+  - metricName: .*
+    limit: 5
+  metrics:
+  - name: stable-check
+    count: 1
+    provider:
+      job:
+        spec:
+          backoffLimit: 0
+          template:
+            spec:
+              restartPolicy: Never
+              containers:
+              - name: check
+                image: docker.io/library/python:3.13-alpine
+                command: ["python", "-c", "print(1)"]
+  - name: experimental-check
+    count: 1
+    provider:
+      job:
+        spec:
+          backoffLimit: 0
+          template:
+            spec:
+              restartPolicy: Never
+              containers:
+              - name: check
+                image: docker.io/library/python:3.13-alpine
+                command: ["python", "-c", "raise SystemExit(1)"]
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisRun
+metadata:
+  name: dry-run-check
+  namespace: starfleet
+spec:
+  dryRun:
+  - metricName: experimental-.*
+  metrics:
+  - name: stable-check
+    count: 1
+    provider:
+      job:
+        spec:
+          backoffLimit: 0
+          template:
+            spec:
+              restartPolicy: Never
+              containers:
+              - name: check
+                image: docker.io/library/python:3.13-alpine
+                command: ["python", "-c", "print(1)"]
+  - name: experimental-check
+    count: 1
+    provider:
+      job:
+        spec:
+          backoffLimit: 0
+          template:
+            spec:
+              restartPolicy: Never
+              containers:
+              - name: check
+                image: docker.io/library/python:3.13-alpine
+                command: ["python", "-c", "raise SystemExit(1)"]

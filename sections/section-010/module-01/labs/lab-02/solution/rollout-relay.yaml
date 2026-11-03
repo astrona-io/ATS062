@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: relay
+  namespace: starfleet
+spec:
+  replicas: 2
+  minReadySeconds: 5
+  progressDeadlineSeconds: 120
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: relay
+  template:
+    metadata:
+      labels:
+        app: relay
+    spec:
+      containers:
+      - name: relay
+        image: docker.io/library/python:3.13-alpine
+        ports:
+        - containerPort: 8080
+        command:
+        - python
+        - -m
+        - http.server
+        - '8080'
+  strategy:
+    canary:
+      stableMetadata:
+        labels:
+          role: stable

@@ -218,3 +218,186 @@ questions:
     correct_option: a
     explanation: "Correct. It can copy the stable and canary specs with `specRef`."
 
+  - id: ats062-030-q101
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Without it the controller looks for a namespaced template"
+    source_readings:
+      - sections/section-030/module-01/course-03-cluster-templates-and-argument-sources.md
+    prompt: "What must a Rollout set to use a `ClusterAnalysisTemplate`?"
+    options:
+      - id: a
+        text: "A namespace on the template."
+        explanation: "Not correct. Without it the controller looks for a namespaced template."
+      - id: b
+        text: "`clusterScope: true` on the template entry."
+        explanation: "Correct. Without it the controller looks for a namespaced template."
+      - id: c
+        text: "A `workloadRef`."
+        explanation: "Not correct. Without it the controller looks for a namespaced template."
+      - id: d
+        text: "A `previewService`."
+        explanation: "Not correct. Without it the controller looks for a namespaced template."
+    correct_option: b
+    explanation: "Correct. Without it the controller looks for a namespaced template."
+
+  - id: ats062-030-q102
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "It reads a key from a Secret in the namespace of the run"
+    source_readings:
+      - sections/section-030/module-01/course-03-cluster-templates-and-argument-sources.md
+    prompt: "Which `valueFrom` form keeps a token out of the template?"
+    options:
+      - id: a
+        text: "`workloadRef`"
+        explanation: "Not correct. It reads a key from a Secret in the namespace of the run."
+      - id: b
+        text: "`podTemplateHashValue`"
+        explanation: "Not correct. It reads a key from a Secret in the namespace of the run."
+      - id: c
+        text: "`secretKeyRef`"
+        explanation: "Correct. It reads a key from a Secret in the namespace of the run."
+      - id: d
+        text: "`stableService`"
+        explanation: "Not correct. It reads a key from a Secret in the namespace of the run."
+    correct_option: c
+    explanation: "Correct. It reads a key from a Secret in the namespace of the run."
+
+  - id: ats062-030-q103
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Dry-run metrics cannot decide the phase of the run"
+    source_readings:
+      - sections/section-030/module-01/course-04-dry-run-retention-and-error-handling.md
+    prompt: "What happens to a metric listed in `dryRun` when it fails?"
+    options:
+      - id: a
+        text: "The Rollout is aborted."
+        explanation: "Not correct. Dry-run metrics cannot decide the phase of the run."
+      - id: b
+        text: "The failure is recorded and does not fail the AnalysisRun."
+        explanation: "Correct. Dry-run metrics cannot decide the phase of the run."
+      - id: c
+        text: "The metric is deleted."
+        explanation: "Not correct. Dry-run metrics cannot decide the phase of the run."
+      - id: d
+        text: "The run ends in `Error`."
+        explanation: "Not correct. Dry-run metrics cannot decide the phase of the run."
+    correct_option: b
+    explanation: "Correct. Dry-run metrics cannot decide the phase of the run."
+
+  - id: ats062-030-q104
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "A good measurement resets the counter"
+    source_readings:
+      - sections/section-030/module-01/course-04-dry-run-retention-and-error-handling.md
+    prompt: "What does `consecutiveErrorLimit` count?"
+    options:
+      - id: a
+        text: "Errors in a row, with a default of 4."
+        explanation: "Correct. A good measurement resets the counter."
+      - id: b
+        text: "Failed measurements in total."
+        explanation: "Not correct. A good measurement resets the counter."
+      - id: c
+        text: "Successful measurements."
+        explanation: "Not correct. A good measurement resets the counter."
+      - id: d
+        text: "Inconclusive measurements."
+        explanation: "Not correct. A good measurement resets the counter."
+    correct_option: a
+    explanation: "Correct. A good measurement resets the counter."
+
+  - id: ats062-030-q105
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "It lets a query select the canary pods"
+    source_readings:
+      - sections/section-030/module-02/course-03-passing-rollout-data-into-an-analysis.md
+    prompt: "Which `valueFrom` form gives an analysis the hash of the newest ReplicaSet?"
+    options:
+      - id: a
+        text: "`fieldRef` on the Service"
+        explanation: "Not correct. It lets a query select the canary pods."
+      - id: b
+        text: "`clusterScope`"
+        explanation: "Not correct. It lets a query select the canary pods."
+      - id: c
+        text: "`secretKeyRef`"
+        explanation: "Not correct. It lets a query select the canary pods."
+      - id: d
+        text: "`podTemplateHashValue: Latest`"
+        explanation: "Correct. It lets a query select the canary pods."
+    correct_option: d
+    explanation: "Correct. It lets a query select the canary pods."
+
+  - id: ats062-030-q106
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "The run ends with the result it has so far"
+    source_readings:
+      - sections/section-030/module-02/course-03-passing-rollout-data-into-an-analysis.md
+    prompt: "What does `spec.terminate: true` do on an AnalysisRun?"
+    options:
+      - id: a
+        text: "It stops the running AnalysisRun."
+        explanation: "Correct. The run ends with the result it has so far."
+      - id: b
+        text: "It changes the template."
+        explanation: "Not correct. The run ends with the result it has so far."
+      - id: c
+        text: "It retries the run."
+        explanation: "Not correct. The run ends with the result it has so far."
+      - id: d
+        text: "It deletes the Rollout."
+        explanation: "Not correct. The run ends with the result it has so far."
+    correct_option: a
+    explanation: "Correct. The run ends with the result it has so far."
+
+  - id: ats062-030-q107
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Fix the query or provider before blaming the application"
+    source_readings:
+      - sections/section-030/module-02/course-04-reading-and-debugging-an-analysisrun.md
+    prompt: "What does an `Error` measurement mean?"
+    options:
+      - id: a
+        text: "The run was terminated."
+        explanation: "Not correct. Fix the query or provider before blaming the application."
+      - id: b
+        text: "The measurement itself broke, for example a query timeout."
+        explanation: "Correct. Fix the query or provider before blaming the application."
+      - id: c
+        text: "The application failed its condition."
+        explanation: "Not correct. Fix the query or provider before blaming the application."
+      - id: d
+        text: "The data was undecided."
+        explanation: "Not correct. Fix the query or provider before blaming the application."
+    correct_option: b
+    explanation: "Correct. Fix the query or provider before blaming the application."
+
+  - id: ats062-030-q108
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "From the run you go to the metric result and then the measurement"
+    source_readings:
+      - sections/section-030/module-02/course-04-reading-and-debugging-an-analysisrun.md
+    prompt: "Where do you look first after a Rollout aborts because of analysis?"
+    options:
+      - id: a
+        text: "The ReplicaSet labels."
+        explanation: "Not correct. From the run you go to the metric result and then the measurement."
+      - id: b
+        text: "The Service selector."
+        explanation: "Not correct. From the run you go to the metric result and then the measurement."
+      - id: c
+        text: "The message in the Rollout status, which names the run."
+        explanation: "Correct. From the run you go to the metric result and then the measurement."
+      - id: d
+        text: "The Ingress."
+        explanation: "Not correct. From the run you go to the metric result and then the measurement."
+    correct_option: c
+    explanation: "Correct. From the run you go to the metric result and then the measurement."

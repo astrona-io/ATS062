@@ -22,6 +22,8 @@ You need to know `AnalysisTemplate` arguments, metrics and providers, and the ca
 
 1. The AnalysisRun lifecycle and the places a Rollout runs analysis.
 2. How a result changes the Rollout, and Experiments.
-3. Summary.
+3. Passing Rollout data into an analysis.
+4. Reading and debugging an AnalysisRun.
+5. Summary.
 
 <!-- astrona:playground -->

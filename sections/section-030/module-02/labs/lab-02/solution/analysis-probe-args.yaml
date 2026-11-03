@@ -1,0 +1,52 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: probe-args
+  namespace: starfleet
+spec:
+  args:
+  - name: service
+  metrics:
+  - name: probe-up
+    count: 1
+    provider:
+      job:
+        spec:
+          backoffLimit: 0
+          template:
+            spec:
+              restartPolicy: Never
+              containers:
+              - name: check
+                image: docker.io/library/python:3.13-alpine
+                command:
+                - python
+                - -c
+                - "import urllib.request; urllib.request.urlopen('http://{{ args.service }}:8080/', timeout=5)"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisRun
+metadata:
+  name: manual-run
+  namespace: starfleet
+spec:
+  args:
+  - name: service
+    value: probe
+  metrics:
+  - name: probe-up
+    count: 1
+    provider:
+      job:
+        spec:
+          backoffLimit: 0
+          template:
+            spec:
+              restartPolicy: Never
+              containers:
+              - name: check
+                image: docker.io/library/python:3.13-alpine
+                command:
+                - python
+                - -c
+                - "import urllib.request; urllib.request.urlopen('http://{{ args.service }}:8080/', timeout=5)"

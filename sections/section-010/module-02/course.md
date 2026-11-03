@@ -22,6 +22,8 @@ You need to know what a `Rollout`, a ReplicaSet and `status.stableRS` are. The p
 
 1. Reading status and controlling a release.
 2. Migrating a Deployment and routing traffic.
-3. Summary.
+3. Observing a release: events, logs and metrics.
+4. Failed releases and recovery.
+5. Summary.
 
 <!-- astrona:playground -->

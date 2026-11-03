@@ -22,6 +22,8 @@ You need to know what a Service selector is, what `rollouts-pod-template-hash` l
 
 1. Active and preview Services.
 2. Promotion, analysis hooks and rollback.
-3. Summary.
+3. Scale-down and preview behaviour.
+4. Operating a blue-green Rollout.
+5. Summary.
 
 <!-- astrona:playground -->

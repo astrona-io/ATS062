@@ -11,11 +11,15 @@ Each distinct pod template has its own ReplicaSet, named with a hash and labelle
 
 The setting `revisionHistoryLimit` decides how many old ReplicaSets remain. These ReplicaSets are the rollback targets, so removing them removes the fast way back.
 
+The timing and history fields change what the controller does and never change the pods, so none of them starts a release. Only a change to the pod template starts one. Labels that only tell revisions apart belong in the metadata fields of the strategy, and `antiAffinity` keeps the two revisions on different nodes.
+
 Key facts:
 
 - The kind is `Rollout` in the group `argoproj.io`; its strategy is `canary` or `blueGreen`.
 - The controller changes ReplicaSets and Services; the ReplicaSet controller creates pods.
 - Only a pod template change creates a new ReplicaSet and revision.
 - `stableRS` equals `currentPodHash` when no release is in progress.
+- `minReadySeconds`, `progressDeadlineSeconds` and `revisionHistoryLimit` are not part of the pod template.
+- `canaryMetadata` and `stableMetadata` label pods without a new revision.
 
 <!-- astrona:playground:destroy -->

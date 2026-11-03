@@ -34,9 +34,15 @@ sections:
     parts:
     - sections/section-010/module-01/course-01-the-rollout-resource-and-its-controller.md
     - sections/section-010/module-01/course-02-replicasets-hashes-and-revisions.md
+    - sections/section-010/module-01/course-03-timing-capacity-and-history-fields.md
+    - sections/section-010/module-01/course-04-template-changes-metadata-and-placement.md
     labs:
     - id: lab-01
       path: sections/section-010/module-01/labs/lab-01
+      status: draft
+      runtime_verification: pending
+    - id: lab-02
+      path: sections/section-010/module-01/labs/lab-02
       status: draft
       runtime_verification: pending
   - id: module-02
@@ -46,9 +52,15 @@ sections:
     parts:
     - sections/section-010/module-02/course-01-reading-status-and-controlling-a-release.md
     - sections/section-010/module-02/course-02-migrating-a-deployment-and-routing-traffic.md
+    - sections/section-010/module-02/course-03-observing-a-release-events-logs-and-metrics.md
+    - sections/section-010/module-02/course-04-failed-releases-and-recovery.md
     labs:
     - id: lab-01
       path: sections/section-010/module-02/labs/lab-01
+      status: draft
+      runtime_verification: pending
+    - id: lab-02
+      path: sections/section-010/module-02/labs/lab-02
       status: draft
       runtime_verification: pending
   capstone_lab:
@@ -69,9 +81,15 @@ sections:
     parts:
     - sections/section-020/module-01/course-01-active-and-preview-services.md
     - sections/section-020/module-01/course-02-promotion-analysis-hooks-and-rollback.md
+    - sections/section-020/module-01/course-03-scale-down-and-preview-behaviour.md
+    - sections/section-020/module-01/course-04-operating-a-blue-green-rollout.md
     labs:
     - id: lab-01
       path: sections/section-020/module-01/labs/lab-01
+      status: draft
+      runtime_verification: pending
+    - id: lab-02
+      path: sections/section-020/module-01/labs/lab-02
       status: draft
       runtime_verification: pending
   - id: module-02
@@ -81,9 +99,15 @@ sections:
     parts:
     - sections/section-020/module-02/course-01-steps-weights-and-replica-counts.md
     - sections/section-020/module-02/course-02-traffic-routing-and-choosing-a-strategy.md
+    - sections/section-020/module-02/course-03-canary-scale-control.md
+    - sections/section-020/module-02/course-04-header-routing-and-mirroring.md
     labs:
     - id: lab-01
       path: sections/section-020/module-02/labs/lab-01
+      status: draft
+      runtime_verification: pending
+    - id: lab-02
+      path: sections/section-020/module-02/labs/lab-02
       status: draft
       runtime_verification: pending
   capstone_lab:
@@ -104,9 +128,15 @@ sections:
     parts:
     - sections/section-030/module-01/course-01-the-template-its-arguments-and-its-metrics.md
     - sections/section-030/module-01/course-02-providers-and-measurement-results.md
+    - sections/section-030/module-01/course-03-cluster-templates-and-argument-sources.md
+    - sections/section-030/module-01/course-04-dry-run-retention-and-error-handling.md
     labs:
     - id: lab-01
       path: sections/section-030/module-01/labs/lab-01
+      status: draft
+      runtime_verification: pending
+    - id: lab-02
+      path: sections/section-030/module-01/labs/lab-02
       status: draft
       runtime_verification: pending
   - id: module-02
@@ -116,9 +146,15 @@ sections:
     parts:
     - sections/section-030/module-02/course-01-the-analysisrun-lifecycle-and-where-a-rollout-runs-it.md
     - sections/section-030/module-02/course-02-how-a-result-changes-the-rollout-and-experiments.md
+    - sections/section-030/module-02/course-03-passing-rollout-data-into-an-analysis.md
+    - sections/section-030/module-02/course-04-reading-and-debugging-an-analysisrun.md
     labs:
     - id: lab-01
       path: sections/section-030/module-02/labs/lab-01
+      status: draft
+      runtime_verification: pending
+    - id: lab-02
+      path: sections/section-030/module-02/labs/lab-02
       status: draft
       runtime_verification: pending
   capstone_lab:

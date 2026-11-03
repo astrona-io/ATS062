@@ -22,6 +22,8 @@ You need to know the `Rollout` resource and the canary steps. The playground has
 
 1. The template, its arguments and its metrics.
 2. Providers and measurement results.
-3. Summary.
+3. Cluster templates and argument sources.
+4. Dry run, retention and error handling.
+5. Summary.
 
 <!-- astrona:playground -->

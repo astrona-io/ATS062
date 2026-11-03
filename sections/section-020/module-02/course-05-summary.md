@@ -11,10 +11,14 @@ Without a traffic router, the controller turns a weight into a pod count, rounds
 
 A promotion ends a pause, a full promotion skips all remaining steps, an abort returns the weight to 0, and a retry starts the revision again. Canary suits releases whose problems show under real traffic, and blue-green suits workloads that cannot serve two versions at once.
 
+With a traffic router, the weight sets the traffic split and `setCanaryScale` sets the number of canary pods. `dynamicStableScale` scales the stable ReplicaSet down as the canary grows. Header routing sends chosen requests to the canary, and a mirror copies requests to it, both only on routers that support them and only for routes listed in `managedRoutes`.
+
 Key facts:
 
 - `maxSurge` and `maxUnavailable` default to 1 and cannot both be 0.
 - Weights are replica ratios unless a traffic router is configured.
 - `status.currentStepIndex` shows the step that is running.
+- `setCanaryScale` needs `trafficRouting`.
+- A `setHeaderRoute` step stays active until a later step removes it.
 
 <!-- astrona:playground:destroy -->

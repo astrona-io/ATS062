@@ -195,3 +195,232 @@ questions:
     correct_option: b
     explanation: "Correct. The release stays where it is and resumes when `spec.paused` is false."
 
+  - id: ats062-010-q101
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "The default deadline is 600 seconds"
+    source_readings:
+      - sections/section-010/module-01/course-03-timing-capacity-and-history-fields.md
+    prompt: "What is the default of `progressDeadlineSeconds`?"
+    options:
+      - id: a
+        text: "3600 seconds"
+        explanation: "Not correct. The default deadline is 600 seconds."
+      - id: b
+        text: "600 seconds"
+        explanation: "Correct. The default deadline is 600 seconds."
+      - id: c
+        text: "60 seconds"
+        explanation: "Not correct. The default deadline is 600 seconds."
+      - id: d
+        text: "10 seconds"
+        explanation: "Not correct. The default deadline is 600 seconds."
+    correct_option: b
+    explanation: "Correct. The default deadline is 600 seconds."
+
+  - id: ats062-010-q102
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Without it, the controller only reports `ProgressDeadlineExceeded`"
+    source_readings:
+      - sections/section-010/module-01/course-03-timing-capacity-and-history-fields.md
+    prompt: "What does `progressDeadlineAbort: true` add?"
+    options:
+      - id: a
+        text: "The controller promotes the release when the deadline passes."
+        explanation: "Not correct. Without it, the controller only reports `ProgressDeadlineExceeded`."
+      - id: b
+        text: "The controller deletes the Rollout when the deadline passes."
+        explanation: "Not correct. Without it, the controller only reports `ProgressDeadlineExceeded`."
+      - id: c
+        text: "The controller aborts the release when the progress deadline passes."
+        explanation: "Correct. Without it, the controller only reports `ProgressDeadlineExceeded`."
+      - id: d
+        text: "The controller doubles the deadline each time."
+        explanation: "Not correct. Without it, the controller only reports `ProgressDeadlineExceeded`."
+    correct_option: c
+    explanation: "Correct. Without it, the controller only reports `ProgressDeadlineExceeded`."
+
+  - id: ats062-010-q103
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "A pod is available after it has been ready for `minReadySeconds`"
+    source_readings:
+      - sections/section-010/module-01/course-03-timing-capacity-and-history-fields.md
+    prompt: "Which field makes a ready pod count as available only after a wait?"
+    options:
+      - id: a
+        text: "`minReadySeconds`"
+        explanation: "Correct. A pod is available after it has been ready for `minReadySeconds`."
+      - id: b
+        text: "`revisionHistoryLimit`"
+        explanation: "Not correct. A pod is available after it has been ready for `minReadySeconds`."
+      - id: c
+        text: "`progressDeadlineSeconds`"
+        explanation: "Not correct. A pod is available after it has been ready for `minReadySeconds`."
+      - id: d
+        text: "`restartAt`"
+        explanation: "Not correct. A pod is available after it has been ready for `minReadySeconds`."
+    correct_option: a
+    explanation: "Correct. A pod is available after it has been ready for `minReadySeconds`."
+
+  - id: ats062-010-q104
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "Only a change to the pod template changes the hash"
+    source_readings:
+      - sections/section-010/module-01/course-04-template-changes-metadata-and-placement.md
+    prompt: "Which change to a `Rollout` creates a new revision?"
+    options:
+      - id: a
+        text: "A change to `spec.minReadySeconds`."
+        explanation: "Not correct. Only a change to the pod template changes the hash."
+      - id: b
+        text: "A change to `spec.revisionHistoryLimit`."
+        explanation: "Not correct. Only a change to the pod template changes the hash."
+      - id: c
+        text: "A change to the container image in `spec.template`."
+        explanation: "Correct. Only a change to the pod template changes the hash."
+      - id: d
+        text: "A change to `spec.replicas`."
+        explanation: "Not correct. Only a change to the pod template changes the hash."
+    correct_option: c
+    explanation: "Correct. Only a change to the pod template changes the hash."
+
+  - id: ats062-010-q105
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "The metadata fields of the strategy add labels to pods after the ReplicaSet creates them"
+    source_readings:
+      - sections/section-010/module-01/course-04-template-changes-metadata-and-placement.md
+    prompt: "How can the controller label canary pods without a new revision?"
+    options:
+      - id: a
+        text: "With `spec.restartAt`."
+        explanation: "Not correct. The metadata fields of the strategy add labels to pods after the ReplicaSet creates them."
+      - id: b
+        text: "With a label on the Rollout metadata."
+        explanation: "Not correct. The metadata fields of the strategy add labels to pods after the ReplicaSet creates them."
+      - id: c
+        text: "With a label in `spec.template.metadata`."
+        explanation: "Not correct. The metadata fields of the strategy add labels to pods after the ReplicaSet creates them."
+      - id: d
+        text: "With `canaryMetadata` in the canary strategy."
+        explanation: "Correct. The metadata fields of the strategy add labels to pods after the ReplicaSet creates them."
+    correct_option: d
+    explanation: "Correct. The metadata fields of the strategy add labels to pods after the ReplicaSet creates them."
+
+  - id: ats062-010-q106
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "A hard rule leaves the pod unscheduled instead of placing it on a shared node"
+    source_readings:
+      - sections/section-010/module-01/course-04-template-changes-metadata-and-placement.md
+    prompt: "What does a hard `requiredDuringSchedulingIgnoredDuringExecution` anti-affinity rule risk on a small cluster?"
+    options:
+      - id: a
+        text: "The pod template hash changes."
+        explanation: "Not correct. A hard rule leaves the pod unscheduled instead of placing it on a shared node."
+      - id: b
+        text: "The old pods are deleted."
+        explanation: "Not correct. A hard rule leaves the pod unscheduled instead of placing it on a shared node."
+      - id: c
+        text: "The Rollout is deleted."
+        explanation: "Not correct. A hard rule leaves the pod unscheduled instead of placing it on a shared node."
+      - id: d
+        text: "New pods stay `Pending` when no free node exists."
+        explanation: "Correct. A hard rule leaves the pod unscheduled instead of placing it on a shared node."
+    correct_option: d
+    explanation: "Correct. A hard rule leaves the pod unscheduled instead of placing it on a shared node."
+
+  - id: ats062-010-q107
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "The controller metrics port is 8090"
+    source_readings:
+      - sections/section-010/module-02/course-03-observing-a-release-events-logs-and-metrics.md
+    prompt: "On which port does the Argo Rollouts controller serve Prometheus metrics?"
+    options:
+      - id: a
+        text: "80"
+        explanation: "Not correct. The controller metrics port is 8090."
+      - id: b
+        text: "8090"
+        explanation: "Correct. The controller metrics port is 8090."
+      - id: c
+        text: "9090"
+        explanation: "Not correct. The controller metrics port is 8090."
+      - id: d
+        text: "443"
+        explanation: "Not correct. The controller metrics port is 8090."
+    correct_option: b
+    explanation: "Correct. The controller metrics port is 8090."
+
+  - id: ats062-010-q108
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "The controller writes one structured log line for each action"
+    source_readings:
+      - sections/section-010/module-02/course-03-observing-a-release-events-logs-and-metrics.md
+    prompt: "Where do you find why the controller chose an action when the status has no useful message?"
+    options:
+      - id: a
+        text: "In the Service selector."
+        explanation: "Not correct. The controller writes one structured log line for each action."
+      - id: b
+        text: "In the ReplicaSet name."
+        explanation: "Not correct. The controller writes one structured log line for each action."
+      - id: c
+        text: "In the pod template."
+        explanation: "Not correct. The controller writes one structured log line for each action."
+      - id: d
+        text: "In the controller log in the `argo-rollouts` namespace."
+        explanation: "Correct. The controller writes one structured log line for each action."
+    correct_option: d
+    explanation: "Correct. The controller writes one structured log line for each action."
+
+  - id: ats062-010-q109
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "The controller sets `InvalidSpec` with the reason in the message"
+    source_readings:
+      - sections/section-010/module-02/course-04-failed-releases-and-recovery.md
+    prompt: "Which condition shows that the controller rejected a Rollout spec as invalid?"
+    options:
+      - id: a
+        text: "`Paused`"
+        explanation: "Not correct. The controller sets `InvalidSpec` with the reason in the message."
+      - id: b
+        text: "`Available`"
+        explanation: "Not correct. The controller sets `InvalidSpec` with the reason in the message."
+      - id: c
+        text: "`Healthy`"
+        explanation: "Not correct. The controller sets `InvalidSpec` with the reason in the message."
+      - id: d
+        text: "`InvalidSpec`"
+        explanation: "Correct. The controller sets `InvalidSpec` with the reason in the message."
+    correct_option: d
+    explanation: "Correct. The controller sets `InvalidSpec` with the reason in the message."
+
+  - id: ats062-010-q110
+    type: single_choice
+    difficulty: intermediate
+    learning_objective: "The strategy never removed the stable ReplicaSet"
+    source_readings:
+      - sections/section-010/module-02/course-04-failed-releases-and-recovery.md
+    prompt: "Which ReplicaSet keeps serving while a release is `Degraded` because new pods never become ready?"
+    options:
+      - id: a
+        text: "The new ReplicaSet."
+        explanation: "Not correct. The strategy never removed the stable ReplicaSet."
+      - id: b
+        text: "The stable ReplicaSet."
+        explanation: "Correct. The strategy never removed the stable ReplicaSet."
+      - id: c
+        text: "No ReplicaSet."
+        explanation: "Not correct. The strategy never removed the stable ReplicaSet."
+      - id: d
+        text: "A ReplicaSet created by the Deployment controller."
+        explanation: "Not correct. The strategy never removed the stable ReplicaSet."
+    correct_option: b
+    explanation: "Correct. The strategy never removed the stable ReplicaSet."

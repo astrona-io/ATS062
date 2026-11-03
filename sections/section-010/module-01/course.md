@@ -22,6 +22,8 @@ You need basic Kubernetes knowledge: a pod runs containers, a ReplicaSet keeps a
 
 1. The Rollout resource and its controller.
 2. ReplicaSets, hashes and revisions.
-3. Summary.
+3. Timing, capacity and history fields.
+4. Template changes, metadata and placement.
+5. Summary.
 
 <!-- astrona:playground -->

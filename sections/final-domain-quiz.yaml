@@ -1,289 +1,721 @@
-# Final domain knowledge check across all three sections.
+# Final domain knowledge check across all sections.
 schema_version: 1
 kind: question_bank
 id: ats062-final
 course_id: ATS062
 exam_code: CAPA
 status: draft
-provenance: Original practice material written for this course; not official exam questions.
+provenance: Original practice material written for this course; not official exam
+  questions.
 scope:
   type: domain
   id: argo-rollouts
-  title: "Argo Rollouts"
+  title: Argo Rollouts
 questions:
-  - id: ats062-final-q01
-    type: single_choice
-    difficulty: intermediate
-    learning_objective: "Read stableRS and currentPodHash to know the state of a release"
-    source_readings:
-      - sections/section-010/module-01/course-02-replicasets-hashes-and-revisions.md
-    prompt: "A `Rollout` shows `status.currentPodHash` different from `status.stableRS`. What does this mean?"
-    options:
-      - id: a
-        text: "A new revision exists and has not yet been promoted to stable."
-        explanation: "Correct. `currentPodHash` is the newest template, `stableRS` is the last fully promoted one."
-      - id: b
-        text: "The `Rollout` is broken and must be deleted."
-        explanation: "The two values differ during every normal release."
-      - id: c
-        text: "The `Rollout` has no ReplicaSet for the stable revision."
-        explanation: "The stable ReplicaSet exists. The hashes are for two different ReplicaSets."
-      - id: d
-        text: "The Service selector is wrong."
-        explanation: "The Service selector is not part of these two status fields."
-    correct_option: a
-    explanation: "Correct. `currentPodHash` is the newest template, `stableRS` is the last fully promoted one."
-
-  - id: ats062-final-q02
-    type: single_choice
-    difficulty: intermediate
-    learning_objective: "Describe revisionHistoryLimit"
-    source_readings:
-      - sections/section-010/module-01/course-02-replicasets-hashes-and-revisions.md
-    prompt: "A `Rollout` has `revisionHistoryLimit: 3`. What does the controller do with old ReplicaSets?"
-    options:
-      - id: a
-        text: "It deletes all old ReplicaSets after each release."
-        explanation: "The old ReplicaSets are kept, up to the limit."
-      - id: b
-        text: "It keeps up to 3 old scaled-down ReplicaSets and deletes the oldest beyond that."
-        explanation: "Correct. They stay at 0 replicas so that an undo is possible, and the oldest are removed beyond the limit."
-      - id: c
-        text: "It keeps 3 pods of the old revision running."
-        explanation: "Old ReplicaSets are scaled to 0 and run no pods."
-      - id: d
-        text: "It limits the number of canary steps to 3."
-        explanation: "The steps are set in the strategy, not by this field."
-    correct_option: b
-    explanation: "Correct. They stay at 0 replicas so that an undo is possible, and the oldest are removed beyond the limit."
-
-  - id: ats062-final-q03
-    type: single_choice
-    difficulty: intermediate
-    learning_objective: "Read the phase of a Rollout"
-    source_readings:
-      - sections/section-010/module-02/course-01-reading-status-and-controlling-a-release.md
-    prompt: "A `Rollout` stopped at a `pause: {}` step. Which phase does `status.phase` show?"
-    options:
-      - id: a
-        text: "`Healthy`"
-        explanation: "The release is not complete, so the phase is not `Healthy`."
-      - id: b
-        text: "`Degraded`"
-        explanation: "`Degraded` means the release failed or timed out."
-      - id: c
-        text: "`Paused`"
-        explanation: "Correct. The controller reports `Paused` while a pause condition exists."
-      - id: d
-        text: "`Pending`"
-        explanation: "`Pending` is not a Rollout phase."
-    correct_option: c
-    explanation: "Correct. The controller reports `Paused` while a pause condition exists."
-
-  - id: ats062-final-q04
-    type: single_choice
-    difficulty: intermediate
-    learning_objective: "Use workloadRef to migrate a Deployment"
-    source_readings:
-      - sections/section-010/module-02/course-02-migrating-a-deployment-and-routing-traffic.md
-    prompt: "You want to adopt a running Deployment into Argo Rollouts without copying its pod template into a new object. Which field do you use?"
-    options:
-      - id: a
-        text: "`spec.workloadRef` in the `Rollout`, with `scaleDown` set to say what happens to the Deployment."
-        explanation: "Correct. The `Rollout` reads the pod template from the referenced Deployment, and `scaleDown` controls the Deployment replicas."
-      - id: b
-        text: "`spec.template.spec.deploymentName`"
-        explanation: "This field does not exist."
-      - id: c
-        text: "`metadata.ownerReferences` pointing at the Deployment, set by hand."
-        explanation: "Owner references do not make the controller read the template."
-      - id: d
-        text: "`strategy.canary.baseDeployment`"
-        explanation: "This field does not exist."
-    correct_option: a
-    explanation: "Correct. The `Rollout` reads the pod template from the referenced Deployment, and `scaleDown` controls the Deployment replicas."
-
-  - id: ats062-final-q05
-    type: single_choice
-    difficulty: intermediate
-    learning_objective: "Place analysis in a blue-green release"
-    source_readings:
-      - sections/section-020/module-01/course-02-promotion-analysis-hooks-and-rollback.md
-    prompt: "You want a smoke test on the new pods before any user is switched. Which field do you use?"
-    options:
-      - id: a
-        text: "`postPromotionAnalysis`"
-        explanation: "This runs after the switch."
-      - id: b
-        text: "`strategy.canary.analysis`"
-        explanation: "This belongs to the canary strategy."
-      - id: c
-        text: "`prePromotionAnalysis`"
-        explanation: "Correct. The controller waits for a `Successful` run before it promotes."
-      - id: d
-        text: "`previewReplicaCount`"
-        explanation: "This sets the number of preview pods and runs no analysis."
-    correct_option: c
-    explanation: "Correct. The controller waits for a `Successful` run before it promotes."
-
-  - id: ats062-final-q06
-    type: single_choice
-    difficulty: intermediate
-    learning_objective: "Predict replica counts of a canary without a router"
-    source_readings:
-      - sections/section-020/module-02/course-01-steps-weights-and-replica-counts.md
-    prompt: "A canary `Rollout` has 4 replicas and no traffic router. A step sets `setWeight: 25`. How many pods does the canary ReplicaSet have?"
-    options:
-      - id: a
-        text: "0"
-        explanation: "At least one pod must run for any weight above 0."
-      - id: b
-        text: "1"
-        explanation: "Correct. The weight is a ratio of the replicas, rounded up, so 25 percent of 4 is 1."
-      - id: c
-        text: "2"
-        explanation: "2 pods would be 50 percent."
-      - id: d
-        text: "4"
-        explanation: "All 4 pods would be 100 percent."
-    correct_option: b
-    explanation: "Correct. The weight is a ratio of the replicas, rounded up, so 25 percent of 4 is 1."
-
-  - id: ats062-final-q07
-    type: single_choice
-    difficulty: intermediate
-    learning_objective: "Know the defaults of maxSurge and maxUnavailable"
-    source_readings:
-      - sections/section-020/module-02/course-01-steps-weights-and-replica-counts.md
-    prompt: "What are the defaults of `maxSurge` and `maxUnavailable` for a canary `Rollout`?"
-    options:
-      - id: a
-        text: "0 and 0"
-        explanation: "Both cannot be 0, because no pod could start or stop."
-      - id: b
-        text: "25 percent and 25 percent"
-        explanation: "These are the Deployment defaults."
-      - id: c
-        text: "1 and 1"
-        explanation: "Correct. Both default to 1."
-      - id: d
-        text: "100 percent and 0"
-        explanation: "These are not the defaults."
-    correct_option: c
-    explanation: "Correct. Both default to 1."
-
-  - id: ats062-final-q08
-    type: single_choice
-    difficulty: intermediate
-    learning_objective: "Explain trafficRouting"
-    source_readings:
-      - sections/section-020/module-02/course-02-traffic-routing-and-choosing-a-strategy.md
-    prompt: "What does `trafficRouting` add to a canary `Rollout`?"
-    options:
-      - id: a
-        text: "Exact request weights set in a router, with `stableService` and `canaryService`."
-        explanation: "Correct. The weight no longer depends on pod counts."
-      - id: b
-        text: "A load balancer that the controller installs."
-        explanation: "The router must already exist. The controller does not install it."
-      - id: c
-        text: "Automatic analysis of the traffic."
-        explanation: "Analysis is configured separately."
-      - id: d
-        text: "A second cluster for the canary."
-        explanation: "The canary runs in the same cluster."
-    correct_option: a
-    explanation: "Correct. The weight no longer depends on pod counts."
-
-  - id: ats062-final-q09
-    type: single_choice
-    difficulty: intermediate
-    learning_objective: "Apply failureLimit"
-    source_readings:
-      - sections/section-030/module-01/course-01-the-template-its-arguments-and-its-metrics.md
-    prompt: "A metric has `count: 5` and `failureLimit: 1`. When does the metric fail?"
-    options:
-      - id: a
-        text: "At the first failed measurement."
-        explanation: "This is the case only for `failureLimit: 0`."
-      - id: b
-        text: "When 2 measurements have failed."
-        explanation: "Correct. The metric fails when the failures exceed the limit."
-      - id: c
-        text: "Only when all 5 measurements fail."
-        explanation: "The limit is lower than that."
-      - id: d
-        text: "Never, because `count` ends the metric."
-        explanation: "The limit still applies during the count."
-    correct_option: b
-    explanation: "Correct. The metric fails when the failures exceed the limit."
-
-  - id: ats062-final-q10
-    type: single_choice
-    difficulty: intermediate
-    learning_objective: "Predict an inconclusive measurement"
-    source_readings:
-      - sections/section-030/module-01/course-01-the-template-its-arguments-and-its-metrics.md
-    prompt: "A metric has both `successCondition: result[0] >= 0.95` and `failureCondition: result[0] < 0.80`. The value is 0.90. What is the measurement?"
-    options:
-      - id: a
-        text: "`Successful`"
-        explanation: "The success condition is false."
-      - id: b
-        text: "`Failed`"
-        explanation: "The failure condition is false."
-      - id: c
-        text: "`Inconclusive`"
-        explanation: "Correct. Neither condition is true."
-      - id: d
-        text: "`Error`"
-        explanation: "No error occurred. The value was read."
-    correct_option: c
-    explanation: "Correct. Neither condition is true."
-
-  - id: ats062-final-q11
-    type: single_choice
-    difficulty: intermediate
-    learning_objective: "Choose a provider"
-    source_readings:
-      - sections/section-030/module-01/course-02-providers-and-measurement-results.md
-    prompt: "You need a check that runs a script inside the cluster and uses the exit code. Which provider fits?"
-    options:
-      - id: a
-        text: "`web`"
-        explanation: "This sends a single HTTP request from the controller."
-      - id: b
-        text: "`prometheus`"
-        explanation: "This runs a query."
-      - id: c
-        text: "`job`"
-        explanation: "Correct. The measurement is `Successful` when the Job completes."
-      - id: d
-        text: "`kayenta`"
-        explanation: "This is a statistical comparison service."
-    correct_option: c
-    explanation: "Correct. The measurement is `Successful` when the Job completes."
-
-  - id: ats062-final-q12
-    type: single_choice
-    difficulty: intermediate
-    learning_objective: "Know where the web provider runs"
-    source_readings:
-      - sections/section-030/module-01/course-02-providers-and-measurement-results.md
-    prompt: "From where does the `web` provider send its request?"
-    options:
-      - id: a
-        text: "From a pod created in the namespace of the run."
-        explanation: "This is the `job` provider."
-      - id: b
-        text: "From the Rollouts controller."
-        explanation: "Correct. The URL must be reachable from the controller."
-      - id: c
-        text: "From the kubelet of the canary node."
-        explanation: "The kubelet takes no part."
-      - id: d
-        text: "From the browser of the user."
-        explanation: "No user browser is involved."
-    correct_option: b
-    explanation: "Correct. The URL must be reachable from the controller."
-
+- id: ats062-final-q01
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Read stableRS and currentPodHash to know the state of a release
+  source_readings:
+  - sections/section-010/module-01/course-02-replicasets-hashes-and-revisions.md
+  prompt: A `Rollout` shows `status.currentPodHash` different from `status.stableRS`.
+    What does this mean?
+  options:
+  - id: a
+    text: A new revision exists and has not yet been promoted to stable.
+    explanation: Correct. `currentPodHash` is the newest template, `stableRS` is the
+      last fully promoted one.
+  - id: b
+    text: The `Rollout` is broken and must be deleted.
+    explanation: The two values differ during every normal release.
+  - id: c
+    text: The `Rollout` has no ReplicaSet for the stable revision.
+    explanation: The stable ReplicaSet exists. The hashes are for two different ReplicaSets.
+  - id: d
+    text: The Service selector is wrong.
+    explanation: The Service selector is not part of these two status fields.
+  correct_option: a
+  explanation: Correct. `currentPodHash` is the newest template, `stableRS` is the
+    last fully promoted one.
+- id: ats062-final-q02
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Describe revisionHistoryLimit
+  source_readings:
+  - sections/section-010/module-01/course-02-replicasets-hashes-and-revisions.md
+  prompt: 'A `Rollout` has `revisionHistoryLimit: 3`. What does the controller do
+    with old ReplicaSets?'
+  options:
+  - id: a
+    text: It deletes all old ReplicaSets after each release.
+    explanation: The old ReplicaSets are kept, up to the limit.
+  - id: b
+    text: It keeps up to 3 old scaled-down ReplicaSets and deletes the oldest beyond
+      that.
+    explanation: Correct. They stay at 0 replicas so that an undo is possible, and
+      the oldest are removed beyond the limit.
+  - id: c
+    text: It keeps 3 pods of the old revision running.
+    explanation: Old ReplicaSets are scaled to 0 and run no pods.
+  - id: d
+    text: It limits the number of canary steps to 3.
+    explanation: The steps are set in the strategy, not by this field.
+  correct_option: b
+  explanation: Correct. They stay at 0 replicas so that an undo is possible, and the
+    oldest are removed beyond the limit.
+- id: ats062-final-q03
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Read the phase of a Rollout
+  source_readings:
+  - sections/section-010/module-02/course-01-reading-status-and-controlling-a-release.md
+  prompt: 'A `Rollout` stopped at a `pause: {}` step. Which phase does `status.phase`
+    show?'
+  options:
+  - id: a
+    text: "`Healthy`"
+    explanation: The release is not complete, so the phase is not `Healthy`.
+  - id: b
+    text: "`Degraded`"
+    explanation: "`Degraded` means the release failed or timed out."
+  - id: c
+    text: "`Paused`"
+    explanation: Correct. The controller reports `Paused` while a pause condition
+      exists.
+  - id: d
+    text: "`Pending`"
+    explanation: "`Pending` is not a Rollout phase."
+  correct_option: c
+  explanation: Correct. The controller reports `Paused` while a pause condition exists.
+- id: ats062-final-q04
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Use workloadRef to migrate a Deployment
+  source_readings:
+  - sections/section-010/module-02/course-02-migrating-a-deployment-and-routing-traffic.md
+  prompt: You want to adopt a running Deployment into Argo Rollouts without copying
+    its pod template into a new object. Which field do you use?
+  options:
+  - id: a
+    text: "`spec.workloadRef` in the `Rollout`, with `scaleDown` set to say what happens
+      to the Deployment."
+    explanation: Correct. The `Rollout` reads the pod template from the referenced
+      Deployment, and `scaleDown` controls the Deployment replicas.
+  - id: b
+    text: "`spec.template.spec.deploymentName`"
+    explanation: This field does not exist.
+  - id: c
+    text: "`metadata.ownerReferences` pointing at the Deployment, set by hand."
+    explanation: Owner references do not make the controller read the template.
+  - id: d
+    text: "`strategy.canary.baseDeployment`"
+    explanation: This field does not exist.
+  correct_option: a
+  explanation: Correct. The `Rollout` reads the pod template from the referenced Deployment,
+    and `scaleDown` controls the Deployment replicas.
+- id: ats062-final-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Place analysis in a blue-green release
+  source_readings:
+  - sections/section-020/module-01/course-02-promotion-analysis-hooks-and-rollback.md
+  prompt: You want a smoke test on the new pods before any user is switched. Which
+    field do you use?
+  options:
+  - id: a
+    text: "`postPromotionAnalysis`"
+    explanation: This runs after the switch.
+  - id: b
+    text: "`strategy.canary.analysis`"
+    explanation: This belongs to the canary strategy.
+  - id: c
+    text: "`prePromotionAnalysis`"
+    explanation: Correct. The controller waits for a `Successful` run before it promotes.
+  - id: d
+    text: "`previewReplicaCount`"
+    explanation: This sets the number of preview pods and runs no analysis.
+  correct_option: c
+  explanation: Correct. The controller waits for a `Successful` run before it promotes.
+- id: ats062-final-q06
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Predict replica counts of a canary without a router
+  source_readings:
+  - sections/section-020/module-02/course-01-steps-weights-and-replica-counts.md
+  prompt: 'A canary `Rollout` has 4 replicas and no traffic router. A step sets `setWeight:
+    25`. How many pods does the canary ReplicaSet have?'
+  options:
+  - id: a
+    text: '0'
+    explanation: At least one pod must run for any weight above 0.
+  - id: b
+    text: '1'
+    explanation: Correct. The weight is a ratio of the replicas, rounded up, so 25
+      percent of 4 is 1.
+  - id: c
+    text: '2'
+    explanation: 2 pods would be 50 percent.
+  - id: d
+    text: '4'
+    explanation: All 4 pods would be 100 percent.
+  correct_option: b
+  explanation: Correct. The weight is a ratio of the replicas, rounded up, so 25 percent
+    of 4 is 1.
+- id: ats062-final-q07
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Know the defaults of maxSurge and maxUnavailable
+  source_readings:
+  - sections/section-020/module-02/course-01-steps-weights-and-replica-counts.md
+  prompt: What are the defaults of `maxSurge` and `maxUnavailable` for a canary `Rollout`?
+  options:
+  - id: a
+    text: 0 and 0
+    explanation: Both cannot be 0, because no pod could start or stop.
+  - id: b
+    text: 25 percent and 25 percent
+    explanation: These are the Deployment defaults.
+  - id: c
+    text: 1 and 1
+    explanation: Correct. Both default to 1.
+  - id: d
+    text: 100 percent and 0
+    explanation: These are not the defaults.
+  correct_option: c
+  explanation: Correct. Both default to 1.
+- id: ats062-final-q08
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Explain trafficRouting
+  source_readings:
+  - sections/section-020/module-02/course-02-traffic-routing-and-choosing-a-strategy.md
+  prompt: What does `trafficRouting` add to a canary `Rollout`?
+  options:
+  - id: a
+    text: Exact request weights set in a router, with `stableService` and `canaryService`.
+    explanation: Correct. The weight no longer depends on pod counts.
+  - id: b
+    text: A load balancer that the controller installs.
+    explanation: The router must already exist. The controller does not install it.
+  - id: c
+    text: Automatic analysis of the traffic.
+    explanation: Analysis is configured separately.
+  - id: d
+    text: A second cluster for the canary.
+    explanation: The canary runs in the same cluster.
+  correct_option: a
+  explanation: Correct. The weight no longer depends on pod counts.
+- id: ats062-final-q09
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Apply failureLimit
+  source_readings:
+  - sections/section-030/module-01/course-01-the-template-its-arguments-and-its-metrics.md
+  prompt: 'A metric has `count: 5` and `failureLimit: 1`. When does the metric fail?'
+  options:
+  - id: a
+    text: At the first failed measurement.
+    explanation: 'This is the case only for `failureLimit: 0`.'
+  - id: b
+    text: When 2 measurements have failed.
+    explanation: Correct. The metric fails when the failures exceed the limit.
+  - id: c
+    text: Only when all 5 measurements fail.
+    explanation: The limit is lower than that.
+  - id: d
+    text: Never, because `count` ends the metric.
+    explanation: The limit still applies during the count.
+  correct_option: b
+  explanation: Correct. The metric fails when the failures exceed the limit.
+- id: ats062-final-q10
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Predict an inconclusive measurement
+  source_readings:
+  - sections/section-030/module-01/course-01-the-template-its-arguments-and-its-metrics.md
+  prompt: 'A metric has both `successCondition: result[0] >= 0.95` and `failureCondition:
+    result[0] < 0.80`. The value is 0.90. What is the measurement?'
+  options:
+  - id: a
+    text: "`Successful`"
+    explanation: The success condition is false.
+  - id: b
+    text: "`Failed`"
+    explanation: The failure condition is false.
+  - id: c
+    text: "`Inconclusive`"
+    explanation: Correct. Neither condition is true.
+  - id: d
+    text: "`Error`"
+    explanation: No error occurred. The value was read.
+  correct_option: c
+  explanation: Correct. Neither condition is true.
+- id: ats062-final-q11
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Choose a provider
+  source_readings:
+  - sections/section-030/module-01/course-02-providers-and-measurement-results.md
+  prompt: You need a check that runs a script inside the cluster and uses the exit
+    code. Which provider fits?
+  options:
+  - id: a
+    text: "`web`"
+    explanation: This sends a single HTTP request from the controller.
+  - id: b
+    text: "`prometheus`"
+    explanation: This runs a query.
+  - id: c
+    text: "`job`"
+    explanation: Correct. The measurement is `Successful` when the Job completes.
+  - id: d
+    text: "`kayenta`"
+    explanation: This is a statistical comparison service.
+  correct_option: c
+  explanation: Correct. The measurement is `Successful` when the Job completes.
+- id: ats062-final-q12
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Know where the web provider runs
+  source_readings:
+  - sections/section-030/module-01/course-02-providers-and-measurement-results.md
+  prompt: From where does the `web` provider send its request?
+  options:
+  - id: a
+    text: From a pod created in the namespace of the run.
+    explanation: This is the `job` provider.
+  - id: b
+    text: From the Rollouts controller.
+    explanation: Correct. The URL must be reachable from the controller.
+  - id: c
+    text: From the kubelet of the canary node.
+    explanation: The kubelet takes no part.
+  - id: d
+    text: From the browser of the user.
+    explanation: No user browser is involved.
+  correct_option: b
+  explanation: Correct. The URL must be reachable from the controller.
+- id: ats062-final-q13
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The default deadline is 600 seconds
+  source_readings:
+  - sections/section-010/module-01/course-03-timing-capacity-and-history-fields.md
+  prompt: What is the default of `progressDeadlineSeconds`?
+  options:
+  - id: a
+    text: 3600 seconds
+    explanation: Not correct. The default deadline is 600 seconds.
+  - id: b
+    text: 600 seconds
+    explanation: Correct. The default deadline is 600 seconds.
+  - id: c
+    text: 60 seconds
+    explanation: Not correct. The default deadline is 600 seconds.
+  - id: d
+    text: 10 seconds
+    explanation: Not correct. The default deadline is 600 seconds.
+  correct_option: b
+  explanation: Correct. The default deadline is 600 seconds.
+- id: ats062-final-q14
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Without it, the controller only reports `ProgressDeadlineExceeded`
+  source_readings:
+  - sections/section-010/module-01/course-03-timing-capacity-and-history-fields.md
+  prompt: 'What does `progressDeadlineAbort: true` add?'
+  options:
+  - id: a
+    text: The controller promotes the release when the deadline passes.
+    explanation: Not correct. Without it, the controller only reports `ProgressDeadlineExceeded`.
+  - id: b
+    text: The controller deletes the Rollout when the deadline passes.
+    explanation: Not correct. Without it, the controller only reports `ProgressDeadlineExceeded`.
+  - id: c
+    text: The controller aborts the release when the progress deadline passes.
+    explanation: Correct. Without it, the controller only reports `ProgressDeadlineExceeded`.
+  - id: d
+    text: The controller doubles the deadline each time.
+    explanation: Not correct. Without it, the controller only reports `ProgressDeadlineExceeded`.
+  correct_option: c
+  explanation: Correct. Without it, the controller only reports `ProgressDeadlineExceeded`.
+- id: ats062-final-q15
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: A pod is available after it has been ready for `minReadySeconds`
+  source_readings:
+  - sections/section-010/module-01/course-03-timing-capacity-and-history-fields.md
+  prompt: Which field makes a ready pod count as available only after a wait?
+  options:
+  - id: a
+    text: "`minReadySeconds`"
+    explanation: Correct. A pod is available after it has been ready for `minReadySeconds`.
+  - id: b
+    text: "`revisionHistoryLimit`"
+    explanation: Not correct. A pod is available after it has been ready for `minReadySeconds`.
+  - id: c
+    text: "`progressDeadlineSeconds`"
+    explanation: Not correct. A pod is available after it has been ready for `minReadySeconds`.
+  - id: d
+    text: "`restartAt`"
+    explanation: Not correct. A pod is available after it has been ready for `minReadySeconds`.
+  correct_option: a
+  explanation: Correct. A pod is available after it has been ready for `minReadySeconds`.
+- id: ats062-final-q16
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Only a change to the pod template changes the hash
+  source_readings:
+  - sections/section-010/module-01/course-04-template-changes-metadata-and-placement.md
+  prompt: Which change to a `Rollout` creates a new revision?
+  options:
+  - id: a
+    text: A change to `spec.minReadySeconds`.
+    explanation: Not correct. Only a change to the pod template changes the hash.
+  - id: b
+    text: A change to `spec.revisionHistoryLimit`.
+    explanation: Not correct. Only a change to the pod template changes the hash.
+  - id: c
+    text: A change to the container image in `spec.template`.
+    explanation: Correct. Only a change to the pod template changes the hash.
+  - id: d
+    text: A change to `spec.replicas`.
+    explanation: Not correct. Only a change to the pod template changes the hash.
+  correct_option: c
+  explanation: Correct. Only a change to the pod template changes the hash.
+- id: ats062-final-q17
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The metadata fields of the strategy add labels to pods after
+    the ReplicaSet creates them
+  source_readings:
+  - sections/section-010/module-01/course-04-template-changes-metadata-and-placement.md
+  prompt: How can the controller label canary pods without a new revision?
+  options:
+  - id: a
+    text: With `spec.restartAt`.
+    explanation: Not correct. The metadata fields of the strategy add labels to pods
+      after the ReplicaSet creates them.
+  - id: b
+    text: With a label on the Rollout metadata.
+    explanation: Not correct. The metadata fields of the strategy add labels to pods
+      after the ReplicaSet creates them.
+  - id: c
+    text: With a label in `spec.template.metadata`.
+    explanation: Not correct. The metadata fields of the strategy add labels to pods
+      after the ReplicaSet creates them.
+  - id: d
+    text: With `canaryMetadata` in the canary strategy.
+    explanation: Correct. The metadata fields of the strategy add labels to pods after
+      the ReplicaSet creates them.
+  correct_option: d
+  explanation: Correct. The metadata fields of the strategy add labels to pods after
+    the ReplicaSet creates them.
+- id: ats062-final-q18
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: A hard rule leaves the pod unscheduled instead of placing it
+    on a shared node
+  source_readings:
+  - sections/section-010/module-01/course-04-template-changes-metadata-and-placement.md
+  prompt: What does a hard `requiredDuringSchedulingIgnoredDuringExecution` anti-affinity
+    rule risk on a small cluster?
+  options:
+  - id: a
+    text: The pod template hash changes.
+    explanation: Not correct. A hard rule leaves the pod unscheduled instead of placing
+      it on a shared node.
+  - id: b
+    text: The old pods are deleted.
+    explanation: Not correct. A hard rule leaves the pod unscheduled instead of placing
+      it on a shared node.
+  - id: c
+    text: The Rollout is deleted.
+    explanation: Not correct. A hard rule leaves the pod unscheduled instead of placing
+      it on a shared node.
+  - id: d
+    text: New pods stay `Pending` when no free node exists.
+    explanation: Correct. A hard rule leaves the pod unscheduled instead of placing
+      it on a shared node.
+  correct_option: d
+  explanation: Correct. A hard rule leaves the pod unscheduled instead of placing
+    it on a shared node.
+- id: ats062-final-q19
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: It lowers the cost of the preview
+  source_readings:
+  - sections/section-020/module-01/course-03-scale-down-and-preview-behaviour.md
+  prompt: What does `previewReplicaCount` set?
+  options:
+  - id: a
+    text: The number of Services in preview.
+    explanation: Not correct. It lowers the cost of the preview.
+  - id: b
+    text: The number of pods the new ReplicaSet runs while it waits in preview.
+    explanation: Correct. It lowers the cost of the preview.
+  - id: c
+    text: The number of old ReplicaSets that are kept.
+    explanation: Not correct. It lowers the cost of the preview.
+  - id: d
+    text: The seconds before a promotion.
+    explanation: Not correct. It lowers the cost of the preview.
+  correct_option: b
+  explanation: Correct. It lowers the cost of the preview.
+- id: ats062-final-q20
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The old ReplicaSet stays 30 seconds after the switch
+  source_readings:
+  - sections/section-020/module-01/course-03-scale-down-and-preview-behaviour.md
+  prompt: What is the default of `scaleDownDelaySeconds` in blue-green?
+  options:
+  - id: a
+    text: 30 seconds
+    explanation: Correct. The old ReplicaSet stays 30 seconds after the switch.
+  - id: b
+    text: 600 seconds
+    explanation: Not correct. The old ReplicaSet stays 30 seconds after the switch.
+  - id: c
+    text: 5 seconds
+    explanation: Not correct. The old ReplicaSet stays 30 seconds after the switch.
+  - id: d
+    text: 0 seconds
+    explanation: Not correct. The old ReplicaSet stays 30 seconds after the switch.
+  correct_option: a
+  explanation: Correct. The old ReplicaSet stays 30 seconds after the switch.
+- id: ats062-final-q21
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The switch happens only after the new pods are available
+  source_readings:
+  - sections/section-020/module-01/course-03-scale-down-and-preview-behaviour.md
+  prompt: In what order does the controller promote a blue-green revision?
+  options:
+  - id: a
+    text: Scale down the old ReplicaSet first, then switch.
+    explanation: Not correct. The switch happens only after the new pods are available.
+  - id: b
+    text: Scale up, switch the active Service, wait, scale the old ReplicaSet down.
+    explanation: Correct. The switch happens only after the new pods are available.
+  - id: c
+    text: Delete the old ReplicaSet, then scale up.
+    explanation: Not correct. The switch happens only after the new pods are available.
+  - id: d
+    text: Switch the active Service, scale up, scale down.
+    explanation: Not correct. The switch happens only after the new pods are available.
+  correct_option: b
+  explanation: Correct. The switch happens only after the new pods are available.
+- id: ats062-final-q22
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The label `rollouts-pod-template-hash` in the selector decides
+    the endpoints
+  source_readings:
+  - sections/section-020/module-01/course-04-operating-a-blue-green-rollout.md
+  prompt: How does the controller switch traffic in blue-green?
+  options:
+  - id: a
+    text: It writes the ReplicaSet hash into the selector of the active Service.
+    explanation: Correct. The label `rollouts-pod-template-hash` in the selector decides
+      the endpoints.
+  - id: b
+    text: It deletes the old Service.
+    explanation: Not correct. The label `rollouts-pod-template-hash` in the selector
+      decides the endpoints.
+  - id: c
+    text: It changes the image of the old pods.
+    explanation: Not correct. The label `rollouts-pod-template-hash` in the selector
+      decides the endpoints.
+  - id: d
+    text: It edits the Ingress.
+    explanation: Not correct. The label `rollouts-pod-template-hash` in the selector
+      decides the endpoints.
+  correct_option: a
+  explanation: Correct. The label `rollouts-pod-template-hash` in the selector decides
+    the endpoints.
+- id: ats062-final-q23
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The preview selector points at the new ReplicaSet, whose pods
+    are not ready
+  source_readings:
+  - sections/section-020/module-01/course-04-operating-a-blue-green-rollout.md
+  prompt: What does an empty endpoints list for the preview Service show?
+  options:
+  - id: a
+    text: The old ReplicaSet was deleted.
+    explanation: Not correct. The preview selector points at the new ReplicaSet, whose
+      pods are not ready.
+  - id: b
+    text: The Rollout has no strategy.
+    explanation: Not correct. The preview selector points at the new ReplicaSet, whose
+      pods are not ready.
+  - id: c
+    text: The active Service is broken.
+    explanation: Not correct. The preview selector points at the new ReplicaSet, whose
+      pods are not ready.
+  - id: d
+    text: No pod of the new revision is ready.
+    explanation: Correct. The preview selector points at the new ReplicaSet, whose
+      pods are not ready.
+  correct_option: d
+  explanation: Correct. The preview selector points at the new ReplicaSet, whose pods
+    are not ready.
+- id: ats062-final-q24
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: It needs `trafficRouting`
+  source_readings:
+  - sections/section-020/module-02/course-03-canary-scale-control.md
+  prompt: Which step sets the canary pod count apart from the traffic weight?
+  options:
+  - id: a
+    text: "`setCanaryScale`"
+    explanation: Correct. It needs `trafficRouting`.
+  - id: b
+    text: "`analysis`"
+    explanation: Not correct. It needs `trafficRouting`.
+  - id: c
+    text: "`setHeaderRoute`"
+    explanation: Not correct. It needs `trafficRouting`.
+  - id: d
+    text: "`pause`"
+    explanation: Not correct. It needs `trafficRouting`.
+  correct_option: a
+  explanation: Correct. It needs `trafficRouting`.
+- id: ats062-final-q25
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Without it the controller looks for a namespaced template
+  source_readings:
+  - sections/section-030/module-01/course-03-cluster-templates-and-argument-sources.md
+  prompt: What must a Rollout set to use a `ClusterAnalysisTemplate`?
+  options:
+  - id: a
+    text: A namespace on the template.
+    explanation: Not correct. Without it the controller looks for a namespaced template.
+  - id: b
+    text: "`clusterScope: true` on the template entry."
+    explanation: Correct. Without it the controller looks for a namespaced template.
+  - id: c
+    text: A `workloadRef`.
+    explanation: Not correct. Without it the controller looks for a namespaced template.
+  - id: d
+    text: A `previewService`.
+    explanation: Not correct. Without it the controller looks for a namespaced template.
+  correct_option: b
+  explanation: Correct. Without it the controller looks for a namespaced template.
+- id: ats062-final-q26
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: It reads a key from a Secret in the namespace of the run
+  source_readings:
+  - sections/section-030/module-01/course-03-cluster-templates-and-argument-sources.md
+  prompt: Which `valueFrom` form keeps a token out of the template?
+  options:
+  - id: a
+    text: "`workloadRef`"
+    explanation: Not correct. It reads a key from a Secret in the namespace of the
+      run.
+  - id: b
+    text: "`podTemplateHashValue`"
+    explanation: Not correct. It reads a key from a Secret in the namespace of the
+      run.
+  - id: c
+    text: "`secretKeyRef`"
+    explanation: Correct. It reads a key from a Secret in the namespace of the run.
+  - id: d
+    text: "`stableService`"
+    explanation: Not correct. It reads a key from a Secret in the namespace of the
+      run.
+  correct_option: c
+  explanation: Correct. It reads a key from a Secret in the namespace of the run.
+- id: ats062-final-q27
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Dry-run metrics cannot decide the phase of the run
+  source_readings:
+  - sections/section-030/module-01/course-04-dry-run-retention-and-error-handling.md
+  prompt: What happens to a metric listed in `dryRun` when it fails?
+  options:
+  - id: a
+    text: The Rollout is aborted.
+    explanation: Not correct. Dry-run metrics cannot decide the phase of the run.
+  - id: b
+    text: The failure is recorded and does not fail the AnalysisRun.
+    explanation: Correct. Dry-run metrics cannot decide the phase of the run.
+  - id: c
+    text: The metric is deleted.
+    explanation: Not correct. Dry-run metrics cannot decide the phase of the run.
+  - id: d
+    text: The run ends in `Error`.
+    explanation: Not correct. Dry-run metrics cannot decide the phase of the run.
+  correct_option: b
+  explanation: Correct. Dry-run metrics cannot decide the phase of the run.
+- id: ats062-final-q28
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: A good measurement resets the counter
+  source_readings:
+  - sections/section-030/module-01/course-04-dry-run-retention-and-error-handling.md
+  prompt: What does `consecutiveErrorLimit` count?
+  options:
+  - id: a
+    text: Errors in a row, with a default of 4.
+    explanation: Correct. A good measurement resets the counter.
+  - id: b
+    text: Failed measurements in total.
+    explanation: Not correct. A good measurement resets the counter.
+  - id: c
+    text: Successful measurements.
+    explanation: Not correct. A good measurement resets the counter.
+  - id: d
+    text: Inconclusive measurements.
+    explanation: Not correct. A good measurement resets the counter.
+  correct_option: a
+  explanation: Correct. A good measurement resets the counter.
+- id: ats062-final-q29
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: It lets a query select the canary pods
+  source_readings:
+  - sections/section-030/module-02/course-03-passing-rollout-data-into-an-analysis.md
+  prompt: Which `valueFrom` form gives an analysis the hash of the newest ReplicaSet?
+  options:
+  - id: a
+    text: "`fieldRef` on the Service"
+    explanation: Not correct. It lets a query select the canary pods.
+  - id: b
+    text: "`clusterScope`"
+    explanation: Not correct. It lets a query select the canary pods.
+  - id: c
+    text: "`secretKeyRef`"
+    explanation: Not correct. It lets a query select the canary pods.
+  - id: d
+    text: "`podTemplateHashValue: Latest`"
+    explanation: Correct. It lets a query select the canary pods.
+  correct_option: d
+  explanation: Correct. It lets a query select the canary pods.
+- id: ats062-final-q30
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The run ends with the result it has so far
+  source_readings:
+  - sections/section-030/module-02/course-03-passing-rollout-data-into-an-analysis.md
+  prompt: 'What does `spec.terminate: true` do on an AnalysisRun?'
+  options:
+  - id: a
+    text: It stops the running AnalysisRun.
+    explanation: Correct. The run ends with the result it has so far.
+  - id: b
+    text: It changes the template.
+    explanation: Not correct. The run ends with the result it has so far.
+  - id: c
+    text: It retries the run.
+    explanation: Not correct. The run ends with the result it has so far.
+  - id: d
+    text: It deletes the Rollout.
+    explanation: Not correct. The run ends with the result it has so far.
+  correct_option: a
+  explanation: Correct. The run ends with the result it has so far.
