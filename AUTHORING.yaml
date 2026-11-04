@@ -39,11 +39,11 @@ sections:
     labs:
     - id: lab-01
       path: sections/section-010/module-01/labs/lab-01
-      status: draft
+      status: alpha
       runtime_verification: pending
     - id: lab-02
       path: sections/section-010/module-01/labs/lab-02
-      status: draft
+      status: alpha
       runtime_verification: pending
   - id: module-02
     title: Operating Rollouts And Migrating From A Deployment
@@ -57,11 +57,11 @@ sections:
     labs:
     - id: lab-01
       path: sections/section-010/module-02/labs/lab-01
-      status: draft
+      status: alpha
       runtime_verification: pending
     - id: lab-02
       path: sections/section-010/module-02/labs/lab-02
-      status: draft
+      status: alpha
       runtime_verification: pending
   - id: module-03
     title: Installing Argo Rollouts And Using The Plugin
@@ -75,7 +75,7 @@ sections:
     labs:
     - id: lab-01
       path: sections/section-010/module-03/labs/lab-01
-      status: draft
+      status: alpha
       runtime_verification: pending
   - id: module-04
     title: Scaling A Rollout With Autoscalers
@@ -89,7 +89,7 @@ sections:
     labs:
     - id: lab-01
       path: sections/section-010/module-04/labs/lab-01
-      status: draft
+      status: alpha
       runtime_verification: pending
   - id: module-05
     title: Notifications
@@ -103,7 +103,7 @@ sections:
     labs:
     - id: lab-01
       path: sections/section-010/module-05/labs/lab-01
-      status: draft
+      status: alpha
       runtime_verification: pending
   - id: module-03
     title: Installing Argo Rollouts And Using The Plugin
@@ -117,7 +117,7 @@ sections:
     labs:
     - id: lab-01
       path: sections/section-010/module-03/labs/lab-01
-      status: draft
+      status: alpha
       runtime_verification: pending
   - id: module-04
     title: Scaling A Rollout With Autoscalers
@@ -131,7 +131,7 @@ sections:
     labs:
     - id: lab-01
       path: sections/section-010/module-04/labs/lab-01
-      status: draft
+      status: alpha
       runtime_verification: pending
   - id: module-05
     title: Notifications
@@ -145,11 +145,11 @@ sections:
     labs:
     - id: lab-01
       path: sections/section-010/module-05/labs/lab-01
-      status: draft
+      status: alpha
       runtime_verification: pending
   capstone_lab:
     path: sections/section-010/capstone/labs/lab-01
-    status: draft
+    status: alpha
     runtime_verification: pending
   quiz: sections/section-010/quiz.yaml
 - id: section-020
@@ -170,11 +170,11 @@ sections:
     labs:
     - id: lab-01
       path: sections/section-020/module-01/labs/lab-01
-      status: draft
+      status: alpha
       runtime_verification: pending
     - id: lab-02
       path: sections/section-020/module-01/labs/lab-02
-      status: draft
+      status: alpha
       runtime_verification: pending
   - id: module-02
     title: Canary Deployments
@@ -188,11 +188,11 @@ sections:
     labs:
     - id: lab-01
       path: sections/section-020/module-02/labs/lab-01
-      status: draft
+      status: alpha
       runtime_verification: pending
     - id: lab-02
       path: sections/section-020/module-02/labs/lab-02
-      status: draft
+      status: alpha
       runtime_verification: pending
   - id: module-03
     title: Traffic Management Providers
@@ -206,7 +206,7 @@ sections:
     labs:
     - id: lab-01
       path: sections/section-020/module-03/labs/lab-01
-      status: draft
+      status: alpha
       runtime_verification: pending
   - id: module-03
     title: Traffic Management Providers
@@ -220,11 +220,11 @@ sections:
     labs:
     - id: lab-01
       path: sections/section-020/module-03/labs/lab-01
-      status: draft
+      status: alpha
       runtime_verification: pending
   capstone_lab:
     path: sections/section-020/capstone/labs/lab-01
-    status: draft
+    status: alpha
     runtime_verification: pending
   quiz: sections/section-020/quiz.yaml
 - id: section-030
@@ -245,11 +245,11 @@ sections:
     labs:
     - id: lab-01
       path: sections/section-030/module-01/labs/lab-01
-      status: draft
+      status: alpha
       runtime_verification: pending
     - id: lab-02
       path: sections/section-030/module-01/labs/lab-02
-      status: draft
+      status: alpha
       runtime_verification: pending
   - id: module-02
     title: AnalysisRuns And Rollout Integration
@@ -263,11 +263,11 @@ sections:
     labs:
     - id: lab-01
       path: sections/section-030/module-02/labs/lab-01
-      status: draft
+      status: alpha
       runtime_verification: pending
     - id: lab-02
       path: sections/section-030/module-02/labs/lab-02
-      status: draft
+      status: alpha
       runtime_verification: pending
   - id: module-03
     title: Experiments
@@ -281,7 +281,7 @@ sections:
     labs:
     - id: lab-01
       path: sections/section-030/module-03/labs/lab-01
-      status: draft
+      status: alpha
       runtime_verification: pending
   - id: module-04
     title: Analysis Providers In Depth
@@ -295,7 +295,7 @@ sections:
     labs:
     - id: lab-01
       path: sections/section-030/module-04/labs/lab-01
-      status: draft
+      status: alpha
       runtime_verification: pending
   - id: module-03
     title: Experiments
@@ -309,7 +309,7 @@ sections:
     labs:
     - id: lab-01
       path: sections/section-030/module-03/labs/lab-01
-      status: draft
+      status: alpha
       runtime_verification: pending
   - id: module-04
     title: Analysis Providers In Depth
@@ -323,11 +323,11 @@ sections:
     labs:
     - id: lab-01
       path: sections/section-030/module-04/labs/lab-01
-      status: draft
+      status: alpha
       runtime_verification: pending
   capstone_lab:
     path: sections/section-030/capstone/labs/lab-01
-    status: draft
+    status: alpha
     runtime_verification: pending
   quiz: sections/section-030/quiz.yaml
 final_quiz: sections/final-domain-quiz.yaml
