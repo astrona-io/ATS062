@@ -719,3 +719,277 @@ questions:
     explanation: Not correct. The run ends with the result it has so far.
   correct_option: a
   explanation: Correct. The run ends with the result it has so far.
+- id: ats062-final-q31
+  type: single_choice
+  difficulty: beginner
+  learning_objective: The installation registers five kinds
+  source_readings:
+  - sections/section-010/module-03/course-01-installing-the-controller-and-the-custom-resources.md
+  prompt: Which list names the five custom resource kinds that Argo Rollouts installs?
+  options:
+  - id: a
+    text: Rollout, AnalysisTemplate, ClusterAnalysisTemplate, AnalysisRun, Experiment
+    explanation: Correct. The installation registers five kinds.
+  - id: b
+    text: Rollout, Deployment, AnalysisTemplate, Gateway, Experiment
+    explanation: Not correct. The installation registers five kinds.
+  - id: c
+    text: Rollout, Service, Ingress, AnalysisRun, Experiment
+    explanation: Not correct. The installation registers five kinds.
+  - id: d
+    text: Rollout, Canary, BlueGreen, AnalysisRun, Experiment
+    explanation: Not correct. The installation registers five kinds.
+  correct_option: a
+  explanation: Correct. The installation registers five kinds.
+- id: ats062-final-q32
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: A strategic merge patch matches containers by name
+  source_readings:
+  - sections/section-010/module-03/course-02-controller-options-and-installation-scope.md
+  prompt: Which command adds an argument to the controller container from a patch
+    file?
+  options:
+  - id: a
+    text: "`kubectl -n argo-rollouts patch deployment argo-rollouts --patch-file controller-args.yaml`"
+    explanation: Correct. A strategic merge patch matches containers by name.
+  - id: b
+    text: "`kubectl -n argo-rollouts scale deployment argo-rollouts --args`"
+    explanation: Not correct. A strategic merge patch matches containers by name.
+  - id: c
+    text: "`kubectl -n argo-rollouts annotate deployment argo-rollouts --args`"
+    explanation: Not correct. A strategic merge patch matches containers by name.
+  - id: d
+    text: "`kubectl -n argo-rollouts expose deployment argo-rollouts`"
+    explanation: Not correct. A strategic merge patch matches containers by name.
+  correct_option: a
+  explanation: Correct. A strategic merge patch matches containers by name.
+- id: ats062-final-q33
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The Rollout status reports replicas and a selector
+  source_readings:
+  - sections/section-010/module-04/course-01-the-scale-subresource-and-the-replica-count.md
+  prompt: Which `Rollout` status fields does the scale subresource expose for an autoscaler?
+  options:
+  - id: a
+    text: "`status.phase` and `status.message`"
+    explanation: Not correct. The Rollout status reports replicas and a selector.
+  - id: b
+    text: "`status.stableRS` and `status.abort`"
+    explanation: Not correct. The Rollout status reports replicas and a selector.
+  - id: c
+    text: "`status.replicas` and `status.selector`"
+    explanation: Correct. The Rollout status reports replicas and a selector.
+  - id: d
+    text: "`status.conditions` and `status.pauseConditions`"
+    explanation: Not correct. The Rollout status reports replicas and a selector.
+  correct_option: c
+  explanation: Correct. The Rollout status reports replicas and a selector.
+- id: ats062-final-q34
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The controller scales the new and stable ReplicaSets during
+    a canary
+  source_readings:
+  - sections/section-010/module-04/course-03-releases-while-the-replica-count-changes.md
+  prompt: During a canary, how does the controller use the replica count from the
+    HPA?
+  options:
+  - id: a
+    text: It gives all replicas to the canary
+    explanation: Not correct. The controller scales the new and stable ReplicaSets
+      during a canary.
+  - id: b
+    text: It ignores the HPA until the release ends
+    explanation: Not correct. The controller scales the new and stable ReplicaSets
+      during a canary.
+  - id: c
+    text: It deletes the stable ReplicaSet
+    explanation: Not correct. The controller scales the new and stable ReplicaSets
+      during a canary.
+  - id: d
+    text: It sets the total replicas and divides them between the canary and stable
+      ReplicaSets by the weight
+    explanation: Correct. The controller scales the new and stable ReplicaSets during
+      a canary.
+  correct_option: d
+  explanation: Correct. The controller scales the new and stable ReplicaSets during
+    a canary.
+- id: ats062-final-q35
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The engine runs inside the controller
+  source_readings:
+  - sections/section-010/module-05/course-01-how-the-notification-engine-works.md
+  prompt: Which component sends the notifications?
+  options:
+  - id: a
+    text: The notification engine in the Rollouts controller
+    explanation: Correct. The engine runs inside the controller.
+  - id: b
+    text: The kubelet
+    explanation: Not correct. The engine runs inside the controller.
+  - id: c
+    text: The kube-proxy
+    explanation: Not correct. The engine runs inside the controller.
+  - id: d
+    text: The API server
+    explanation: Not correct. The engine runs inside the controller.
+  correct_option: a
+  explanation: Correct. The engine runs inside the controller.
+- id: ats062-final-q36
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: oncePer prevents repeats
+  source_readings:
+  - sections/section-010/module-05/course-03-triggers-and-subscriptions.md
+  prompt: 'What does `oncePer: rollout.status.currentPodHash` do?'
+  options:
+  - id: a
+    text: It sends the message once for each pod
+    explanation: Not correct. oncePer prevents repeats.
+  - id: b
+    text: It sends the message once for each revision
+    explanation: Correct. oncePer prevents repeats.
+  - id: c
+    text: It sends the message once each hour
+    explanation: Not correct. oncePer prevents repeats.
+  - id: d
+    text: It disables the trigger after one Rollout
+    explanation: Not correct. oncePer prevents repeats.
+  correct_option: b
+  explanation: Correct. oncePer prevents repeats.
+- id: ats062-final-q37
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The controller edits the provider objects
+  source_readings:
+  - sections/section-020/module-03/course-01-how-the-controller-drives-a-provider.md
+  prompt: Which component changes the provider objects during a canary?
+  options:
+  - id: a
+    text: The kubelet
+    explanation: Not correct. The controller edits the provider objects.
+  - id: b
+    text: The Rollouts controller
+    explanation: Correct. The controller edits the provider objects.
+  - id: c
+    text: The provider itself
+    explanation: Not correct. The controller edits the provider objects.
+  - id: d
+    text: The kubectl plugin
+    explanation: Not correct. The controller edits the provider objects.
+  correct_option: b
+  explanation: Correct. The controller edits the provider objects.
+- id: ats062-final-q38
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Istio splits by routes in a VirtualService
+  source_readings:
+  - sections/section-020/module-03/course-03-the-istio-provider.md
+  prompt: Which Istio object does the controller edit to change the weights?
+  options:
+  - id: a
+    text: The Gateway
+    explanation: Not correct. Istio splits by routes in a VirtualService.
+  - id: b
+    text: The VirtualService
+    explanation: Correct. Istio splits by routes in a VirtualService.
+  - id: c
+    text: The PeerAuthentication
+    explanation: Not correct. Istio splits by routes in a VirtualService.
+  - id: d
+    text: The Sidecar
+    explanation: Not correct. Istio splits by routes in a VirtualService.
+  correct_option: b
+  explanation: Correct. Istio splits by routes in a VirtualService.
+- id: ats062-final-q39
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Experiments have a duration
+  source_readings:
+  - sections/section-030/module-03/course-01-the-experiment-resource.md
+  prompt: What does `spec.duration` set?
+  options:
+  - id: a
+    text: The weight of the canary
+    explanation: Not correct. Experiments have a duration.
+  - id: b
+    text: The number of metrics
+    explanation: Not correct. Experiments have a duration.
+  - id: c
+    text: How long the Experiment runs
+    explanation: Correct. Experiments have a duration.
+  - id: d
+    text: The time between measurements
+    explanation: Not correct. Experiments have a duration.
+  correct_option: c
+  explanation: Correct. Experiments have a duration.
+- id: ats062-final-q40
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Required analyses block the step
+  source_readings:
+  - sections/section-030/module-03/course-03-experiments-in-a-canary.md
+  prompt: 'What does `requiredForCompletion: true` on an analysis in an Experiment
+    do?'
+  options:
+  - id: a
+    text: The analysis is skipped
+    explanation: Not correct. Required analyses block the step.
+  - id: b
+    text: The analysis runs after the Experiment
+    explanation: Not correct. Required analyses block the step.
+  - id: c
+    text: The Experiment cannot complete until that analysis ends
+    explanation: Correct. Required analyses block the step.
+  - id: d
+    text: The analysis replaces the template
+    explanation: Not correct. Required analyses block the step.
+  correct_option: c
+  explanation: Correct. Required analyses block the step.
+- id: ats062-final-q41
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The jsonPath selects a value
+  source_readings:
+  - sections/section-030/module-04/course-01-the-web-provider.md
+  prompt: What does `jsonPath` do in the `web` provider?
+  options:
+  - id: a
+    text: It sets the URL
+    explanation: Not correct. The jsonPath selects a value.
+  - id: b
+    text: It sets the timeout
+    explanation: Not correct. The jsonPath selects a value.
+  - id: c
+    text: It selects one value from the JSON answer
+    explanation: Correct. The jsonPath selects a value.
+  - id: d
+    text: It sets the method
+    explanation: Not correct. The jsonPath selects a value.
+  correct_option: c
+  explanation: Correct. The jsonPath selects a value.
+- id: ats062-final-q42
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Plugins add providers
+  source_readings:
+  - sections/section-030/module-04/course-03-vendor-providers-and-plugins.md
+  prompt: How is a metric provider plugin registered?
+  options:
+  - id: a
+    text: In the AnalysisRun status
+    explanation: Not correct. Plugins add providers.
+  - id: b
+    text: In the Service
+    explanation: Not correct. Plugins add providers.
+  - id: c
+    text: In the controller configuration under `metricProviderPlugins`
+    explanation: Correct. Plugins add providers.
+  - id: d
+    text: In the Ingress
+    explanation: Not correct. Plugins add providers.
+  correct_option: c
+  explanation: Correct. Plugins add providers.

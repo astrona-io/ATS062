@@ -1,0 +1,234 @@
+# Knowledge check for this module. Listed in astrona.yaml as a `type: quiz` entry (pass_score 70).
+schema_version: 1
+kind: question_bank
+id: ats062-030-m04
+course_id: ATS062
+exam_code: CAPA
+status: draft
+provenance: Original practice material written for this course; not official exam
+  questions.
+scope:
+  type: module
+  id: module-04
+  title: Analysis Providers In Depth
+questions:
+- id: ats062-030-m04-q01
+  type: single_choice
+  difficulty: beginner
+  learning_objective: The controller sends the web request
+  source_readings:
+  - sections/section-030/module-04/course-01-the-web-provider.md
+  prompt: Which component sends the HTTP request of a `web` provider?
+  options:
+  - id: a
+    text: A Job pod
+    explanation: Not correct. The controller sends the web request.
+  - id: b
+    text: The application pod
+    explanation: Not correct. The controller sends the web request.
+  - id: c
+    text: The kubectl plugin
+    explanation: Not correct. The controller sends the web request.
+  - id: d
+    text: The Rollouts controller
+    explanation: Correct. The controller sends the web request.
+  correct_option: d
+  explanation: Correct. The controller sends the web request.
+- id: ats062-030-m04-q02
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The jsonPath selects a value
+  source_readings:
+  - sections/section-030/module-04/course-01-the-web-provider.md
+  prompt: What does `jsonPath` do in the `web` provider?
+  options:
+  - id: a
+    text: It sets the URL
+    explanation: Not correct. The jsonPath selects a value.
+  - id: b
+    text: It selects one value from the JSON answer
+    explanation: Correct. The jsonPath selects a value.
+  - id: c
+    text: It sets the timeout
+    explanation: Not correct. The jsonPath selects a value.
+  - id: d
+    text: It sets the method
+    explanation: Not correct. The jsonPath selects a value.
+  correct_option: b
+  explanation: Correct. The jsonPath selects a value.
+- id: ats062-030-m04-q03
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The controller resolves the address
+  source_readings:
+  - sections/section-030/module-04/course-01-the-web-provider.md
+  prompt: Why must a `web` provider URL use the full Service name with the namespace?
+  options:
+  - id: a
+    text: The API server blocks short names
+    explanation: Not correct. The controller resolves the address.
+  - id: b
+    text: The request leaves from the controller pod in another namespace
+    explanation: Correct. The controller resolves the address.
+  - id: c
+    text: The Service has two names
+    explanation: Not correct. The controller resolves the address.
+  - id: d
+    text: The Ingress rewrites it
+    explanation: Not correct. The controller resolves the address.
+  correct_option: b
+  explanation: Correct. The controller resolves the address.
+- id: ats062-030-m04-q04
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Prometheus answers with a vector
+  source_readings:
+  - sections/section-030/module-04/course-02-the-prometheus-provider.md
+  prompt: Which `successCondition` reads the first value of a Prometheus result?
+  options:
+  - id: a
+    text: "`result.first >= 0.95`"
+    explanation: Not correct. Prometheus answers with a vector.
+  - id: b
+    text: "`value > 0.95`"
+    explanation: Not correct. Prometheus answers with a vector.
+  - id: c
+    text: "`prometheus.result == 0.95`"
+    explanation: Not correct. Prometheus answers with a vector.
+  - id: d
+    text: "`result[0] >= 0.95`"
+    explanation: Correct. Prometheus answers with a vector.
+  correct_option: d
+  explanation: Correct. Prometheus answers with a vector.
+- id: ats062-030-m04-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The provider needs an address
+  source_readings:
+  - sections/section-030/module-04/course-02-the-prometheus-provider.md
+  prompt: Which field of the `prometheus` provider holds the server address?
+  options:
+  - id: a
+    text: "`url`"
+    explanation: Not correct. The provider needs an address.
+  - id: b
+    text: "`endpoint`"
+    explanation: Not correct. The provider needs an address.
+  - id: c
+    text: "`address`"
+    explanation: Correct. The provider needs an address.
+  - id: d
+    text: "`host`"
+    explanation: Not correct. The provider needs an address.
+  correct_option: c
+  explanation: Correct. The provider needs an address.
+- id: ats062-030-m04-q06
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Vendors have their own providers
+  source_readings:
+  - sections/section-030/module-04/course-03-vendor-providers-and-plugins.md
+  prompt: Which is a built-in metric provider type?
+  options:
+  - id: a
+    text: "`datadog`"
+    explanation: Correct. Vendors have their own providers.
+  - id: b
+    text: "`grafana`"
+    explanation: Not correct. Vendors have their own providers.
+  - id: c
+    text: "`etcd`"
+    explanation: Not correct. Vendors have their own providers.
+  - id: d
+    text: "`jaeger-ui`"
+    explanation: Not correct. Vendors have their own providers.
+  correct_option: a
+  explanation: Correct. Vendors have their own providers.
+- id: ats062-030-m04-q07
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Plugins add providers
+  source_readings:
+  - sections/section-030/module-04/course-03-vendor-providers-and-plugins.md
+  prompt: How is a metric provider plugin registered?
+  options:
+  - id: a
+    text: In the AnalysisRun status
+    explanation: Not correct. Plugins add providers.
+  - id: b
+    text: In the controller configuration under `metricProviderPlugins`
+    explanation: Correct. Plugins add providers.
+  - id: c
+    text: In the Service
+    explanation: Not correct. Plugins add providers.
+  - id: d
+    text: In the Ingress
+    explanation: Not correct. Plugins add providers.
+  correct_option: b
+  explanation: Correct. Plugins add providers.
+- id: ats062-030-m04-q08
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Three results exist
+  source_readings:
+  - sections/section-030/module-04/course-04-result-types-and-conditions.md
+  prompt: Which three outcomes can one measurement have?
+  options:
+  - id: a
+    text: Pending, Ready and Done
+    explanation: Not correct. Three results exist.
+  - id: b
+    text: Passed, Skipped and Retried
+    explanation: Not correct. Three results exist.
+  - id: c
+    text: Running, Stopped and Paused
+    explanation: Not correct. Three results exist.
+  - id: d
+    text: Successful, Failed and Inconclusive
+    explanation: Correct. Three results exist.
+  correct_option: d
+  explanation: Correct. Three results exist.
+- id: ats062-030-m04-q09
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: A condition decides the result
+  source_readings:
+  - sections/section-030/module-04/course-04-result-types-and-conditions.md
+  prompt: Which field marks a measurement as failed?
+  options:
+  - id: a
+    text: "`failureWeight`"
+    explanation: Not correct. A condition decides the result.
+  - id: b
+    text: "`errorPath`"
+    explanation: Not correct. A condition decides the result.
+  - id: c
+    text: "`failureCondition`"
+    explanation: Correct. A condition decides the result.
+  - id: d
+    text: "`stopCondition`"
+    explanation: Not correct. A condition decides the result.
+  correct_option: c
+  explanation: Correct. A condition decides the result.
+- id: ats062-030-m04-q10
+  type: single_choice
+  difficulty: advanced
+  learning_objective: An error is not a failure
+  source_readings:
+  - sections/section-030/module-04/course-04-result-types-and-conditions.md
+  prompt: What does a measurement error, such as a request timeout, count toward?
+  options:
+  - id: a
+    text: The `failureLimit`
+    explanation: Not correct. An error is not a failure.
+  - id: b
+    text: The `inconclusiveLimit`
+    explanation: Not correct. An error is not a failure.
+  - id: c
+    text: The `consecutiveErrorLimit`
+    explanation: Correct. An error is not a failure.
+  - id: d
+    text: The `count`
+    explanation: Not correct. An error is not a failure.
+  correct_option: c
+  explanation: Correct. An error is not a failure.

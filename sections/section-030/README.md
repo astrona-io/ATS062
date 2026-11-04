@@ -11,8 +11,10 @@ This section covers automated release decisions. An AnalysisTemplate defines met
 
 1. AnalysisTemplates And Metric Providers
 2. AnalysisRuns And Rollout Integration
+3. Experiments
+4. Analysis Providers In Depth
 
-Each module has a short landing page, two parts and a summary. A playground and a graded lab follow the parts. The section ends with a capstone lab and a knowledge check.
+Each module has a short landing page, up to four parts and a summary. A playground and a graded lab follow the parts. The section ends with a capstone lab and a knowledge check.
 
 ## Learning Outcomes
 
@@ -20,3 +22,5 @@ Each module has a short landing page, two parts and a summary. A playground and 
 - Choose the job, web or prometheus provider.
 - Describe the AnalysisRun lifecycle and the effect of each phase on a Rollout.
 - Describe what an Experiment adds.
+- Run an Experiment on its own and inside a canary step, and read its status.
+- Configure the web, Prometheus and vendor providers, and write success, failure and inconclusive conditions.

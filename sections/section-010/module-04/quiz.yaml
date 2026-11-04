@@ -1,0 +1,251 @@
+# Knowledge check for this module. Listed in astrona.yaml as a `type: quiz` entry (pass_score 70).
+schema_version: 1
+kind: question_bank
+id: ats062-010-m04
+course_id: ATS062
+exam_code: CAPA
+status: draft
+provenance: Original practice material written for this course; not official exam
+  questions.
+scope:
+  type: module
+  id: module-04
+  title: Scaling A Rollout
+questions:
+- id: ats062-010-m04-q01
+  type: single_choice
+  difficulty: beginner
+  learning_objective: The scale subresource lets autoscalers change the replica count
+  source_readings:
+  - sections/section-010/module-04/course-01-the-scale-subresource-and-the-replica-count.md
+  prompt: Which Kubernetes feature lets an HPA change the replica count of a `Rollout`?
+  options:
+  - id: a
+    text: The status subresource
+    explanation: Not correct. The scale subresource lets autoscalers change the replica
+      count.
+  - id: b
+    text: The scale subresource
+    explanation: Correct. The scale subresource lets autoscalers change the replica
+      count.
+  - id: c
+    text: The finalizer
+    explanation: Not correct. The scale subresource lets autoscalers change the replica
+      count.
+  - id: d
+    text: The admission webhook
+    explanation: Not correct. The scale subresource lets autoscalers change the replica
+      count.
+  correct_option: b
+  explanation: Correct. The scale subresource lets autoscalers change the replica
+    count.
+- id: ats062-010-m04-q02
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The Rollout status reports replicas and a selector
+  source_readings:
+  - sections/section-010/module-04/course-01-the-scale-subresource-and-the-replica-count.md
+  prompt: Which `Rollout` status fields does the scale subresource expose for an autoscaler?
+  options:
+  - id: a
+    text: "`status.phase` and `status.message`"
+    explanation: Not correct. The Rollout status reports replicas and a selector.
+  - id: b
+    text: "`status.replicas` and `status.selector`"
+    explanation: Correct. The Rollout status reports replicas and a selector.
+  - id: c
+    text: "`status.stableRS` and `status.abort`"
+    explanation: Not correct. The Rollout status reports replicas and a selector.
+  - id: d
+    text: "`status.conditions` and `status.pauseConditions`"
+    explanation: Not correct. The Rollout status reports replicas and a selector.
+  correct_option: b
+  explanation: Correct. The Rollout status reports replicas and a selector.
+- id: ats062-010-m04-q03
+  type: single_choice
+  difficulty: beginner
+  learning_objective: The target reference names the kind and API group
+  source_readings:
+  - sections/section-010/module-04/course-02-an-hpa-that-targets-a-rollout.md
+  prompt: Which `scaleTargetRef.apiVersion` makes an HPA target a Rollout?
+  options:
+  - id: a
+    text: "`apps/v1`"
+    explanation: Not correct. The target reference names the kind and API group.
+  - id: b
+    text: "`autoscaling/v2`"
+    explanation: Not correct. The target reference names the kind and API group.
+  - id: c
+    text: "`argoproj.io/v1alpha1`"
+    explanation: Correct. The target reference names the kind and API group.
+  - id: d
+    text: "`v1`"
+    explanation: Not correct. The target reference names the kind and API group.
+  correct_option: c
+  explanation: Correct. The target reference names the kind and API group.
+- id: ats062-010-m04-q04
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Utilization is a percentage of the CPU request
+  source_readings:
+  - sections/section-010/module-04/course-02-an-hpa-that-targets-a-rollout.md
+  prompt: Why must the pods of a Rollout request CPU when the HPA uses a utilization
+    target?
+  options:
+  - id: a
+    text: The scheduler refuses pods without a request
+    explanation: Not correct. Utilization is a percentage of the CPU request.
+  - id: b
+    text: The controller deletes pods without a request
+    explanation: Not correct. Utilization is a percentage of the CPU request.
+  - id: c
+    text: The HPA copies the request into the limit
+    explanation: Not correct. Utilization is a percentage of the CPU request.
+  - id: d
+    text: Utilization is a percentage of the requested CPU
+    explanation: Correct. Utilization is a percentage of the CPU request.
+  correct_option: d
+  explanation: Correct. Utilization is a percentage of the CPU request.
+- id: ats062-010-m04-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Without a metrics server the HPA has no values
+  source_readings:
+  - sections/section-010/module-04/course-02-an-hpa-that-targets-a-rollout.md
+  prompt: What does the HPA show as current utilization when the cluster has no metrics
+    server?
+  options:
+  - id: a
+    text: Zero percent
+    explanation: Not correct. Without a metrics server the HPA has no values.
+  - id: b
+    text: An unknown value
+    explanation: Correct. Without a metrics server the HPA has no values.
+  - id: c
+    text: One hundred percent
+    explanation: Not correct. Without a metrics server the HPA has no values.
+  - id: d
+    text: The target value
+    explanation: Not correct. Without a metrics server the HPA has no values.
+  correct_option: b
+  explanation: Correct. Without a metrics server the HPA has no values.
+- id: ats062-010-m04-q06
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The HPA changes the replica count, not the pod template
+  source_readings:
+  - sections/section-010/module-04/course-03-releases-while-the-replica-count-changes.md
+  prompt: Does a replica change by the HPA start a new release?
+  options:
+  - id: a
+    text: No, only a change of the pod template creates a new revision
+    explanation: Correct. The HPA changes the replica count, not the pod template.
+  - id: b
+    text: Yes, every replica change creates a revision
+    explanation: Not correct. The HPA changes the replica count, not the pod template.
+  - id: c
+    text: Yes, but only for blue-green
+    explanation: Not correct. The HPA changes the replica count, not the pod template.
+  - id: d
+    text: No, because the HPA cannot change a Rollout
+    explanation: Not correct. The HPA changes the replica count, not the pod template.
+  correct_option: a
+  explanation: Correct. The HPA changes the replica count, not the pod template.
+- id: ats062-010-m04-q07
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The controller scales the new and stable ReplicaSets during
+    a canary
+  source_readings:
+  - sections/section-010/module-04/course-03-releases-while-the-replica-count-changes.md
+  prompt: During a canary, how does the controller use the replica count from the
+    HPA?
+  options:
+  - id: a
+    text: It gives all replicas to the canary
+    explanation: Not correct. The controller scales the new and stable ReplicaSets
+      during a canary.
+  - id: b
+    text: It ignores the HPA until the release ends
+    explanation: Not correct. The controller scales the new and stable ReplicaSets
+      during a canary.
+  - id: c
+    text: It sets the total replicas and divides them between the canary and stable
+      ReplicaSets by the weight
+    explanation: Correct. The controller scales the new and stable ReplicaSets during
+      a canary.
+  - id: d
+    text: It deletes the stable ReplicaSet
+    explanation: Not correct. The controller scales the new and stable ReplicaSets
+      during a canary.
+  correct_option: c
+  explanation: Correct. The controller scales the new and stable ReplicaSets during
+    a canary.
+- id: ats062-010-m04-q08
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: A PodDisruptionBudget limits voluntary evictions
+  source_readings:
+  - sections/section-010/module-04/course-04-anti-affinity-disruption-budgets-and-other-autoscalers.md
+  prompt: What does a PodDisruptionBudget limit?
+  options:
+  - id: a
+    text: The CPU of each pod
+    explanation: Not correct. A PodDisruptionBudget limits voluntary evictions.
+  - id: b
+    text: The number of Rollouts in a namespace
+    explanation: Not correct. A PodDisruptionBudget limits voluntary evictions.
+  - id: c
+    text: The weight of the canary
+    explanation: Not correct. A PodDisruptionBudget limits voluntary evictions.
+  - id: d
+    text: The number of pods that voluntary disruptions such as a node drain can remove
+      at once
+    explanation: Correct. A PodDisruptionBudget limits voluntary evictions.
+  correct_option: d
+  explanation: Correct. A PodDisruptionBudget limits voluntary evictions.
+- id: ats062-010-m04-q09
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Anti-affinity spreads pods across nodes
+  source_readings:
+  - sections/section-010/module-04/course-04-anti-affinity-disruption-budgets-and-other-autoscalers.md
+  prompt: Which setting asks the scheduler to place the pods of a Rollout on different
+    nodes?
+  options:
+  - id: a
+    text: The `restartAt` field
+    explanation: Not correct. Anti-affinity spreads pods across nodes.
+  - id: b
+    text: The `maxSurge` field
+    explanation: Not correct. Anti-affinity spreads pods across nodes.
+  - id: c
+    text: A ClusterAnalysisTemplate
+    explanation: Not correct. Anti-affinity spreads pods across nodes.
+  - id: d
+    text: Pod anti-affinity in the pod template
+    explanation: Correct. Anti-affinity spreads pods across nodes.
+  correct_option: d
+  explanation: Correct. Anti-affinity spreads pods across nodes.
+- id: ats062-010-m04-q10
+  type: single_choice
+  difficulty: advanced
+  learning_objective: KEDA creates and manages an HPA
+  source_readings:
+  - sections/section-010/module-04/course-04-anti-affinity-disruption-budgets-and-other-autoscalers.md
+  prompt: Which statement about KEDA and a Rollout is correct?
+  options:
+  - id: a
+    text: KEDA replaces the Rollouts controller
+    explanation: Not correct. KEDA creates and manages an HPA.
+  - id: b
+    text: KEDA cannot scale any custom resource
+    explanation: Not correct. KEDA creates and manages an HPA.
+  - id: c
+    text: KEDA requires a Deployment
+    explanation: Not correct. KEDA creates and manages an HPA.
+  - id: d
+    text: KEDA can target a Rollout through the scale subresource
+    explanation: Correct. KEDA creates and manages an HPA.
+  correct_option: d
+  explanation: Correct. KEDA creates and manages an HPA.

@@ -1,0 +1,236 @@
+# Knowledge check for this module. Listed in astrona.yaml as a `type: quiz` entry (pass_score 70).
+schema_version: 1
+kind: question_bank
+id: ats062-030-m03
+course_id: ATS062
+exam_code: CAPA
+status: draft
+provenance: Original practice material written for this course; not official exam
+  questions.
+scope:
+  type: module
+  id: module-03
+  title: Experiments
+questions:
+- id: ats062-030-m03-q01
+  type: single_choice
+  difficulty: beginner
+  learning_objective: An Experiment runs temporary pods
+  source_readings:
+  - sections/section-030/module-03/course-01-the-experiment-resource.md
+  prompt: What does an `Experiment` create?
+  options:
+  - id: a
+    text: A Deployment for each release
+    explanation: Not correct. An Experiment runs temporary pods.
+  - id: b
+    text: ReplicaSets for temporary pods, one for each template
+    explanation: Correct. An Experiment runs temporary pods.
+  - id: c
+    text: A Service for each pod
+    explanation: Not correct. An Experiment runs temporary pods.
+  - id: d
+    text: A new CRD
+    explanation: Not correct. An Experiment runs temporary pods.
+  correct_option: b
+  explanation: Correct. An Experiment runs temporary pods.
+- id: ats062-030-m03-q02
+  type: single_choice
+  difficulty: beginner
+  learning_objective: Experiments have a duration
+  source_readings:
+  - sections/section-030/module-03/course-01-the-experiment-resource.md
+  prompt: What does `spec.duration` set?
+  options:
+  - id: a
+    text: The weight of the canary
+    explanation: Not correct. Experiments have a duration.
+  - id: b
+    text: How long the Experiment runs
+    explanation: Correct. Experiments have a duration.
+  - id: c
+    text: The number of metrics
+    explanation: Not correct. Experiments have a duration.
+  - id: d
+    text: The time between measurements
+    explanation: Not correct. Experiments have a duration.
+  correct_option: b
+  explanation: Correct. Experiments have a duration.
+- id: ats062-030-m03-q03
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Selectors must differ
+  source_readings:
+  - sections/section-030/module-03/course-01-the-experiment-resource.md
+  prompt: Why must the templates of an Experiment use different selector labels?
+  options:
+  - id: a
+    text: So each ReplicaSet selects only its own pods
+    explanation: Correct. Selectors must differ.
+  - id: b
+    text: So the scheduler can place them
+    explanation: Not correct. Selectors must differ.
+  - id: c
+    text: So the Service can route
+    explanation: Not correct. Selectors must differ.
+  - id: d
+    text: So the duration can start
+    explanation: Not correct. Selectors must differ.
+  correct_option: a
+  explanation: Correct. Selectors must differ.
+- id: ats062-030-m03-q04
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Analyses can run in an Experiment
+  source_readings:
+  - sections/section-030/module-03/course-02-analyses-inside-an-experiment.md
+  prompt: What does the `analyses` list of an Experiment run?
+  options:
+  - id: a
+    text: AnalysisRuns created from AnalysisTemplates while the pods run
+    explanation: Correct. Analyses can run in an Experiment.
+  - id: b
+    text: Jobs created from CronJobs
+    explanation: Not correct. Analyses can run in an Experiment.
+  - id: c
+    text: Rollouts
+    explanation: Not correct. Analyses can run in an Experiment.
+  - id: d
+    text: Services
+    explanation: Not correct. Analyses can run in an Experiment.
+  correct_option: a
+  explanation: Correct. Analyses can run in an Experiment.
+- id: ats062-030-m03-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: A failed analysis fails the Experiment
+  source_readings:
+  - sections/section-030/module-03/course-02-analyses-inside-an-experiment.md
+  prompt: What happens to an Experiment when one of its analyses fails?
+  options:
+  - id: a
+    text: The Experiment continues for the full duration
+    explanation: Not correct. A failed analysis fails the Experiment.
+  - id: b
+    text: The Experiment fails
+    explanation: Correct. A failed analysis fails the Experiment.
+  - id: c
+    text: The Experiment is deleted
+    explanation: Not correct. A failed analysis fails the Experiment.
+  - id: d
+    text: The Rollout is promoted
+    explanation: Not correct. A failed analysis fails the Experiment.
+  correct_option: b
+  explanation: Correct. A failed analysis fails the Experiment.
+- id: ats062-030-m03-q06
+  type: single_choice
+  difficulty: beginner
+  learning_objective: The canary has an experiment step
+  source_readings:
+  - sections/section-030/module-03/course-03-experiments-in-a-canary.md
+  prompt: Where does a canary strategy use an Experiment?
+  options:
+  - id: a
+    text: In the `selector` field
+    explanation: Not correct. The canary has an experiment step.
+  - id: b
+    text: In the Service
+    explanation: Not correct. The canary has an experiment step.
+  - id: c
+    text: In an `experiment` step in the list of steps
+    explanation: Correct. The canary has an experiment step.
+  - id: d
+    text: In the Ingress
+    explanation: Not correct. The canary has an experiment step.
+  correct_option: c
+  explanation: Correct. The canary has an experiment step.
+- id: ats062-030-m03-q07
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Required analyses block the step
+  source_readings:
+  - sections/section-030/module-03/course-03-experiments-in-a-canary.md
+  prompt: 'What does `requiredForCompletion: true` on an analysis in an Experiment
+    do?'
+  options:
+  - id: a
+    text: The analysis is skipped
+    explanation: Not correct. Required analyses block the step.
+  - id: b
+    text: The Experiment cannot complete until that analysis ends
+    explanation: Correct. Required analyses block the step.
+  - id: c
+    text: The analysis runs after the Experiment
+    explanation: Not correct. Required analyses block the step.
+  - id: d
+    text: The analysis replaces the template
+    explanation: Not correct. Required analyses block the step.
+  correct_option: b
+  explanation: Correct. Required analyses block the step.
+- id: ats062-030-m03-q08
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The step ends with the Experiment
+  source_readings:
+  - sections/section-030/module-03/course-03-experiments-in-a-canary.md
+  prompt: What happens to the Rollout when the Experiment of an experiment step is
+    Successful?
+  options:
+  - id: a
+    text: The Rollout is aborted
+    explanation: Not correct. The step ends with the Experiment.
+  - id: b
+    text: The Rollout moves to the next step
+    explanation: Correct. The step ends with the Experiment.
+  - id: c
+    text: The Rollout restarts
+    explanation: Not correct. The step ends with the Experiment.
+  - id: d
+    text: The Rollout is deleted
+    explanation: Not correct. The step ends with the Experiment.
+  correct_option: b
+  explanation: Correct. The step ends with the Experiment.
+- id: ats062-030-m03-q09
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The Experiment status shows the phase
+  source_readings:
+  - sections/section-030/module-03/course-04-reading-and-debugging-an-experiment.md
+  prompt: Which field shows whether an Experiment is Running, Successful or Failed?
+  options:
+  - id: a
+    text: "`status.weight`"
+    explanation: Not correct. The Experiment status shows the phase.
+  - id: b
+    text: "`status.phase`"
+    explanation: Correct. The Experiment status shows the phase.
+  - id: c
+    text: "`spec.phase`"
+    explanation: Not correct. The Experiment status shows the phase.
+  - id: d
+    text: "`status.stableRS`"
+    explanation: Not correct. The Experiment status shows the phase.
+  correct_option: b
+  explanation: Correct. The Experiment status shows the phase.
+- id: ats062-030-m03-q10
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: After the duration the pods are scaled down
+  source_readings:
+  - sections/section-030/module-03/course-04-reading-and-debugging-an-experiment.md
+  prompt: What happens to the ReplicaSets when an Experiment ends?
+  options:
+  - id: a
+    text: They are deleted at once with their history
+    explanation: Not correct. After the duration the pods are scaled down.
+  - id: b
+    text: They become the stable ReplicaSet
+    explanation: Not correct. After the duration the pods are scaled down.
+  - id: c
+    text: They are promoted
+    explanation: Not correct. After the duration the pods are scaled down.
+  - id: d
+    text: They are scaled to zero
+    explanation: Correct. After the duration the pods are scaled down.
+  correct_option: d
+  explanation: Correct. After the duration the pods are scaled down.

@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: web-gate
+  namespace: starfleet
+spec:
+  metrics:
+  - name: probe-status
+    count: 1
+    failureLimit: 0
+    successCondition: result == 200
+    provider:
+      web:
+        url: http://probe.starfleet.svc.cluster.local:8080/work?status=200
+        jsonPath: "{$.status}"
+        timeoutSeconds: 5

@@ -1,0 +1,44 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Experiment
+metadata:
+  name: compare-versions
+  namespace: starfleet
+spec:
+  duration: 30s
+  templates:
+  - name: baseline
+    replicas: 1
+    selector:
+      matchLabels:
+        app: baseline
+    template:
+      metadata:
+        labels:
+          app: baseline
+      spec:
+        containers:
+        - name: web
+          image: docker.io/library/python:3.13-alpine
+          command:
+          - python
+          - -m
+          - http.server
+          - '8080'
+  - name: candidate
+    replicas: 1
+    selector:
+      matchLabels:
+        app: candidate
+    template:
+      metadata:
+        labels:
+          app: candidate
+      spec:
+        containers:
+        - name: web
+          image: docker.io/library/python:3.13-alpine
+          command:
+          - python
+          - -m
+          - http.server
+          - '8080'

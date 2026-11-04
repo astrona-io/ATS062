@@ -1,0 +1,236 @@
+# Knowledge check for this module. Listed in astrona.yaml as a `type: quiz` entry (pass_score 70).
+schema_version: 1
+kind: question_bank
+id: ats062-010-m05
+course_id: ATS062
+exam_code: CAPA
+status: draft
+provenance: Original practice material written for this course; not official exam
+  questions.
+scope:
+  type: module
+  id: module-05
+  title: Notifications
+questions:
+- id: ats062-010-m05-q01
+  type: single_choice
+  difficulty: beginner
+  learning_objective: The engine reads a ConfigMap and a Secret
+  source_readings:
+  - sections/section-010/module-05/course-01-how-the-notification-engine-works.md
+  prompt: Which two objects hold the notification configuration of Argo Rollouts?
+  options:
+  - id: a
+    text: The ConfigMap `argo-rollouts-config` and the Secret `argo-rollouts-token`
+    explanation: Not correct. The engine reads a ConfigMap and a Secret.
+  - id: b
+    text: The Rollout and the AnalysisRun
+    explanation: Not correct. The engine reads a ConfigMap and a Secret.
+  - id: c
+    text: The Service and the Ingress
+    explanation: Not correct. The engine reads a ConfigMap and a Secret.
+  - id: d
+    text: The ConfigMap `argo-rollouts-notification-configmap` and the Secret `argo-rollouts-notification-secret`
+    explanation: Correct. The engine reads a ConfigMap and a Secret.
+  correct_option: d
+  explanation: Correct. The engine reads a ConfigMap and a Secret.
+- id: ats062-010-m05-q02
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The engine runs inside the controller
+  source_readings:
+  - sections/section-010/module-05/course-01-how-the-notification-engine-works.md
+  prompt: Which component sends the notifications?
+  options:
+  - id: a
+    text: The kubelet
+    explanation: Not correct. The engine runs inside the controller.
+  - id: b
+    text: The kube-proxy
+    explanation: Not correct. The engine runs inside the controller.
+  - id: c
+    text: The API server
+    explanation: Not correct. The engine runs inside the controller.
+  - id: d
+    text: The notification engine in the Rollouts controller
+    explanation: Correct. The engine runs inside the controller.
+  correct_option: d
+  explanation: Correct. The engine runs inside the controller.
+- id: ats062-010-m05-q03
+  type: single_choice
+  difficulty: beginner
+  learning_objective: A service is the destination
+  source_readings:
+  - sections/section-010/module-05/course-02-services-and-templates.md
+  prompt: What does a notification service define?
+  options:
+  - id: a
+    text: The text of the message
+    explanation: Not correct. A service is the destination.
+  - id: b
+    text: The condition that sends the message
+    explanation: Not correct. A service is the destination.
+  - id: c
+    text: A destination such as a webhook, with its URL and credentials
+    explanation: Correct. A service is the destination.
+  - id: d
+    text: The Rollout to watch
+    explanation: Not correct. A service is the destination.
+  correct_option: c
+  explanation: Correct. A service is the destination.
+- id: ats062-010-m05-q04
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The key prefix names the kind of entry
+  source_readings:
+  - sections/section-010/module-05/course-02-services-and-templates.md
+  prompt: Which ConfigMap key defines a webhook service named `probe`?
+  options:
+  - id: a
+    text: "`webhook.service.probe`"
+    explanation: Not correct. The key prefix names the kind of entry.
+  - id: b
+    text: "`service.webhook.probe`"
+    explanation: Correct. The key prefix names the kind of entry.
+  - id: c
+    text: "`template.webhook.probe`"
+    explanation: Not correct. The key prefix names the kind of entry.
+  - id: d
+    text: "`trigger.webhook.probe`"
+    explanation: Not correct. The key prefix names the kind of entry.
+  correct_option: b
+  explanation: Correct. The key prefix names the kind of entry.
+- id: ats062-010-m05-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: A template holds the message
+  source_readings:
+  - sections/section-010/module-05/course-02-services-and-templates.md
+  prompt: What does a template define?
+  options:
+  - id: a
+    text: The content of the message for each service
+    explanation: Correct. A template holds the message.
+  - id: b
+    text: The URL of the receiver
+    explanation: Not correct. A template holds the message.
+  - id: c
+    text: The weight of the canary
+    explanation: Not correct. A template holds the message.
+  - id: d
+    text: The subscription list
+    explanation: Not correct. A template holds the message.
+  correct_option: a
+  explanation: Correct. A template holds the message.
+- id: ats062-010-m05-q06
+  type: single_choice
+  difficulty: beginner
+  learning_objective: A trigger has a condition
+  source_readings:
+  - sections/section-010/module-05/course-03-triggers-and-subscriptions.md
+  prompt: What does the `when` field of a trigger hold?
+  options:
+  - id: a
+    text: A condition evaluated against the Rollout
+    explanation: Correct. A trigger has a condition.
+  - id: b
+    text: The URL of the service
+    explanation: Not correct. A trigger has a condition.
+  - id: c
+    text: The name of the Secret
+    explanation: Not correct. A trigger has a condition.
+  - id: d
+    text: The namespace of the controller
+    explanation: Not correct. A trigger has a condition.
+  correct_option: a
+  explanation: Correct. A trigger has a condition.
+- id: ats062-010-m05-q07
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: oncePer prevents repeats
+  source_readings:
+  - sections/section-010/module-05/course-03-triggers-and-subscriptions.md
+  prompt: 'What does `oncePer: rollout.status.currentPodHash` do?'
+  options:
+  - id: a
+    text: It sends the message once for each revision
+    explanation: Correct. oncePer prevents repeats.
+  - id: b
+    text: It sends the message once for each pod
+    explanation: Not correct. oncePer prevents repeats.
+  - id: c
+    text: It sends the message once each hour
+    explanation: Not correct. oncePer prevents repeats.
+  - id: d
+    text: It disables the trigger after one Rollout
+    explanation: Not correct. oncePer prevents repeats.
+  correct_option: a
+  explanation: Correct. oncePer prevents repeats.
+- id: ats062-010-m05-q08
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The annotation subscribes a Rollout
+  source_readings:
+  - sections/section-010/module-05/course-03-triggers-and-subscriptions.md
+  prompt: Which annotation subscribes the Rollout to the trigger `on-healthy` and
+    the service `probe`?
+  options:
+  - id: a
+    text: "`notifications.argoproj.io/trigger: on-healthy`"
+    explanation: Not correct. The annotation subscribes a Rollout.
+  - id: b
+    text: '`notifications.argoproj.io/subscribe.on-healthy.probe: ""`'
+    explanation: Correct. The annotation subscribes a Rollout.
+  - id: c
+    text: "`argo-rollouts.argoproj.io/notify: probe`"
+    explanation: Not correct. The annotation subscribes a Rollout.
+  - id: d
+    text: '`subscribe.probe.on-healthy: "true"`'
+    explanation: Not correct. The annotation subscribes a Rollout.
+  correct_option: b
+  explanation: Correct. The annotation subscribes a Rollout.
+- id: ats062-010-m05-q09
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The engine records sent notifications in an annotation
+  source_readings:
+  - sections/section-010/module-05/course-04-testing-and-troubleshooting.md
+  prompt: Which annotation shows that the engine has sent a notification?
+  options:
+  - id: a
+    text: "`sent.argoproj.io`"
+    explanation: Not correct. The engine records sent notifications in an annotation.
+  - id: b
+    text: "`notifications.argoproj.io/done`"
+    explanation: Not correct. The engine records sent notifications in an annotation.
+  - id: c
+    text: "`rollouts.argoproj.io/notified`"
+    explanation: Not correct. The engine records sent notifications in an annotation.
+  - id: d
+    text: "`notified.notifications.argoproj.io`"
+    explanation: Correct. The engine records sent notifications in an annotation.
+  correct_option: d
+  explanation: Correct. The engine records sent notifications in an annotation.
+- id: ats062-010-m05-q10
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Work from the receiver back to the trigger
+  source_readings:
+  - sections/section-010/module-05/course-04-testing-and-troubleshooting.md
+  prompt: What is the best first check when no message arrives?
+  options:
+  - id: a
+    text: Check whether the receiver got a request, then the controller log, the annotation
+      and the trigger condition
+    explanation: Correct. Work from the receiver back to the trigger.
+  - id: b
+    text: Delete the Rollout
+    explanation: Not correct. Work from the receiver back to the trigger.
+  - id: c
+    text: Reinstall the CRDs
+    explanation: Not correct. Work from the receiver back to the trigger.
+  - id: d
+    text: Change the cluster version
+    explanation: Not correct. Work from the receiver back to the trigger.
+  correct_option: a
+  explanation: Correct. Work from the receiver back to the trigger.

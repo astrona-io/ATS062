@@ -1,0 +1,236 @@
+# Knowledge check for this module. Listed in astrona.yaml as a `type: quiz` entry (pass_score 70).
+schema_version: 1
+kind: question_bank
+id: ats062-020-m03
+course_id: ATS062
+exam_code: CAPA
+status: draft
+provenance: Original practice material written for this course; not official exam
+  questions.
+scope:
+  type: module
+  id: module-03
+  title: Traffic Management Providers
+questions:
+- id: ats062-020-m03-q01
+  type: single_choice
+  difficulty: beginner
+  learning_objective: A provider splits traffic by exact weight
+  source_readings:
+  - sections/section-020/module-03/course-01-how-the-controller-drives-a-provider.md
+  prompt: What does a traffic management provider add to a canary?
+  options:
+  - id: a
+    text: Exact request weights instead of weights by pod count
+    explanation: Correct. A provider splits traffic by exact weight.
+  - id: b
+    text: More pods in the stable ReplicaSet
+    explanation: Not correct. A provider splits traffic by exact weight.
+  - id: c
+    text: A second controller
+    explanation: Not correct. A provider splits traffic by exact weight.
+  - id: d
+    text: A longer pause
+    explanation: Not correct. A provider splits traffic by exact weight.
+  correct_option: a
+  explanation: Correct. A provider splits traffic by exact weight.
+- id: ats062-020-m03-q02
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The controller edits the provider objects
+  source_readings:
+  - sections/section-020/module-03/course-01-how-the-controller-drives-a-provider.md
+  prompt: Which component changes the provider objects during a canary?
+  options:
+  - id: a
+    text: The Rollouts controller
+    explanation: Correct. The controller edits the provider objects.
+  - id: b
+    text: The kubelet
+    explanation: Not correct. The controller edits the provider objects.
+  - id: c
+    text: The provider itself
+    explanation: Not correct. The controller edits the provider objects.
+  - id: d
+    text: The kubectl plugin
+    explanation: Not correct. The controller edits the provider objects.
+  correct_option: a
+  explanation: Correct. The controller edits the provider objects.
+- id: ats062-020-m03-q03
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Stable and canary Services have separate selectors
+  source_readings:
+  - sections/section-020/module-03/course-01-how-the-controller-drives-a-provider.md
+  prompt: What do `stableService` and `canaryService` give the provider?
+  options:
+  - id: a
+    text: Two Services whose selectors the controller points at the stable and canary
+      pods
+    explanation: Correct. Stable and canary Services have separate selectors.
+  - id: b
+    text: Two namespaces
+    explanation: Not correct. Stable and canary Services have separate selectors.
+  - id: c
+    text: Two Ingress classes
+    explanation: Not correct. Stable and canary Services have separate selectors.
+  - id: d
+    text: Two controllers
+    explanation: Not correct. Stable and canary Services have separate selectors.
+  correct_option: a
+  explanation: Correct. Stable and canary Services have separate selectors.
+- id: ats062-020-m03-q04
+  type: single_choice
+  difficulty: beginner
+  learning_objective: The canary Ingress is created by the controller
+  source_readings:
+  - sections/section-020/module-03/course-02-the-nginx-ingress-provider.md
+  prompt: Who creates the canary Ingress in the NGINX integration?
+  options:
+  - id: a
+    text: The NGINX Ingress controller
+    explanation: Not correct. The canary Ingress is created by the controller.
+  - id: b
+    text: The Rollouts controller
+    explanation: Correct. The canary Ingress is created by the controller.
+  - id: c
+    text: The administrator
+    explanation: Not correct. The canary Ingress is created by the controller.
+  - id: d
+    text: The kubelet
+    explanation: Not correct. The canary Ingress is created by the controller.
+  correct_option: b
+  explanation: Correct. The canary Ingress is created by the controller.
+- id: ats062-020-m03-q05
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The name follows a pattern
+  source_readings:
+  - sections/section-020/module-03/course-02-the-nginx-ingress-provider.md
+  prompt: How is the canary Ingress named for the Rollout `mission` and the stable
+    Ingress `mission-ingress`?
+  options:
+  - id: a
+    text: "`mission-ingress-canary`"
+    explanation: Not correct. The name follows a pattern.
+  - id: b
+    text: "`canary-mission`"
+    explanation: Not correct. The name follows a pattern.
+  - id: c
+    text: "`mission-canary-ingress`"
+    explanation: Not correct. The name follows a pattern.
+  - id: d
+    text: "`mission-mission-ingress-canary`"
+    explanation: Correct. The name follows a pattern.
+  correct_option: d
+  explanation: Correct. The name follows a pattern.
+- id: ats062-020-m03-q06
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: The annotation sets the weight
+  source_readings:
+  - sections/section-020/module-03/course-02-the-nginx-ingress-provider.md
+  prompt: Which annotation carries the weight on the canary Ingress?
+  options:
+  - id: a
+    text: "`nginx.ingress.kubernetes.io/weight`"
+    explanation: Not correct. The annotation sets the weight.
+  - id: b
+    text: "`nginx.ingress.kubernetes.io/canary-weight`"
+    explanation: Correct. The annotation sets the weight.
+  - id: c
+    text: "`argoproj.io/canary-weight`"
+    explanation: Not correct. The annotation sets the weight.
+  - id: d
+    text: "`nginx.ingress.kubernetes.io/split`"
+    explanation: Not correct. The annotation sets the weight.
+  correct_option: b
+  explanation: Correct. The annotation sets the weight.
+- id: ats062-020-m03-q07
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Istio splits by routes in a VirtualService
+  source_readings:
+  - sections/section-020/module-03/course-03-the-istio-provider.md
+  prompt: Which Istio object does the controller edit to change the weights?
+  options:
+  - id: a
+    text: The VirtualService
+    explanation: Correct. Istio splits by routes in a VirtualService.
+  - id: b
+    text: The Gateway
+    explanation: Not correct. Istio splits by routes in a VirtualService.
+  - id: c
+    text: The PeerAuthentication
+    explanation: Not correct. Istio splits by routes in a VirtualService.
+  - id: d
+    text: The Sidecar
+    explanation: Not correct. Istio splits by routes in a VirtualService.
+  correct_option: a
+  explanation: Correct. Istio splits by routes in a VirtualService.
+- id: ats062-020-m03-q08
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Subsets use a DestinationRule
+  source_readings:
+  - sections/section-020/module-03/course-03-the-istio-provider.md
+  prompt: When one Service is used with subsets, which object defines the subsets?
+  options:
+  - id: a
+    text: An Ingress
+    explanation: Not correct. Subsets use a DestinationRule.
+  - id: b
+    text: A DestinationRule
+    explanation: Correct. Subsets use a DestinationRule.
+  - id: c
+    text: A ConfigMap
+    explanation: Not correct. Subsets use a DestinationRule.
+  - id: d
+    text: A ServiceAccount
+    explanation: Not correct. Subsets use a DestinationRule.
+  correct_option: b
+  explanation: Correct. Subsets use a DestinationRule.
+- id: ats062-020-m03-q09
+  type: single_choice
+  difficulty: intermediate
+  learning_objective: Several providers exist
+  source_readings:
+  - sections/section-020/module-03/course-04-other-providers-and-the-plugin-route.md
+  prompt: Which is a traffic router that Argo Rollouts supports?
+  options:
+  - id: a
+    text: Prometheus
+    explanation: Not correct. Several providers exist.
+  - id: b
+    text: Grafana
+    explanation: Not correct. Several providers exist.
+  - id: c
+    text: AWS Application Load Balancer
+    explanation: Correct. Several providers exist.
+  - id: d
+    text: etcd
+    explanation: Not correct. Several providers exist.
+  correct_option: c
+  explanation: Correct. Several providers exist.
+- id: ats062-020-m03-q10
+  type: single_choice
+  difficulty: advanced
+  learning_objective: Plugins add providers
+  source_readings:
+  - sections/section-020/module-03/course-04-other-providers-and-the-plugin-route.md
+  prompt: How does a team add a traffic router that Argo Rollouts does not include?
+  options:
+  - id: a
+    text: With a traffic router plugin registered in the controller configuration
+    explanation: Correct. Plugins add providers.
+  - id: b
+    text: By editing the CRD
+    explanation: Not correct. Plugins add providers.
+  - id: c
+    text: By forking the Rollout kind
+    explanation: Not correct. Plugins add providers.
+  - id: d
+    text: By using a Job
+    explanation: Not correct. Plugins add providers.
+  correct_option: a
+  explanation: Correct. Plugins add providers.

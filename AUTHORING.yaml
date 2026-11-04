@@ -63,6 +63,90 @@ sections:
       path: sections/section-010/module-02/labs/lab-02
       status: draft
       runtime_verification: pending
+  - id: module-03
+    title: Installing Argo Rollouts And Using The Plugin
+    playground: true
+    module_lab: true
+    parts:
+    - sections/section-010/module-03/course-01-installing-the-controller-and-the-custom-resources.md
+    - sections/section-010/module-03/course-02-controller-options-and-installation-scope.md
+    - sections/section-010/module-03/course-03-the-kubectl-plugin.md
+    - sections/section-010/module-03/course-04-the-dashboard-upgrades-and-removal.md
+    labs:
+    - id: lab-01
+      path: sections/section-010/module-03/labs/lab-01
+      status: draft
+      runtime_verification: pending
+  - id: module-04
+    title: Scaling A Rollout With Autoscalers
+    playground: true
+    module_lab: true
+    parts:
+    - sections/section-010/module-04/course-01-the-scale-subresource-and-the-replica-count.md
+    - sections/section-010/module-04/course-02-an-hpa-that-targets-a-rollout.md
+    - sections/section-010/module-04/course-03-releases-while-the-replica-count-changes.md
+    - sections/section-010/module-04/course-04-anti-affinity-disruption-budgets-and-other-autoscalers.md
+    labs:
+    - id: lab-01
+      path: sections/section-010/module-04/labs/lab-01
+      status: draft
+      runtime_verification: pending
+  - id: module-05
+    title: Notifications
+    playground: true
+    module_lab: true
+    parts:
+    - sections/section-010/module-05/course-01-how-the-notification-engine-works.md
+    - sections/section-010/module-05/course-02-services-and-templates.md
+    - sections/section-010/module-05/course-03-triggers-and-subscriptions.md
+    - sections/section-010/module-05/course-04-testing-and-troubleshooting.md
+    labs:
+    - id: lab-01
+      path: sections/section-010/module-05/labs/lab-01
+      status: draft
+      runtime_verification: pending
+  - id: module-03
+    title: Installing Argo Rollouts And Using The Plugin
+    playground: true
+    module_lab: true
+    parts:
+    - sections/section-010/module-03/course-01-installing-the-controller-and-the-custom-resources.md
+    - sections/section-010/module-03/course-02-controller-options-and-installation-scope.md
+    - sections/section-010/module-03/course-03-the-kubectl-plugin.md
+    - sections/section-010/module-03/course-04-the-dashboard-upgrades-and-removal.md
+    labs:
+    - id: lab-01
+      path: sections/section-010/module-03/labs/lab-01
+      status: draft
+      runtime_verification: pending
+  - id: module-04
+    title: Scaling A Rollout With Autoscalers
+    playground: true
+    module_lab: true
+    parts:
+    - sections/section-010/module-04/course-01-the-scale-subresource-and-the-replica-count.md
+    - sections/section-010/module-04/course-02-an-hpa-that-targets-a-rollout.md
+    - sections/section-010/module-04/course-03-releases-while-the-replica-count-changes.md
+    - sections/section-010/module-04/course-04-anti-affinity-disruption-budgets-and-other-autoscalers.md
+    labs:
+    - id: lab-01
+      path: sections/section-010/module-04/labs/lab-01
+      status: draft
+      runtime_verification: pending
+  - id: module-05
+    title: Notifications
+    playground: true
+    module_lab: true
+    parts:
+    - sections/section-010/module-05/course-01-how-the-notification-engine-works.md
+    - sections/section-010/module-05/course-02-services-and-templates.md
+    - sections/section-010/module-05/course-03-triggers-and-subscriptions.md
+    - sections/section-010/module-05/course-04-testing-and-troubleshooting.md
+    labs:
+    - id: lab-01
+      path: sections/section-010/module-05/labs/lab-01
+      status: draft
+      runtime_verification: pending
   capstone_lab:
     path: sections/section-010/capstone/labs/lab-01
     status: draft
@@ -110,6 +194,34 @@ sections:
       path: sections/section-020/module-02/labs/lab-02
       status: draft
       runtime_verification: pending
+  - id: module-03
+    title: Traffic Management Providers
+    playground: true
+    module_lab: true
+    parts:
+    - sections/section-020/module-03/course-01-how-the-controller-drives-a-provider.md
+    - sections/section-020/module-03/course-02-the-nginx-ingress-provider.md
+    - sections/section-020/module-03/course-03-the-istio-provider.md
+    - sections/section-020/module-03/course-04-other-providers-and-the-plugin-route.md
+    labs:
+    - id: lab-01
+      path: sections/section-020/module-03/labs/lab-01
+      status: draft
+      runtime_verification: pending
+  - id: module-03
+    title: Traffic Management Providers
+    playground: true
+    module_lab: true
+    parts:
+    - sections/section-020/module-03/course-01-how-the-controller-drives-a-provider.md
+    - sections/section-020/module-03/course-02-the-nginx-ingress-provider.md
+    - sections/section-020/module-03/course-03-the-istio-provider.md
+    - sections/section-020/module-03/course-04-other-providers-and-the-plugin-route.md
+    labs:
+    - id: lab-01
+      path: sections/section-020/module-03/labs/lab-01
+      status: draft
+      runtime_verification: pending
   capstone_lab:
     path: sections/section-020/capstone/labs/lab-01
     status: draft
@@ -155,6 +267,62 @@ sections:
       runtime_verification: pending
     - id: lab-02
       path: sections/section-030/module-02/labs/lab-02
+      status: draft
+      runtime_verification: pending
+  - id: module-03
+    title: Experiments
+    playground: true
+    module_lab: true
+    parts:
+    - sections/section-030/module-03/course-01-the-experiment-resource.md
+    - sections/section-030/module-03/course-02-analyses-inside-an-experiment.md
+    - sections/section-030/module-03/course-03-experiments-in-a-canary.md
+    - sections/section-030/module-03/course-04-reading-and-debugging-an-experiment.md
+    labs:
+    - id: lab-01
+      path: sections/section-030/module-03/labs/lab-01
+      status: draft
+      runtime_verification: pending
+  - id: module-04
+    title: Analysis Providers In Depth
+    playground: true
+    module_lab: true
+    parts:
+    - sections/section-030/module-04/course-01-the-web-provider.md
+    - sections/section-030/module-04/course-02-the-prometheus-provider.md
+    - sections/section-030/module-04/course-03-vendor-providers-and-plugins.md
+    - sections/section-030/module-04/course-04-result-types-and-conditions.md
+    labs:
+    - id: lab-01
+      path: sections/section-030/module-04/labs/lab-01
+      status: draft
+      runtime_verification: pending
+  - id: module-03
+    title: Experiments
+    playground: true
+    module_lab: true
+    parts:
+    - sections/section-030/module-03/course-01-the-experiment-resource.md
+    - sections/section-030/module-03/course-02-analyses-inside-an-experiment.md
+    - sections/section-030/module-03/course-03-experiments-in-a-canary.md
+    - sections/section-030/module-03/course-04-reading-and-debugging-an-experiment.md
+    labs:
+    - id: lab-01
+      path: sections/section-030/module-03/labs/lab-01
+      status: draft
+      runtime_verification: pending
+  - id: module-04
+    title: Analysis Providers In Depth
+    playground: true
+    module_lab: true
+    parts:
+    - sections/section-030/module-04/course-01-the-web-provider.md
+    - sections/section-030/module-04/course-02-the-prometheus-provider.md
+    - sections/section-030/module-04/course-03-vendor-providers-and-plugins.md
+    - sections/section-030/module-04/course-04-result-types-and-conditions.md
+    labs:
+    - id: lab-01
+      path: sections/section-030/module-04/labs/lab-01
       status: draft
       runtime_verification: pending
   capstone_lab:
