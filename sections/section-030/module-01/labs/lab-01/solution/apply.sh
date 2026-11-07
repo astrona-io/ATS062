@@ -6,5 +6,5 @@ if [[ "$(kubectl config current-context)" != "kind-astro-ats-062-lab-030-01-01" 
 fi
 lab_directory="$(cd "$(dirname "$0")/.." && pwd)"
 solution_directory="$lab_directory/solution"
-kubectl apply -f "$solution_directory/analysistemplate-probe-check.yaml"
-kubectl -n starfleet wait --for=jsonpath='{.status.phase}'=Successful analysisrun/mission-analysis --timeout=240s
+kubectl apply -f "$solution_directory/analysis-dry-run.yaml"
+kubectl -n starfleet wait --for=jsonpath='{.status.phase}'=Successful analysisrun/dry-run-check --timeout=240s

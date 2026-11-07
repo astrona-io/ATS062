@@ -6,6 +6,8 @@ metadata:
 spec:
   replicas: 3
   revisionHistoryLimit: 2
+  rollbackWindow:
+    revisions: 1
   selector:
     matchLabels:
       app: bridge

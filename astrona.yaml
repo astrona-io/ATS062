@@ -49,10 +49,10 @@ modules:
     title: "ReplicaSets, Hashes And Revisions"
     path: sections/section-010/module-01/course-02-replicasets-hashes-and-revisions.md
   - type: reading
-    title: "Reconcile A Rollout And Its ReplicaSet - Task"
+    title: "Create A Rollout With A Revision History Limit Lab - Task"
     path: sections/section-010/module-01/labs/lab-01/question.md
   - type: lab
-    title: "Reconcile A Rollout And Its ReplicaSet"
+    title: "Create A Rollout With A Revision History Limit Lab"
     path: sections/section-010/module-01/labs/lab-01
     difficulty: intermediate
     estimated_duration: 25m
@@ -77,10 +77,10 @@ modules:
     title: "Template Changes, Metadata And Placement"
     path: sections/section-010/module-01/course-04-template-changes-metadata-and-placement.md
   - type: reading
-    title: "Set Timing Fields And Stable Metadata On A Rollout - Task"
+    title: "Set Timing Fields And Stable Metadata On A Rollout Lab - Task"
     path: sections/section-010/module-01/labs/lab-02/question.md
   - type: lab
-    title: "Set Timing Fields And Stable Metadata On A Rollout"
+    title: "Set Timing Fields And Stable Metadata On A Rollout Lab"
     path: sections/section-010/module-01/labs/lab-02
     difficulty: intermediate
     estimated_duration: 25m
@@ -88,7 +88,7 @@ modules:
     task_kind: build
     learning_goals:
     - "Set minReadySeconds, progressDeadlineSeconds and stableMetadata"
-    - "Verify the final state in the live cluster"
+    - "Read the stable label that the controller writes on the running pods"
     tags:
     - capa
     - argo-rollout
@@ -109,10 +109,10 @@ modules:
     title: "Migrating A Deployment And Routing Traffic"
     path: sections/section-010/module-02/course-02-migrating-a-deployment-and-routing-traffic.md
   - type: reading
-    title: "Migrate A Deployment To A Rollout With workloadRef - Task"
+    title: "Migrate A Deployment To A Rollout With workloadRef Lab - Task"
     path: sections/section-010/module-02/labs/lab-01/question.md
   - type: lab
-    title: "Migrate A Deployment To A Rollout With workloadRef"
+    title: "Migrate A Deployment To A Rollout With workloadRef Lab"
     path: sections/section-010/module-02/labs/lab-01
     difficulty: intermediate
     estimated_duration: 25m
@@ -137,18 +137,18 @@ modules:
     title: "Failed Releases And Recovery"
     path: sections/section-010/module-02/course-04-failed-releases-and-recovery.md
   - type: reading
-    title: "Set A Progress Deadline With Automatic Abort - Task"
+    title: "Set A Progress Deadline With Automatic Abort Lab - Task"
     path: sections/section-010/module-02/labs/lab-02/question.md
   - type: lab
-    title: "Set A Progress Deadline With Automatic Abort"
+    title: "Set A Progress Deadline With Automatic Abort Lab"
     path: sections/section-010/module-02/labs/lab-02
     difficulty: intermediate
     estimated_duration: 25m
     topic: argo-rollout
     task_kind: build
     learning_goals:
-    - "Set progressDeadlineAbort on a canary Rollout"
-    - "Verify the final state in the live cluster"
+    - "Set progressDeadlineSeconds and progressDeadlineAbort on a canary Rollout"
+    - "Read the aborted status and the ReplicaSet that stays stable"
     tags:
     - capa
     - argo-rollout
@@ -160,25 +160,27 @@ modules:
     title: "Summary"
     path: sections/section-010/module-02/course-05-summary.md
   - type: reading
+    title: "Installing Argo Rollouts And Using The Plugin"
+    path: sections/section-010/module-03/course.md
+  - type: reading
     title: "Installing The Controller And The Custom Resources"
     path: sections/section-010/module-03/course-01-installing-the-controller-and-the-custom-resources.md
   - type: reading
     title: "Controller Options And Installation Scope"
     path: sections/section-010/module-03/course-02-controller-options-and-installation-scope.md
   - type: reading
-    title: "Configure The Controller Log Level And Format - Task"
+    title: "Configure The Controller Log Level And Format Lab - Task"
     path: sections/section-010/module-03/labs/lab-01/question.md
   - type: lab
-    title: "Configure The Controller Log Level And Format"
+    title: "Configure The Controller Log Level And Format Lab"
     path: sections/section-010/module-03/labs/lab-01
     difficulty: beginner
     estimated_duration: 15m
     topic: argo-rollout
     task_kind: build
     learning_goals:
-    - "Patch the controller Deployment with new arguments"
-    - "Verify the rollout of the controller pod"
-    - "Verify the final state in the live cluster"
+    - "Patch the controller Deployment with the loglevel and logformat arguments"
+    - "Verify that the new controller pod runs with the new arguments"
     tags:
     - capa
     - argo-rollout
@@ -193,9 +195,6 @@ modules:
     title: "The Dashboard, Upgrades And Removal"
     path: sections/section-010/module-03/course-04-the-dashboard-upgrades-and-removal.md
   - type: reading
-    title: "Installing Argo Rollouts And Using The Plugin"
-    path: sections/section-010/module-03/course.md
-  - type: reading
     title: "Summary"
     path: sections/section-010/module-03/course-05-summary.md
   - type: quiz
@@ -203,25 +202,27 @@ modules:
     path: sections/section-010/module-03/quiz.yaml
     pass_score: 70
   - type: reading
+    title: "Scaling A Rollout With Autoscalers"
+    path: sections/section-010/module-04/course.md
+  - type: reading
     title: "The Scale Subresource And The Replica Count"
     path: sections/section-010/module-04/course-01-the-scale-subresource-and-the-replica-count.md
   - type: reading
     title: "An HPA That Targets A Rollout"
     path: sections/section-010/module-04/course-02-an-hpa-that-targets-a-rollout.md
   - type: reading
-    title: "Autoscale A Rollout With An HPA - Task"
+    title: "Autoscale A Rollout With An HPA Lab - Task"
     path: sections/section-010/module-04/labs/lab-01/question.md
   - type: lab
-    title: "Autoscale A Rollout With An HPA"
+    title: "Autoscale A Rollout With An HPA Lab"
     path: sections/section-010/module-04/labs/lab-01
     difficulty: intermediate
     estimated_duration: 25m
     topic: argo-rollout
     task_kind: build
     learning_goals:
-    - "Create an HPA that targets a Rollout"
-    - "Request CPU in the pod template"
-    - "Verify the final state in the live cluster"
+    - "Create an HPA that targets a Rollout through the scale subresource"
+    - "Request CPU in the pod template so the HPA can read a metric"
     tags:
     - capa
     - argo-rollout
@@ -236,15 +237,15 @@ modules:
     title: "Anti-Affinity, Disruption Budgets And Other Autoscalers"
     path: sections/section-010/module-04/course-04-anti-affinity-disruption-budgets-and-other-autoscalers.md
   - type: reading
-    title: "Scaling A Rollout With Autoscalers"
-    path: sections/section-010/module-04/course.md
-  - type: reading
     title: "Summary"
     path: sections/section-010/module-04/course-05-summary.md
   - type: quiz
     title: "Knowledge Check: Scaling A Rollout With Autoscalers"
     path: sections/section-010/module-04/quiz.yaml
     pass_score: 70
+  - type: reading
+    title: "Notifications"
+    path: sections/section-010/module-05/course.md
   - type: reading
     title: "How The Notification Engine Works"
     path: sections/section-010/module-05/course-01-how-the-notification-engine-works.md
@@ -258,19 +259,18 @@ modules:
     title: "Testing And Troubleshooting"
     path: sections/section-010/module-05/course-04-testing-and-troubleshooting.md
   - type: reading
-    title: "Send A Rollout Notification To A Webhook - Task"
+    title: "Send A Rollout Notification To A Webhook Lab - Task"
     path: sections/section-010/module-05/labs/lab-01/question.md
   - type: lab
-    title: "Send A Rollout Notification To A Webhook"
+    title: "Send A Rollout Notification To A Webhook Lab"
     path: sections/section-010/module-05/labs/lab-01
     difficulty: intermediate
     estimated_duration: 30m
     topic: argo-rollout
     task_kind: build
     learning_goals:
-    - "Configure a webhook service, template and trigger"
+    - "Configure a webhook service, a template and a trigger in the notifications ConfigMap"
     - "Subscribe a Rollout with an annotation"
-    - "Verify the final state in the live cluster"
     tags:
     - capa
     - argo-rollout
@@ -279,9 +279,6 @@ modules:
     - name: "Argo Rollouts documentation"
       url: https://argo-rollouts.readthedocs.io/en/stable/
   - type: reading
-    title: "Notifications"
-    path: sections/section-010/module-05/course.md
-  - type: reading
     title: "Summary"
     path: sections/section-010/module-05/course-05-summary.md
   - type: quiz
@@ -289,10 +286,10 @@ modules:
     path: sections/section-010/module-05/quiz.yaml
     pass_score: 70
   - type: reading
-    title: "Fundamentals Capstone: Run And Update A Rollout Behind A Service - Task"
+    title: "Run And Update A Rollout Behind A Service Capstone - Task"
     path: sections/section-010/capstone/labs/lab-01/question.md
   - type: lab
-    title: "Fundamentals Capstone: Run And Update A Rollout Behind A Service"
+    title: "Run And Update A Rollout Behind A Service Capstone"
     path: sections/section-010/capstone/labs/lab-01
     difficulty: advanced
     estimated_duration: 30m
@@ -301,6 +298,7 @@ modules:
     learning_goals:
     - "Run a service as a Rollout behind an existing Service"
     - "Release a second revision and reach a healthy state"
+    - "Limit fast rollbacks with rollbackWindow"
     tags:
     - capa
     - argo-rollout
@@ -332,10 +330,10 @@ modules:
     title: "Promotion, Analysis Hooks And Rollback"
     path: sections/section-020/module-01/course-02-promotion-analysis-hooks-and-rollback.md
   - type: reading
-    title: "Hold A Blue-Green Revision In Preview - Task"
+    title: "Hold A Blue-Green Revision In Preview Lab - Task"
     path: sections/section-020/module-01/labs/lab-01/question.md
   - type: lab
-    title: "Hold A Blue-Green Revision In Preview"
+    title: "Hold A Blue-Green Revision In Preview Lab"
     path: sections/section-020/module-01/labs/lab-01
     difficulty: intermediate
     estimated_duration: 25m
@@ -358,22 +356,22 @@ modules:
     title: "Operating A Blue-Green Rollout"
     path: sections/section-020/module-01/course-04-operating-a-blue-green-rollout.md
   - type: reading
-    title: "Run A Blue-Green Rollout With A Small Preview - Task"
+    title: "Run A Blue-Green Rollout With A Small Preview Lab - Task"
     path: sections/section-020/module-01/labs/lab-02/question.md
   - type: lab
-    title: "Run A Blue-Green Rollout With A Small Preview"
+    title: "Run A Blue-Green Rollout With A Small Preview Lab"
     path: sections/section-020/module-01/labs/lab-02
     difficulty: intermediate
     estimated_duration: 25m
-    topic: argo-rollout
+    topic: argo-bluegreen
     task_kind: build
     learning_goals:
     - "Use previewReplicaCount, scaleDownDelaySeconds and activeMetadata"
-    - "Verify the final state in the live cluster"
+    - "Read the active label that the controller writes on the running pods"
     tags:
     - capa
-    - argo-rollout
-    - bluegreen
+    - argo-bluegreen
+    - preview-replicas
     resources:
     - name: "Argo Rollouts documentation"
       url: https://argo-rollouts.readthedocs.io/en/stable/
@@ -390,10 +388,10 @@ modules:
     title: "Traffic Routing, Controlling A Canary And Choosing A Strategy"
     path: sections/section-020/module-02/course-02-traffic-routing-and-choosing-a-strategy.md
   - type: reading
-    title: "Complete A Canary Revision With Weight And Pause Steps - Task"
+    title: "Complete A Canary Revision With Weight And Pause Steps Lab - Task"
     path: sections/section-020/module-02/labs/lab-01/question.md
   - type: lab
-    title: "Complete A Canary Revision With Weight And Pause Steps"
+    title: "Complete A Canary Revision With Weight And Pause Steps Lab"
     path: sections/section-020/module-02/labs/lab-01
     difficulty: intermediate
     estimated_duration: 25m
@@ -413,31 +411,34 @@ modules:
     title: "Canary Scale Control"
     path: sections/section-020/module-02/course-03-canary-scale-control.md
   - type: reading
-    title: "Header Routing And Mirroring"
-    path: sections/section-020/module-02/course-04-header-routing-and-mirroring.md
-  - type: reading
-    title: "Limit Surge And Unavailability In A Canary - Task"
+    title: "Limit Surge And Unavailability In A Canary Lab - Task"
     path: sections/section-020/module-02/labs/lab-02/question.md
   - type: lab
-    title: "Limit Surge And Unavailability In A Canary"
+    title: "Limit Surge And Unavailability In A Canary Lab"
     path: sections/section-020/module-02/labs/lab-02
     difficulty: intermediate
     estimated_duration: 25m
-    topic: argo-rollout
+    topic: argo-canary
     task_kind: build
     learning_goals:
     - "Set maxSurge and maxUnavailable on a canary"
-    - "Verify the final state in the live cluster"
+    - "Read the limits and the ready replica count from the live Rollout"
     tags:
     - capa
-    - argo-rollout
-    - canary
+    - argo-canary
+    - surge-limits
     resources:
     - name: "Argo Rollouts documentation"
       url: https://argo-rollouts.readthedocs.io/en/stable/
   - type: reading
+    title: "Header Routing And Mirroring"
+    path: sections/section-020/module-02/course-04-header-routing-and-mirroring.md
+  - type: reading
     title: "Summary"
     path: sections/section-020/module-02/course-05-summary.md
+  - type: reading
+    title: "Traffic Management Providers"
+    path: sections/section-020/module-03/course.md
   - type: reading
     title: "How The Controller Drives A Provider"
     path: sections/section-020/module-03/course-01-how-the-controller-drives-a-provider.md
@@ -445,22 +446,21 @@ modules:
     title: "The NGINX Ingress Provider"
     path: sections/section-020/module-03/course-02-the-nginx-ingress-provider.md
   - type: reading
-    title: "Route A Canary Through An NGINX Ingress - Task"
+    title: "Route A Canary Through An NGINX Ingress Lab - Task"
     path: sections/section-020/module-03/labs/lab-01/question.md
   - type: lab
-    title: "Route A Canary Through An NGINX Ingress"
+    title: "Route A Canary Through An NGINX Ingress Lab"
     path: sections/section-020/module-03/labs/lab-01
     difficulty: intermediate
     estimated_duration: 30m
-    topic: argo-rollout
+    topic: argo-traffic-routing
     task_kind: build
     learning_goals:
-    - "Route a canary through an NGINX Ingress"
-    - "Read the canary Ingress that the controller creates"
-    - "Verify the final state in the live cluster"
+    - "Route a canary through an NGINX Ingress with stableIngress"
+    - "Read the canary Ingress and its annotations that the controller creates"
     tags:
     - capa
-    - argo-rollout
+    - argo-traffic-routing
     - nginx-traffic-routing
     resources:
     - name: "Argo Rollouts documentation"
@@ -472,9 +472,6 @@ modules:
     title: "Other Providers And The Plugin Route"
     path: sections/section-020/module-03/course-04-other-providers-and-the-plugin-route.md
   - type: reading
-    title: "Traffic Management Providers"
-    path: sections/section-020/module-03/course.md
-  - type: reading
     title: "Summary"
     path: sections/section-020/module-03/course-05-summary.md
   - type: quiz
@@ -482,22 +479,23 @@ modules:
     path: sections/section-020/module-03/quiz.yaml
     pass_score: 70
   - type: reading
-    title: "Strategies Capstone: Preview A Blue-Green Release And Complete A Canary - Task"
+    title: "Gate A Blue-Green Switch And Set The Canary Scale Capstone - Task"
     path: sections/section-020/capstone/labs/lab-01/question.md
   - type: lab
-    title: "Strategies Capstone: Preview A Blue-Green Release And Complete A Canary"
+    title: "Gate A Blue-Green Switch And Set The Canary Scale Capstone"
     path: sections/section-020/capstone/labs/lab-01
     difficulty: advanced
-    estimated_duration: 35m
+    estimated_duration: 40m
     topic: argo-strategies
     task_kind: build
     learning_goals:
-    - "Hold a blue-green release in preview"
-    - "Complete a canary release with weight and pause steps"
+    - "Gate a blue-green promotion with prePromotionAnalysis"
+    - "Set the canary pod count with setCanaryScale and dynamicStableScale under NGINX traffic routing"
     tags:
     - capa
     - argo-bluegreen
     - argo-canary
+    - argo-traffic-routing
     - capstone
     resources:
     - name: "Blue-green strategy"
@@ -526,47 +524,27 @@ modules:
     title: "Providers And Measurement Results"
     path: sections/section-030/module-01/course-02-providers-and-measurement-results.md
   - type: reading
-    title: "Execute A Job-Based Analysis - Task"
-    path: sections/section-030/module-01/labs/lab-01/question.md
-  - type: lab
-    title: "Execute A Job-Based Analysis"
-    path: sections/section-030/module-01/labs/lab-01
-    difficulty: intermediate
-    estimated_duration: 25m
-    topic: argo-analysis
-    task_kind: build
-    learning_goals:
-    - "Write an AnalysisTemplate with a job provider"
-    - "Run an AnalysisRun to the Successful phase"
-    tags:
-    - capa
-    - argo-analysis
-    - analysistemplate
-    resources:
-    - name: "Analysis and progressive delivery"
-      url: https://argo-rollouts.readthedocs.io/en/stable/features/analysis/
-  - type: reading
     title: "Cluster Templates And Argument Sources"
     path: sections/section-030/module-01/course-03-cluster-templates-and-argument-sources.md
   - type: reading
     title: "Dry Run, Retention And Error Handling"
     path: sections/section-030/module-01/course-04-dry-run-retention-and-error-handling.md
   - type: reading
-    title: "Try A Metric In Dry Run - Task"
-    path: sections/section-030/module-01/labs/lab-02/question.md
+    title: "Try A Metric In Dry Run Lab - Task"
+    path: sections/section-030/module-01/labs/lab-01/question.md
   - type: lab
-    title: "Try A Metric In Dry Run"
-    path: sections/section-030/module-01/labs/lab-02
+    title: "Try A Metric In Dry Run Lab"
+    path: sections/section-030/module-01/labs/lab-01
     difficulty: intermediate
     estimated_duration: 25m
-    topic: argo-rollout
+    topic: argo-analysis
     task_kind: build
     learning_goals:
     - "Use dryRun and measurementRetention in a template and a run"
-    - "Verify the final state in the live cluster"
+    - "Read the dryRun flag and the phase in the metric results of a finished run"
     tags:
     - capa
-    - argo-rollout
+    - argo-analysis
     - dry-run
     resources:
     - name: "Argo Rollouts documentation"
@@ -584,10 +562,10 @@ modules:
     title: "How A Result Changes The Rollout, And Experiments"
     path: sections/section-030/module-02/course-02-how-a-result-changes-the-rollout-and-experiments.md
   - type: reading
-    title: "Gate A Canary Step With An AnalysisRun - Task"
+    title: "Gate A Canary Step With An AnalysisRun Lab - Task"
     path: sections/section-030/module-02/labs/lab-01/question.md
   - type: lab
-    title: "Gate A Canary Step With An AnalysisRun"
+    title: "Gate A Canary Step With An AnalysisRun Lab"
     path: sections/section-030/module-02/labs/lab-01
     difficulty: intermediate
     estimated_duration: 30m
@@ -609,67 +587,67 @@ modules:
     title: "Passing Rollout Data Into An Analysis"
     path: sections/section-030/module-02/course-03-passing-rollout-data-into-an-analysis.md
   - type: reading
-    title: "Reading And Debugging An AnalysisRun"
-    path: sections/section-030/module-02/course-04-reading-and-debugging-an-analysisrun.md
-  - type: reading
-    title: "Run An AnalysisRun With An Argument - Task"
+    title: "Run A Job-Based Analysis With An Argument Lab - Task"
     path: sections/section-030/module-02/labs/lab-02/question.md
   - type: lab
-    title: "Run An AnalysisRun With An Argument"
+    title: "Run A Job-Based Analysis With An Argument Lab"
     path: sections/section-030/module-02/labs/lab-02
     difficulty: intermediate
     estimated_duration: 25m
-    topic: argo-rollout
+    topic: argo-analysis
     task_kind: build
     learning_goals:
-    - "Pass an argument into an AnalysisRun created by hand"
-    - "Verify the final state in the live cluster"
+    - "Write an AnalysisTemplate with a job provider and an argument without a default"
+    - "Create an AnalysisRun by hand with an argument value and run it to Successful"
     tags:
     - capa
-    - argo-rollout
+    - argo-analysis
+    - analysistemplate
     - analysisrun
     resources:
-    - name: "Argo Rollouts documentation"
-      url: https://argo-rollouts.readthedocs.io/en/stable/
+    - name: "Analysis and progressive delivery"
+      url: https://argo-rollouts.readthedocs.io/en/stable/features/analysis/
+  - type: reading
+    title: "Reading And Debugging An AnalysisRun"
+    path: sections/section-030/module-02/course-04-reading-and-debugging-an-analysisrun.md
   - type: reading
     title: "Summary"
     path: sections/section-030/module-02/course-05-summary.md
   - type: reading
+    title: "Experiments"
+    path: sections/section-030/module-03/course.md
+  - type: reading
     title: "The Experiment Resource"
     path: sections/section-030/module-03/course-01-the-experiment-resource.md
   - type: reading
-    title: "Compare Two Versions With An Experiment - Task"
+    title: "Analyses Inside An Experiment"
+    path: sections/section-030/module-03/course-02-analyses-inside-an-experiment.md
+  - type: reading
+    title: "Compare Two Versions With An Experiment Lab - Task"
     path: sections/section-030/module-03/labs/lab-01/question.md
   - type: lab
-    title: "Compare Two Versions With An Experiment"
+    title: "Compare Two Versions With An Experiment Lab"
     path: sections/section-030/module-03/labs/lab-01
     difficulty: intermediate
     estimated_duration: 25m
-    topic: argo-rollout
+    topic: argo-experiment
     task_kind: build
     learning_goals:
     - "Run two versions in an Experiment"
     - "Verify the Experiment phase and its ReplicaSets"
-    - "Verify the final state in the live cluster"
     tags:
     - capa
-    - argo-rollout
+    - argo-experiment
     - experiment
     resources:
     - name: "Argo Rollouts documentation"
       url: https://argo-rollouts.readthedocs.io/en/stable/
-  - type: reading
-    title: "Analyses Inside An Experiment"
-    path: sections/section-030/module-03/course-02-analyses-inside-an-experiment.md
   - type: reading
     title: "Experiments In A Canary"
     path: sections/section-030/module-03/course-03-experiments-in-a-canary.md
   - type: reading
     title: "Reading And Debugging An Experiment"
     path: sections/section-030/module-03/course-04-reading-and-debugging-an-experiment.md
-  - type: reading
-    title: "Experiments"
-    path: sections/section-030/module-03/course.md
   - type: reading
     title: "Summary"
     path: sections/section-030/module-03/course-05-summary.md
@@ -678,25 +656,27 @@ modules:
     path: sections/section-030/module-03/quiz.yaml
     pass_score: 70
   - type: reading
+    title: "Analysis Providers In Depth"
+    path: sections/section-030/module-04/course.md
+  - type: reading
     title: "The Web Provider"
     path: sections/section-030/module-04/course-01-the-web-provider.md
   - type: reading
-    title: "Measure A Canary With A Web Provider - Task"
+    title: "Measure A Canary With A Web Provider Lab - Task"
     path: sections/section-030/module-04/labs/lab-01/question.md
   - type: lab
-    title: "Measure A Canary With A Web Provider"
+    title: "Measure A Canary With A Web Provider Lab"
     path: sections/section-030/module-04/labs/lab-01
     difficulty: intermediate
     estimated_duration: 30m
-    topic: argo-rollout
+    topic: argo-analysis
     task_kind: build
     learning_goals:
-    - "Define a web provider metric"
-    - "Gate a canary with the web provider"
-    - "Verify the final state in the live cluster"
+    - "Define a web provider metric with jsonPath and successCondition"
+    - "Gate a canary step with the web provider"
     tags:
     - capa
-    - argo-rollout
+    - argo-analysis
     - web-provider
     resources:
     - name: "Argo Rollouts documentation"
@@ -711,9 +691,6 @@ modules:
     title: "Result Types And Conditions"
     path: sections/section-030/module-04/course-04-result-types-and-conditions.md
   - type: reading
-    title: "Analysis Providers In Depth"
-    path: sections/section-030/module-04/course.md
-  - type: reading
     title: "Summary"
     path: sections/section-030/module-04/course-05-summary.md
   - type: quiz
@@ -721,10 +698,10 @@ modules:
     path: sections/section-030/module-04/quiz.yaml
     pass_score: 70
   - type: reading
-    title: "Analysis Capstone: Block A Bad Release With Background Analysis - Task"
+    title: "Block A Bad Release With Background Analysis Capstone - Task"
     path: sections/section-030/capstone/labs/lab-01/question.md
   - type: lab
-    title: "Analysis Capstone: Block A Bad Release With Background Analysis"
+    title: "Block A Bad Release With Background Analysis Capstone"
     path: sections/section-030/capstone/labs/lab-01
     difficulty: advanced
     estimated_duration: 35m
@@ -732,6 +709,7 @@ modules:
     task_kind: build
     learning_goals:
     - "Create a ClusterAnalysisTemplate"
+    - "Pass the latest pod template hash into the analysis with valueFrom"
     - "Abort a canary with a failing background analysis"
     tags:
     - capa

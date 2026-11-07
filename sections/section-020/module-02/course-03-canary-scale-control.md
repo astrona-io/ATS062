@@ -23,6 +23,64 @@ kubectl -n starfleet get rollout mission -o jsonpath='{.spec.strategy.canary.max
 
 An empty result means that the defaults apply.
 
+Set both fields on the playground `Rollout`. Save this as `rollout-mission-limits.yaml`:
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: mission
+  namespace: starfleet
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: mission
+  template:
+    metadata:
+      labels:
+        app: mission
+    spec:
+      containers:
+      - name: mission
+        image: docker.io/library/python:3.13-alpine
+        env:
+        - name: REVISION
+          value: one
+        ports:
+        - containerPort: 8080
+        command:
+        - python
+        - -m
+        - http.server
+        - '8080'
+  strategy:
+    canary:
+      maxSurge: 1
+      maxUnavailable: 0
+      steps:
+      - setWeight: 50
+      - pause: {duration: 5s}
+      - setWeight: 100
+```
+
+With `maxSurge: 1` and `maxUnavailable: 0`, the controller may run at most 5 pods and never fewer than 4 available pods during a release. The pod template is the same as before, so this file changes the strategy and the replica count without a new revision.
+
+Apply it:
+
+```sh
+kubectl apply -f rollout-mission-limits.yaml
+```
+
+Then check the result:
+
+```sh
+kubectl -n starfleet wait --for=jsonpath='{.status.phase}'=Healthy rollout/mission --timeout=240s
+kubectl -n starfleet get rollout mission -o jsonpath='{.spec.strategy.canary.maxSurge} {.spec.strategy.canary.maxUnavailable} {.status.readyReplicas}{"\n"}'
+```
+
+The values are `1`, `0` and `4`. A later release of a new revision with `setWeight: 50` then adds one canary pod at a time and scales a stable pod down only after a canary pod is available.
+
 ## Scale control with a traffic router
 
 When `trafficRouting` is set, the router splits the traffic, and the pod count no longer has to match the weight. The step `setCanaryScale` sets the canary pods on its own. It takes one of three forms:

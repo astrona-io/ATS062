@@ -3,13 +3,13 @@ draft: true
 exam_objectives:
 - Describe Analysis Template and AnalysisRun
 ---
-# Execute A Job-Based Analysis
+# Try A Metric In Dry Run
 
-Before the next release the team wants a reusable health check for the `probe` Service, and proof that the check passes now.
+The `starfleet` team wants to try a new metric on an analysis without letting it fail the run.
 
 ## Starting state
 
-The Argo Rollouts controller runs in the `argo-rollouts` namespace. The `starfleet` namespace holds the `probe` Service, which answers HTTP requests on port 8080, and the `shuttle` pod. No AnalysisTemplate and no AnalysisRun exist.
+The Argo Rollouts controller runs in the `argo-rollouts` namespace. The `starfleet` namespace holds the `probe` Service, which answers HTTP requests on port 8080, and the `shuttle` pod. Nothing else exists yet.
 
 Select the private kubeconfig for this environment:
 
@@ -20,13 +20,16 @@ test "$(kubectl config current-context)" = "kind-astro-ats-062-lab-030-01-01" ||
 
 ## Required result
 
-- Create an AnalysisTemplate `probe-check` in `starfleet` with one metric `probe-available`, `count: 1`, and a `job` provider. The Job pod runs `python -c` with a script that requests `http://probe:8080/` and asserts that the body contains `probe-ready`.
-- Create an AnalysisRun `mission-analysis` with the same metric, and wait until its phase is `Successful`.
+- Create an AnalysisTemplate named `probe-dry` in `starfleet` with two Job metrics, `stable-check` (the Job exits 0) and `experimental-check` (the Job exits 1), each with `count: 1`.
+- In the template, list `experimental-.*` under `dryRun` and set `measurementRetention` to a `limit` of 5 for `.*`.
+- Create an AnalysisRun named `dry-run-check` with the same two metrics and the same `dryRun` entry.
+- Wait until the AnalysisRun is `Successful`.
 
 ## Constraints
 
-- The Job needs `backoffLimit: 0` and `restartPolicy: Never`.
-- Do not change the `probe` Service.
+- Do not create a Rollout.
+- Do not use the web or prometheus providers.
+- Do not change the `probe` Service or the `shuttle` pod.
 
 ## Verify the result
 

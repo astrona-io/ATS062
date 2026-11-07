@@ -3,7 +3,7 @@ draft: true
 exam_objectives:
 - Understand Argo Rollouts Fundamentals
 ---
-# Reconcile A Rollout And Its ReplicaSet
+# Create A Rollout With A Revision History Limit
 
 The `starfleet` team wants the `mission` workload managed by Argo Rollouts instead of a Deployment.
 

@@ -71,7 +71,7 @@ The `virtualService` block also accepts `tlsRoutes` and `tcpRoutes` for non-HTTP
 
 ## What you know now
 
-The Istio integration edits a `VirtualService`, and optionally a `DestinationRule`. Weights go to two destinations or two subsets. The data path is the Envoy sidecar proxy. The last part lists the other providers.
+The Istio integration edits a `VirtualService`, and optionally a `DestinationRule`. Weights go to two destinations or two subsets. The data path is the Envoy sidecar proxy. Other providers follow the same pattern with their own routing resources.
 
 ## Common pitfalls
 

@@ -29,6 +29,68 @@ The controller also adds the annotation `argo-rollouts.argoproj.io/managed-by-ro
 
 The fields `activeMetadata` and `previewMetadata` under `strategy.blueGreen` hold labels and annotations that the controller puts on the pods of the active and the preview ReplicaSet. A monitoring rule can select `role: preview` pods without a change to the pod template. When a revision is promoted, the controller moves it from the preview metadata to the active metadata.
 
+Save this as `bluegreen-metadata.yaml`. It is the `mission` `Rollout` with revision `two`, a preview of one pod, and both metadata fields added:
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: mission
+  namespace: starfleet
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mission
+  template:
+    metadata:
+      labels:
+        app: mission
+    spec:
+      containers:
+      - name: mission
+        image: docker.io/library/python:3.13-alpine
+        env:
+        - name: REVISION
+          value: two
+        ports:
+        - containerPort: 8080
+        command:
+        - python
+        - -m
+        - http.server
+        - '8080'
+  strategy:
+    blueGreen:
+      activeService: active
+      previewService: preview
+      previewReplicaCount: 1
+      autoPromotionEnabled: false
+      scaleDownDelaySeconds: 45
+      activeMetadata:
+        labels:
+          role: active
+      previewMetadata:
+        labels:
+          role: preview
+```
+
+The label `role` is not in `spec.template.metadata.labels`. It lives only in the strategy, so adding it changes no pod template hash and starts no release. The controller writes the label into the ReplicaSets and into the pods that already run.
+
+Apply it:
+
+```sh
+kubectl apply -f bluegreen-metadata.yaml
+```
+
+Then check the result:
+
+```sh
+kubectl -n starfleet get pods -l app=mission -L role
+```
+
+The column `ROLE` shows `active` on the pods of the active revision. If a revision is still waiting in preview, its pod shows `preview`, and it changes to `active` after the promotion.
+
 ## A preview that does not become ready
 
 When the new pods stay unready, the release stays in `Progressing`, the active Service keeps the old selector and users see no change. That is the safe outcome of the strategy. To find the cause, read the new pods:

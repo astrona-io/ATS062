@@ -1,4 +1,4 @@
-# Fundamentals Capstone: Run And Update A Rollout Behind A Service
+# Run And Update A Rollout Behind A Service
 
 The `bridge` service must run as a Rollout behind the existing `bridge` Service, and it must already have been updated once.
 

@@ -69,6 +69,93 @@ The diagram shows that the controller sends the request, selects the value and e
 
 The request leaves from the controller pod, not from the pods of the application. The address must therefore be reachable from the `argo-rollouts` namespace, and a short Service name that works in the `starfleet` namespace does not work there. Use the full name `probe.starfleet.svc.cluster.local`.
 
+## Gating a release with the web provider
+
+A `Rollout` cannot reference an `AnalysisRun`; it references a template. Put the same metric into an `AnalysisTemplate`, and an inline analysis step in a canary creates a run from it at the right moment.
+
+Save this as `analysistemplate-probe-web.yaml`:
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisTemplate
+metadata:
+  name: probe-web
+  namespace: starfleet
+spec:
+  metrics:
+  - name: probe-status
+    count: 1
+    failureLimit: 0
+    successCondition: result == 200
+    provider:
+      web:
+        url: http://probe.starfleet.svc.cluster.local:8080/work?status=200
+        jsonPath: "{$.status}"
+        timeoutSeconds: 5
+```
+
+Apply it:
+
+```sh
+kubectl apply -f analysistemplate-probe-web.yaml
+```
+
+Then release a new revision of the playground `Rollout` `mission` with an analysis step that uses the template. Save this as `rollout-mission.yaml`:
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: mission
+  namespace: starfleet
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mission
+  template:
+    metadata:
+      labels:
+        app: mission
+    spec:
+      containers:
+      - name: mission
+        image: docker.io/library/python:3.13-alpine
+        env:
+        - name: REVISION
+          value: two
+        ports:
+        - containerPort: 8080
+        command:
+        - python
+        - -m
+        - http.server
+        - '8080'
+  strategy:
+    canary:
+      steps:
+      - setWeight: 50
+      - analysis:
+          templates:
+          - templateName: probe-web
+      - setWeight: 100
+```
+
+Apply it:
+
+```sh
+kubectl apply -f rollout-mission.yaml
+```
+
+Then check the result:
+
+```sh
+kubectl -n starfleet wait --for=jsonpath='{.status.phase}'=Healthy rollout/mission --timeout=300s
+kubectl -n starfleet get analysisrun -o jsonpath='{range .items[*]}{.metadata.name} {.status.phase}{"\n"}{end}'
+```
+
+The list holds the hand-made `web-check` and a second run that the `Rollout` created from `probe-web`, both `Successful`. No Job ran for either: the controller sent the request itself and moved the release to 100 percent.
+
 ## What you know now
 
 The `web` provider is an HTTP request sent by the controller, with `jsonPath` to select the value. The condition reads the value as `result`. The next question is how a monitoring query is written.

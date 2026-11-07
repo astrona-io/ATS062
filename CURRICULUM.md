@@ -37,34 +37,27 @@ AUTHORING.yaml records the objectives and the labs per module. All technical rea
 
 ## Hands-On Coverage
 
-This course has 12 ungraded playgrounds, 18 module labs and 3 capstone labs. Each module has one lab, and the six modules with the oldest content have a second one. Each lab task follows the parts it practises, and the solution is not listed as a reading. Static checks (`astrona validate`, `bash -n`, YAML and JSON parsing) are done. No lab or playground has been run on a cluster, so all are untested.
+This course has 12 ungraded playgrounds, 17 module labs and 3 capstone labs. Each module has one lab, and five modules have a second one. Each lab task follows the part it practises, and the solution is not listed as a reading. Static checks (`astrona validate`, `bash -n`, YAML and JSON parsing) are done. No lab or playground has been run on a cluster, so all are untested.
 
 | Section / module | Graded lab |
 | --- | --- |
-| 010/01 | Reconcile A Rollout And Its ReplicaSet |
-| 010/02 | Migrate A Deployment To A Rollout With workloadRef |
-| 010/03 | Configure The Controller Log Level And Format |
-| 010/04 | Autoscale A Rollout With An HPA |
-| 010/05 | Send A Rollout Notification To A Webhook |
-| 010/03 | Configure The Controller Log Level And Format |
-| 010/04 | Autoscale A Rollout With An HPA |
-| 010/05 | Send A Rollout Notification To A Webhook |
-| 010/capstone | Fundamentals Capstone: Run And Update A Rollout Behind A Service |
-| 020/01 | Hold A Blue-Green Revision In Preview |
-| 020/02 | Complete A Canary Revision With Weight And Pause Steps |
-| 020/03 | Route A Canary Through An NGINX Ingress |
-| 020/03 | Route A Canary Through An NGINX Ingress |
-| 020/capstone | Strategies Capstone: Preview A Blue-Green Release And Complete A Canary |
-| 030/01 | Execute A Job-Based Analysis |
-| 030/02 | Gate A Canary Step With An AnalysisRun |
-| 030/03 | Compare Two Versions With An Experiment |
-| 030/04 | Measure A Canary With A Web Provider |
-| 030/03 | Compare Two Versions With An Experiment |
-| 030/04 | Measure A Canary With A Web Provider |
+| 010/01 | Create A Rollout With A Revision History Limit |
 | 010/01 (lab 2) | Set Timing Fields And Stable Metadata On A Rollout |
+| 010/02 | Migrate A Deployment To A Rollout With workloadRef |
 | 010/02 (lab 2) | Set A Progress Deadline With Automatic Abort |
+| 010/03 | Configure The Controller Log Level And Format |
+| 010/04 | Autoscale A Rollout With An HPA |
+| 010/05 | Send A Rollout Notification To A Webhook |
+| 010/capstone | Run And Update A Rollout Behind A Service |
+| 020/01 | Hold A Blue-Green Revision In Preview |
 | 020/01 (lab 2) | Run A Blue-Green Rollout With A Small Preview |
+| 020/02 | Complete A Canary Revision With Weight And Pause Steps |
 | 020/02 (lab 2) | Limit Surge And Unavailability In A Canary |
-| 030/01 (lab 2) | Try A Metric In Dry Run |
-| 030/02 (lab 2) | Run An AnalysisRun With An Argument |
-| 030/capstone | Analysis Capstone: Block A Bad Release With Background Analysis |
+| 020/03 | Route A Canary Through An NGINX Ingress |
+| 020/capstone | Gate A Blue-Green Switch And Set The Canary Scale |
+| 030/01 | Try A Metric In Dry Run |
+| 030/02 | Gate A Canary Step With An AnalysisRun |
+| 030/02 (lab 2) | Run A Job-Based Analysis With An Argument |
+| 030/03 | Compare Two Versions With An Experiment |
+| 030/04 | Measure A Canary With A Web Provider |
+| 030/capstone | Block A Bad Release With Background Analysis |

@@ -13,9 +13,11 @@ def owned_by(item,kind,name):
 def observed(rollout):
  return str(rollout['status'].get('observedGeneration'))==str(rollout['metadata']['generation'])
 
-t=obj('analysistemplate','probe-check')
-m=t['spec']['metrics'][0]
-assert m['name']=='probe-available' and m.get('count')==1 and 'job' in m['provider'], 'The template must define the job metric probe-available with count 1'
-run=obj('analysisrun','mission-analysis'); assert run['status']['phase']=='Successful', 'The AnalysisRun must be Successful'
-res=run['status']['metricResults'][0]
-assert res['name']=='probe-available' and res.get('successful')==1 and res['measurements'][0]['phase']=='Successful', 'The metric must have one successful measurement'
+t=obj('analysistemplate','probe-dry'); sp=t['spec']
+assert any(d.get('metricName')=='experimental-.*' for d in sp.get('dryRun',[])), 'The template must list experimental-.* in dryRun'
+assert any(m.get('limit')==5 for m in sp.get('measurementRetention',[])), 'measurementRetention must have a limit of 5'
+assert [m['name'] for m in sp['metrics']]==['stable-check','experimental-check'], 'The template must define the two metrics in order'
+run=obj('analysisrun','dry-run-check')
+assert run['status']['phase']=='Successful', 'The AnalysisRun must be Successful'
+names={m['name'] for m in run['status']['metricResults']}
+assert names=={'stable-check','experimental-check'}, 'Both metrics must have a result'

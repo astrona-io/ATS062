@@ -16,6 +16,7 @@ def observed(rollout):
 r=obj('rollout','bridge'); st=r['status']
 assert observed(r), 'Rollout generation has not been observed'
 assert r['spec'].get('replicas')==3 and r['spec'].get('revisionHistoryLimit')==2, 'replicas must be 3 and revisionHistoryLimit 2'
+assert r['spec'].get('rollbackWindow',{}).get('revisions')==1, 'rollbackWindow.revisions must be 1'
 assert r['spec']['strategy'].get('canary') is not None and 'blueGreen' not in r['spec']['strategy'], 'canary strategy required'
 env={e['name']:e.get('value') for e in r['spec']['template']['spec']['containers'][0].get('env',[])}
 assert env.get('REVISION')=='two', 'The pod template must carry REVISION=two'

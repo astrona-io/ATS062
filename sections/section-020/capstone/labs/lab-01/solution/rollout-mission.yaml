@@ -28,8 +28,16 @@ spec:
         - '8080'
   strategy:
     canary:
+      stableService: mission-stable
+      canaryService: mission-canary
+      dynamicStableScale: true
+      trafficRouting:
+        nginx:
+          stableIngress: mission-ingress
       steps:
+      - setCanaryScale:
+          replicas: 1
       - setWeight: 50
       - pause:
-          duration: 5s
+          duration: 10s
       - setWeight: 100

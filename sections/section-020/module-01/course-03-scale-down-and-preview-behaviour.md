@@ -13,9 +13,33 @@ The field `previewReplicaCount` sets how many pods the new ReplicaSet runs while
 
 When the controller promotes the revision, it scales the new ReplicaSet to the full `spec.replicas` first and switches the active Service only after those pods are available. The switch therefore never points at fewer pods than the service needs.
 
-Save this as `bluegreen-preview-count.yaml`:
+Save this as `bluegreen-preview-count.yaml`. It holds the two Services and the `Rollout`, so it works whether or not the `mission` objects already exist:
 
 ```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: active
+  namespace: starfleet
+spec:
+  selector:
+    app: mission
+  ports:
+  - port: 8080
+    targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: preview
+  namespace: starfleet
+spec:
+  selector:
+    app: mission
+  ports:
+  - port: 8080
+    targetPort: 8080
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
@@ -45,21 +69,43 @@ spec:
       previewService: preview
       previewReplicaCount: 1
       autoPromotionEnabled: false
+      scaleDownDelaySeconds: 45
 ```
 
-Apply it:
+The last field, `scaleDownDelaySeconds`, is the time the controller keeps the old ReplicaSet running after a promotion. The default is 30 seconds; this file sets 45.
 
 <!-- astrona:playground:renew -->
+
+Apply it:
 
 ```sh
 kubectl apply -f bluegreen-preview-count.yaml
 ```
 
-Then check the result. After you change the image and apply again, the new ReplicaSet runs one pod while it waits:
+Then check the result:
 
 ```sh
+kubectl -n starfleet wait --for=jsonpath='{.status.phase}'=Healthy rollout/mission --timeout=240s
+kubectl -n starfleet get rollout mission -o jsonpath='{.spec.strategy.blueGreen.previewReplicaCount} {.spec.strategy.blueGreen.scaleDownDelaySeconds}{"\n"}'
+```
+
+The two values are `1` and `45`. A change to the strategy fields alone starts no new revision; only a change to the pod template does.
+
+To see the preview count at work, add an environment variable to the container in `bluegreen-preview-count.yaml`, under `image`, and apply the file again:
+
+```yaml
+        env:
+        - name: REVISION
+          value: two
+```
+
+```sh
+kubectl apply -f bluegreen-preview-count.yaml
+kubectl -n starfleet wait --for=jsonpath='{.status.phase}'=Paused rollout/mission --timeout=240s
 kubectl -n starfleet get replicasets -l app=mission
 ```
+
+The new ReplicaSet runs one pod while it waits in preview, and the old one keeps its three.
 
 ## Automatic promotion
 

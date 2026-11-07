@@ -16,6 +16,8 @@ The `args` list of an analysis entry in a `Rollout` sets the arguments of the te
 
 A template can use the hash in a query that selects pods by the label `rollouts-pod-template-hash`, so it measures exactly the canary pods.
 
+<!-- astrona:playground:renew -->
+
 Save this as `rollout-analysis-args.yaml`:
 
 ```yaml
@@ -60,8 +62,6 @@ The template `probe-gate` takes an argument `status`. The `Rollout` sets it to `
 
 Apply it:
 
-<!-- astrona:playground:renew -->
-
 ```sh
 kubectl apply -f rollout-analysis-args.yaml
 ```
@@ -78,7 +78,57 @@ The controller creates an `AnalysisRun` for each analysis entry that starts, set
 
 ## Creating a run by hand
 
-An operator can also create an `AnalysisRun` with `kubectl`, with a `spec` that has `metrics` and `args`. The run executes the same way, with no `Rollout`. This is useful to test a template before it is used in a release. The field `spec.terminate: true` stops a running `AnalysisRun`; the run ends with the result it has so far.
+An operator can also create an `AnalysisRun` with `kubectl`, with a `spec` that has `metrics` and `args`. The run executes the same way, with no `Rollout`. This is useful to test a metric before it is used in a release. The field `spec.terminate: true` stops a running `AnalysisRun`; the run ends with the result it has so far.
+
+Save this as `analysisrun-hand-run.yaml`. Its argument `service` names the Service that the Job requests, and the metric reads it with `{{ args.service }}`:
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisRun
+metadata:
+  name: hand-run
+  namespace: starfleet
+spec:
+  args:
+  - name: service
+    value: probe
+  metrics:
+  - name: probe-up
+    count: 1
+    failureLimit: 0
+    provider:
+      job:
+        spec:
+          backoffLimit: 0
+          template:
+            spec:
+              restartPolicy: Never
+              containers:
+              - name: check
+                image: docker.io/library/python:3.13-alpine
+                command:
+                - python
+                - -c
+                args:
+                - import urllib.request; urllib.request.urlopen("http://{{ args.service }}:8080/", timeout=4)
+```
+
+A hand-made run has no `Rollout` and no template to supply a value, so every argument that a metric uses must have a `value` in the run itself. The controller replaces `{{ args.service }}` with `probe` before it creates the Job.
+
+Apply it:
+
+```sh
+kubectl apply -f analysisrun-hand-run.yaml
+```
+
+Then check the result:
+
+```sh
+kubectl -n starfleet wait --for=jsonpath='{.status.phase}'=Successful analysisrun/hand-run --timeout=180s
+kubectl -n starfleet get analysisrun hand-run -o jsonpath='{.spec.args} {.metadata.ownerReferences}{"\n"}'
+```
+
+The run ends `Successful`. The first value shows the argument as it was set, and the second is empty, because no `Rollout` owns a run that an operator created.
 
 ```mermaid
 flowchart TB

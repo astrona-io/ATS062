@@ -1,6 +1,6 @@
 apiVersion: astrona.io/v1
 metadata:
-  name: ats-062-lab-020-cap-01
+  name: ats-062-capstone-020
   docs:
     prerequisites: docs/prerequisites.md
     examQuestion: question.md

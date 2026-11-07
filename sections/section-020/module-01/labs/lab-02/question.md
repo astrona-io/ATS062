@@ -5,7 +5,7 @@ exam_objectives:
 ---
 # Run A Blue-Green Rollout With A Small Preview
 
-The `starfleet` team wants a blue-green `relay` workload with active and preview Services and role labels on the active pods.
+The `starfleet` team wants a blue-green `lander` workload with active and preview Services and role labels on the active pods.
 
 ## Starting state
 
@@ -20,14 +20,14 @@ test "$(kubectl config current-context)" = "kind-astro-ats-062-lab-020-01-02" ||
 
 ## Required result
 
-- Create the Services `relay-active` and `relay-preview` in `starfleet`, both selecting `app: relay` on port 8080.
-- Create a Rollout named `relay` with 2 replicas and the `blueGreen` strategy that uses those two Services, `previewReplicaCount: 1`, `scaleDownDelaySeconds: 45` and `activeMetadata` with the label `role: active`.
-- Use the image `docker.io/library/python:3.13-alpine`, the label `app: relay`, port 8080 and the command `python -m http.server 8080`.
-- Wait until the Rollout is `Healthy` and `relay-active` selects the stable ReplicaSet.
+- Create the Services `lander-active` and `lander-preview` in `starfleet`, both selecting `app: lander` on port 8080.
+- Create a Rollout named `lander` with 2 replicas and the `blueGreen` strategy that uses those two Services, `previewReplicaCount: 1`, `scaleDownDelaySeconds: 45` and `activeMetadata` with the label `role: active`.
+- Use the image `docker.io/library/python:3.13-alpine`, the label `app: lander`, port 8080 and the command `python -m http.server 8080`.
+- Wait until the Rollout is `Healthy` and `lander-active` selects the stable ReplicaSet.
 
 ## Constraints
 
-- Do not create a Deployment named `relay`.
+- Do not create a Deployment named `lander`.
 - Do not put the label `role` in the pod template.
 - Do not change the `probe` Service or the `shuttle` pod.
 

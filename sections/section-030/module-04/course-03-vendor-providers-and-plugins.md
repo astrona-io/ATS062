@@ -57,7 +57,7 @@ A provider that is not built in can be added as a plugin. A metric provider plug
 
 ## What you know now
 
-Vendor providers cover the common monitoring products, and each reads its credentials from a Secret. A plugin adds any other source. The last part explains how to write conditions for these answers.
+Vendor providers cover the common monitoring products, and each reads its credentials from a Secret. A plugin adds any other source. The question still open is how to write conditions for the answers these providers return.
 
 ## Common pitfalls
 

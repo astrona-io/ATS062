@@ -68,7 +68,10 @@ spec:
       activeService: scout-active
       previewService: scout-preview
       autoPromotionEnabled: false
+      scaleDownDelaySeconds: 60
 ```
+
+The field `autoPromotionEnabled: false` makes the controller wait for a promotion before it moves the active Service to a new revision. The field `scaleDownDelaySeconds` is the time the controller keeps the old ReplicaSet running after a promotion, 30 seconds by default, here 60.
 
 <!-- astrona:playground:renew -->
 
@@ -95,6 +98,29 @@ The first revision of a new `Rollout` has no older version to protect. The contr
 
 When you change the pod template, the controller creates a second ReplicaSet at full size. It does not touch the active Service. It points the preview Service at the new ReplicaSet. At this point both versions run completely, the active Service still reaches only the old pods, and the Rollout is in the phase `Paused` if `autoPromotionEnabled` is `false`.
 
+Release a second revision to see this. Add an environment variable to the container in `bluegreen-scout.yaml`, under `image`, and apply the file again:
+
+```yaml
+        env:
+        - name: REVISION
+          value: two
+```
+
+```sh
+kubectl apply -f bluegreen-scout.yaml
+kubectl -n starfleet wait --for=jsonpath='{.status.phase}'=Paused rollout/scout --timeout=240s
+```
+
+Then read the hashes and the two selectors:
+
+```sh
+kubectl -n starfleet get rollout scout -o jsonpath='{.status.stableRS} {.status.currentPodHash}{"\n"}'
+kubectl -n starfleet get service scout-active -o jsonpath='{.spec.selector.rollouts-pod-template-hash}{"\n"}'
+kubectl -n starfleet get service scout-preview -o jsonpath='{.spec.selector.rollouts-pod-template-hash}{"\n"}'
+```
+
+The two hashes of the `Rollout` differ. The active Service carries the `stableRS` hash and the preview Service carries the `currentPodHash` hash. Users still reach revision one, and a tester who sends a request to `scout-preview` reaches revision two.
+
 ```mermaid
 flowchart TB
   U["Users"] --> A["Service: scout-active"]
@@ -105,7 +131,7 @@ flowchart TB
 
 The diagram shows that users stay on the old ReplicaSet while testers reach the new one through the preview Service.
 
-Promotion changes one thing: the `rollouts-pod-template-hash` selector of the active Service becomes the hash of the new ReplicaSet. Kubernetes updates the Endpoints of the Service, and the next request goes to the new pods. No pod restarts, so the switch is fast. The old ReplicaSet stays up for a short time, as the next part explains.
+Promotion changes one thing: the `rollouts-pod-template-hash` selector of the active Service becomes the hash of the new ReplicaSet. Kubernetes updates the Endpoints of the Service, and the next request goes to the new pods. No pod restarts, so the switch is fast. The old ReplicaSet stays up for `scaleDownDelaySeconds` after the switch, so requests that are still in flight can finish, and the controller then scales it to zero.
 
 ## Why the selector approach has limits
 

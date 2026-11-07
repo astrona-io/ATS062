@@ -10,6 +10,6 @@ This task runs in its own kind cluster (Kubernetes in Docker). You need `astrona
 A kubeconfig file holds the address and credentials that `kubectl` uses. Select the one for this environment:
 
 ```sh
-export KUBECONFIG="$(astrona kubeconfig ats-062-lab-020-cap-01)"
-test "$(kubectl config current-context)" = "kind-astro-ats-062-lab-020-cap-01" || exit 1
+export KUBECONFIG="$(astrona kubeconfig ats-062-capstone-020)"
+test "$(kubectl config current-context)" = "kind-astro-ats-062-capstone-020" || exit 1
 ```

@@ -15,9 +15,14 @@ def observed(rollout):
 
 t=obj('analysistemplate','probe-args')
 assert any(a['name']=='service' and 'value' not in a for a in t['spec'].get('args',[])), 'The template needs an argument service with no default'
-cmd=json.dumps(t['spec']['metrics'][0]['provider']['job']['spec'])
+m=t['spec']['metrics'][0]
+assert m['name']=='probe-up' and m.get('count')==1 and 'job' in m['provider'], 'The template must define the job metric probe-up with count 1'
+cmd=json.dumps(m['provider']['job']['spec'])
 assert '{{ args.service }}' in cmd or '{{args.service}}' in cmd, 'The Job command must use the service argument'
+assert 'probe-ready' in cmd, 'The Job command must assert that the body contains probe-ready'
 run=obj('analysisrun','manual-run')
 assert any(a['name']=='service' and a.get('value')=='probe' for a in run['spec'].get('args',[])), 'The run must set service to probe'
 assert run['status']['phase']=='Successful', 'The AnalysisRun must be Successful'
-assert run['status']['metricResults'][0]['name']=='probe-up', 'The metric result for probe-up is missing'
+res=run['status']['metricResults'][0]
+assert res['name']=='probe-up' and res.get('successful')==1 and res['measurements'][0]['phase']=='Successful', 'The metric probe-up must have one successful measurement'
+assert not items('rollouts'), 'No Rollout may exist'

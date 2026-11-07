@@ -60,14 +60,14 @@ The field `specRef` copies the pod spec of the stable or the canary ReplicaSet. 
 
 ## Reading the abort
 
-If you ran the background analysis in the previous part, read what the controller recorded:
+The `Rollout` `mission` is aborted after a background run of the template `probe-gate`, with the argument `status` set to `"500"`, ended `Failed`. Read what the controller recorded:
 
 ```sh
 kubectl -n starfleet get rollout mission -o jsonpath='{.status.stableRS} {.status.currentPodHash}{"\n"}'
 kubectl -n starfleet get analysisrun -o jsonpath='{range .items[*]}{.metadata.name} {.status.phase}{"\n"}{end}'
 ```
 
-The two hashes differ, because the new ReplicaSet exists but is not stable. The run list shows a `Failed` run. To release a corrected version, set `status` back to `"200"` in the Rollout and apply it. The controller treats this as a new revision and creates a new run.
+The two hashes differ, because the new ReplicaSet exists but is not stable. The run list shows a `Failed` run. To release a corrected version, set `status` back to `"200"` and `REVISION` to `four` in `rollout-mission-background.yaml` and apply it. The changed pod template is a new revision, and the controller creates a new run for it.
 
 ## Choosing where to place the analysis
 

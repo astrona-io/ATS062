@@ -12,19 +12,19 @@ export KUBECONFIG="$(astrona kubeconfig ats-062-lab-020-01-02)"
 test "$(kubectl config current-context)" = "kind-astro-ats-062-lab-020-01-02" || exit 1
 ```
 
-The first revision has no earlier revision to protect, so it becomes active at once and the controller writes its hash into the selector of `relay-active`.
+The first revision has no earlier revision to protect, so it becomes active at once and the controller writes its hash into the selector of `lander-active`.
 
-Save this as `bluegreen-relay.yaml`:
+Save this as `bluegreen-lander.yaml`:
 
 ```yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: relay-active
+  name: lander-active
   namespace: starfleet
 spec:
   selector:
-    app: relay
+    app: lander
   ports:
   - port: 8080
     targetPort: 8080
@@ -32,11 +32,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: relay-preview
+  name: lander-preview
   namespace: starfleet
 spec:
   selector:
-    app: relay
+    app: lander
   ports:
   - port: 8080
     targetPort: 8080
@@ -44,20 +44,20 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: relay
+  name: lander
   namespace: starfleet
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: relay
+      app: lander
   template:
     metadata:
       labels:
-        app: relay
+        app: lander
     spec:
       containers:
-      - name: relay
+      - name: lander
         image: docker.io/library/python:3.13-alpine
         ports:
         - containerPort: 8080
@@ -68,8 +68,8 @@ spec:
         - '8080'
   strategy:
     blueGreen:
-      activeService: relay-active
-      previewService: relay-preview
+      activeService: lander-active
+      previewService: lander-preview
       previewReplicaCount: 1
       scaleDownDelaySeconds: 45
       activeMetadata:
@@ -80,13 +80,13 @@ spec:
 Apply it:
 
 ```sh
-kubectl apply -f bluegreen-relay.yaml
+kubectl apply -f bluegreen-lander.yaml
 ```
 
 Then check the result:
 
 ```sh
-kubectl -n starfleet wait --for=jsonpath='{.status.phase}'=Healthy rollout/relay --timeout=240s
+kubectl -n starfleet wait --for=jsonpath='{.status.phase}'=Healthy rollout/lander --timeout=240s
 ```
 
 ## Verify the result

@@ -9,7 +9,7 @@ A notification setup has many parts, and a failure in any one of them looks the 
 
 ## Building the setup
 
-Save this as `configmap-notifications.yaml`. It holds the service, the template and the trigger from the earlier parts:
+Save this as `configmap-notifications.yaml`. It holds the three pieces of a notification in one object: the service (where a message goes), the template (what the message says) and the trigger (when it is sent):
 
 ```yaml
 apiVersion: v1

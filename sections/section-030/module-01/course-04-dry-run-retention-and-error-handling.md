@@ -17,7 +17,9 @@ Each outcome has its own limit. `failureLimit` counts failed measurements. `inco
 
 The field `spec.dryRun` lists metrics that run but cannot fail the `AnalysisRun`. Each entry has a `metricName`, which can be a regular expression. The controller records the results of a dry-run metric in the run, with the phase of the metric, and ignores them when it decides the phase of the whole run.
 
-Save this as `analysistemplate-dry-run.yaml`:
+A second top-level field, `spec.measurementRetention`, limits how many measurements a run keeps for a metric. Each entry has a `metricName` (a regular expression is allowed) and a `limit`. When the number of measurements passes the limit, the controller drops the oldest. A background metric that measures every 30 seconds for hours would otherwise store thousands of entries in the status of one object.
+
+Save this as `analysistemplate-dry-run.yaml`. It uses both fields:
 
 ```yaml
 apiVersion: argoproj.io/v1alpha1
@@ -28,6 +30,72 @@ metadata:
 spec:
   dryRun:
   - metricName: experimental-.*
+  measurementRetention:
+  - metricName: .*
+    limit: 20
+  metrics:
+  - name: stable-check
+    count: 1
+    provider:
+      job:
+        spec:
+          backoffLimit: 0
+          template:
+            spec:
+              restartPolicy: Never
+              containers:
+              - name: check
+                image: docker.io/library/python:3.13-alpine
+                command: ["python", "-c", "print('ok')"]
+  - name: experimental-check
+    count: 1
+    provider:
+      job:
+        spec:
+          backoffLimit: 0
+          template:
+            spec:
+              restartPolicy: Never
+              containers:
+              - name: check
+                image: docker.io/library/python:3.13-alpine
+                command: ["python", "-c", "raise SystemExit(1)"]
+```
+
+<!-- astrona:playground:renew -->
+
+Apply it:
+
+```sh
+kubectl apply -f analysistemplate-dry-run.yaml
+```
+
+Then check the result:
+
+```sh
+kubectl -n starfleet get analysistemplate dry-run-demo -o jsonpath='{.spec.dryRun} {.spec.measurementRetention}{"\n"}'
+```
+
+The metric `experimental-check` always fails. In a run created from this template, it fails in the record, and the run still ends `Successful`, because only `stable-check` counts. The retention entry keeps the last 20 measurements of every metric. This is how a team tries a new metric on real releases before it lets the metric stop them.
+
+## A dry run without a Rollout
+
+A template only describes a run. To see the dry-run rule work without a release, create an `AnalysisRun` by hand. A hand-made run has no template to read, so it carries the `dryRun`, `measurementRetention` and `metrics` fields itself, with the same content as the template.
+
+Save this as `analysisrun-dry-run-trial.yaml`:
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: AnalysisRun
+metadata:
+  name: dry-run-trial
+  namespace: starfleet
+spec:
+  dryRun:
+  - metricName: experimental-.*
+  measurementRetention:
+  - metricName: .*
+    limit: 20
   metrics:
   - name: stable-check
     count: 1
@@ -59,25 +127,18 @@ spec:
 
 Apply it:
 
-<!-- astrona:playground:renew -->
+```sh
+kubectl apply -f analysisrun-dry-run-trial.yaml
+```
+
+Then check the result. The two Jobs take a short time to finish:
 
 ```sh
-kubectl apply -f analysistemplate-dry-run.yaml
+kubectl -n starfleet wait --for=jsonpath='{.status.phase}'=Successful analysisrun/dry-run-trial --timeout=180s
+kubectl -n starfleet get analysisrun dry-run-trial -o jsonpath='{range .status.metricResults[*]}{.name} {.phase} {.dryRun}{"\n"}{end}'
 ```
 
-The metric `experimental-check` always fails. In a run created from this template, it fails in the record, and the run still ends `Successful`, because only `stable-check` counts. This is how a team tries a new metric on real releases before it lets the metric stop them.
-
-## Measurement retention
-
-The field `spec.measurementRetention` limits how many measurements an `AnalysisRun` keeps for a metric. Each entry has a `metricName` (a regular expression is allowed) and a `limit`. When the number of measurements passes the limit, the controller drops the oldest. A background metric that measures every 30 seconds for hours would otherwise store thousands of entries in the status of one object.
-
-```yaml
-  measurementRetention:
-  - metricName: .*
-    limit: 20
-```
-
-The snippet belongs at the top level of the template `spec`. It keeps the last 20 measurements of every metric.
+The run ends `Successful`. In the metric list, `stable-check` is `Successful`, and `experimental-check` is `Failed` with `dryRun` set to `true`. The controller recorded the failure and did not let it decide the run.
 
 ## What you know now
 

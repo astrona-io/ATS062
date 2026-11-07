@@ -6,5 +6,5 @@ if [[ "$(kubectl config current-context)" != "kind-astro-ats-062-lab-020-01-02" 
 fi
 lab_directory="$(cd "$(dirname "$0")/.." && pwd)"
 solution_directory="$lab_directory/solution"
-kubectl apply -f "$solution_directory/bluegreen-relay.yaml"
-kubectl -n starfleet wait --for=jsonpath='{.status.phase}'=Healthy rollout/relay --timeout=240s
+kubectl apply -f "$solution_directory/bluegreen-lander.yaml"
+kubectl -n starfleet wait --for=jsonpath='{.status.phase}'=Healthy rollout/lander --timeout=240s

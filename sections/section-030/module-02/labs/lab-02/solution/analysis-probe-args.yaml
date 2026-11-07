@@ -22,7 +22,7 @@ spec:
                 command:
                 - python
                 - -c
-                - "import urllib.request; urllib.request.urlopen('http://{{ args.service }}:8080/', timeout=5)"
+                - "import urllib.request; text=urllib.request.urlopen('http://{{ args.service }}:8080/', timeout=5).read().decode(); assert 'probe-ready' in text"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: AnalysisRun
@@ -49,4 +49,4 @@ spec:
                 command:
                 - python
                 - -c
-                - "import urllib.request; urllib.request.urlopen('http://{{ args.service }}:8080/', timeout=5)"
+                - "import urllib.request; text=urllib.request.urlopen('http://{{ args.service }}:8080/', timeout=5).read().decode(); assert 'probe-ready' in text"

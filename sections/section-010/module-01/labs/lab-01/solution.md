@@ -3,7 +3,7 @@ draft: true
 exam_objectives:
 - Understand Argo Rollouts Fundamentals
 ---
-# Reconcile A Rollout And Its ReplicaSet Solution
+# Create A Rollout With A Revision History Limit Solution
 
 Select the private kubeconfig for this environment:
 

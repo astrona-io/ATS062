@@ -3,16 +3,16 @@ draft: true
 exam_objectives:
 - Describe Analysis Template and AnalysisRun
 ---
-# Analysis Capstone: Block A Bad Release With Background Analysis Solution
+# Block A Bad Release With Background Analysis Solution
 
 Select the private kubeconfig for this environment:
 
 ```sh
-export KUBECONFIG="$(astrona kubeconfig ats-062-lab-030-cap-01)"
-test "$(kubectl config current-context)" = "kind-astro-ats-062-lab-030-cap-01" || exit 1
+export KUBECONFIG="$(astrona kubeconfig ats-062-capstone-030)"
+test "$(kubectl config current-context)" = "kind-astro-ats-062-capstone-030" || exit 1
 ```
 
-Write the cluster-wide template. A ClusterAnalysisTemplate has no namespace, and the runs created from it run in the namespace of the Rollout.
+Write the cluster-wide template. A ClusterAnalysisTemplate has no namespace, and the runs created from it run in the namespace of the Rollout. The template declares two arguments without defaults: `status` for the HTTP status the Job requests, and `hash` for the pod template hash of the revision under test. The Job prints the hash before it sends the request, so the Job log shows which revision was checked.
 
 Save this as `clusteranalysistemplate-probe-gate.yaml`:
 
@@ -24,6 +24,7 @@ metadata:
 spec:
   args:
   - name: status
+  - name: hash
   metrics:
   - name: probe-ok
     count: 1
@@ -42,7 +43,7 @@ spec:
                 - python
                 - -c
                 args:
-                - import urllib.request; urllib.request.urlopen("http://probe:8080/work?status={{ args.status }}", timeout=4)
+                - import urllib.request; print("checking pod template hash {{ args.hash }}"); urllib.request.urlopen("http://probe:8080/work?status={{ args.status }}", timeout=4)
 ```
 
 Apply it:
@@ -51,7 +52,7 @@ Apply it:
 kubectl apply -f clusteranalysistemplate-probe-gate.yaml
 ```
 
-Then update the Rollout with background analysis. Background analysis starts with the update and runs next to the steps.
+Then update the Rollout with background analysis. Background analysis starts with the update and runs next to the steps. The argument `hash` takes its value from `valueFrom.podTemplateHashValue: Latest`, so the controller fills in the hash of the newest ReplicaSet when it creates the run.
 
 Save this as `rollout-mission.yaml`:
 
@@ -93,6 +94,9 @@ spec:
         args:
         - name: status
           value: "500"
+        - name: hash
+          valueFrom:
+            podTemplateHashValue: Latest
       steps:
       - setWeight: 50
       - pause:
@@ -112,15 +116,16 @@ Then wait for the abort and read the evidence.
 kubectl -n starfleet wait --for=jsonpath='{.status.abort}'=true rollout/mission --timeout=240s
 kubectl -n starfleet get analysisruns -o custom-columns=NAME:.metadata.name,PHASE:.status.phase
 kubectl -n starfleet get rollout mission -o jsonpath='{.status.phase} {.status.stableRS} {.status.currentPodHash}'
+kubectl -n starfleet get analysisruns -o jsonpath='{range .items[*]}{.metadata.name} {.spec.args}{"\n"}{end}'
 ```
 
 ## Verify the result
 
-`status.abort` is `true`. One AnalysisRun owned by `mission` has phase `Failed`. `status.stableRS` is still the hash stored in `initial-rollout`.
+`status.abort` is `true`. One AnalysisRun owned by `mission` has phase `Failed`. `status.stableRS` is still the hash stored in `initial-rollout`. In the run, the argument `hash` holds the same value as `status.currentPodHash`.
 
-When you are done, remove the environment with `astrona destroy ats-062-lab-030-cap-01`.
+When you are done, remove the environment with `astrona destroy ats-062-capstone-030`.
 
 ## Common pitfalls
 
 > [!WARNING]
-> The argument `status` has no default in the cluster template. If the Rollout does not pass it, the AnalysisRun cannot start and the Rollout reports an error instead of a failed analysis.
+> The arguments `status` and `hash` have no default in the cluster template. If the Rollout does not pass both, the AnalysisRun cannot start and the Rollout reports an error instead of a failed analysis.

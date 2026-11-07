@@ -247,10 +247,6 @@ sections:
       path: sections/section-030/module-01/labs/lab-01
       status: alpha
       runtime_verification: pending
-    - id: lab-02
-      path: sections/section-030/module-01/labs/lab-02
-      status: alpha
-      runtime_verification: pending
   - id: module-02
     title: AnalysisRuns And Rollout Integration
     playground: true

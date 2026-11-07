@@ -23,6 +23,15 @@ kubectl -n starfleet get rollout mission -o jsonpath='{.spec.replicas} {.spec.mi
 
 An empty value for `minReadySeconds` means the field is not set and the default of 0 applies.
 
+Set the field with a merge patch, a small JSON document that `kubectl` merges into the object, and read it back:
+
+```sh
+kubectl -n starfleet patch rollout mission --type merge -p '{"spec":{"minReadySeconds":5}}'
+kubectl -n starfleet get rollout mission -o jsonpath='{.spec.minReadySeconds} {.status.readyReplicas} {.status.availableReplicas}{"\n"}'
+```
+
+The first value is now `5`. The two counters stay equal, because the pods have been ready for longer than 5 seconds. From now on, a new pod of this `Rollout` counts as available 5 seconds after its readiness probe passes.
+
 ## The progress deadline
 
 The field `spec.progressDeadlineSeconds` is the time the controller allows for a release to make progress. The default is 600 seconds. Progress means that a new ReplicaSet is created, scaled up, or that its pods become available. When no progress happens for the whole deadline, the controller sets the condition `Progressing` to `False` with the reason `ProgressDeadlineExceeded`, and the phase becomes `Degraded`.

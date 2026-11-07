@@ -80,7 +80,9 @@ The diagram shows that the provider, the conditions and the limits each narrow t
 
 ## Reading a provider result
 
-The `probe` Service answers `/work?status=NNN` with the given HTTP status. To see what a check against it does, create an `AnalysisRun` from the template of the previous part. Save this as `analysis-run.yaml`:
+The `probe` Service answers `/work?status=NNN` with the given HTTP status. To see what a check against it does, create an `AnalysisRun` with the same metric as the template `probe-status`: a Job that requests `/work?status=<status>` from the `probe` Service.
+
+Save this as `analysisrun-probe-status.yaml`:
 
 ```yaml
 apiVersion: argoproj.io/v1alpha1
@@ -112,10 +114,15 @@ spec:
                 - import urllib.request; urllib.request.urlopen("http://probe:8080/work?status={{ args.status }}", timeout=4)
 ```
 
-Apply it and read the phase and the measurements:
+Apply it:
 
 ```sh
-kubectl apply -f analysis-run.yaml
+kubectl apply -f analysisrun-probe-status.yaml
+```
+
+Then check the result:
+
+```sh
 kubectl -n starfleet wait --for=jsonpath='{.status.phase}'=Successful analysisrun/probe-status-run --timeout=120s
 kubectl -n starfleet get analysisrun probe-status-run -o jsonpath='{.status.metricResults}'
 ```

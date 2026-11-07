@@ -35,6 +35,9 @@ spec:
         args:
         - name: status
           value: "500"
+        - name: hash
+          valueFrom:
+            podTemplateHashValue: Latest
       steps:
       - setWeight: 50
       - pause:

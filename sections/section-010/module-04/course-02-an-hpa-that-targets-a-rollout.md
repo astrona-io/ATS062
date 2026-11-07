@@ -66,7 +66,60 @@ The controller then applies the count to the strategy. This split of work is the
 
 ## Adding a CPU request
 
-A pod template change creates a new revision. Adding a request is such a change. Add `resources.requests.cpu` under the container in the `Rollout` template, and the controller runs a normal release. The template change is what makes `Utilization` meaningful, so teams add requests before they add an HPA.
+A pod template change creates a new revision. Adding a request is such a change. The field `resources.requests.cpu` under the container in the `Rollout` template is what makes `Utilization` meaningful, so teams add requests before they add an HPA.
+
+Save this as `rollout-mission.yaml`. It is the playground `Rollout` with a CPU request of 100 millicores, one tenth of a CPU core:
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: mission
+  namespace: starfleet
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mission
+  template:
+    metadata:
+      labels:
+        app: mission
+    spec:
+      containers:
+      - name: mission
+        image: docker.io/library/python:3.13-alpine
+        env:
+        - name: REVISION
+          value: one
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: 100m
+        command:
+        - python
+        - -m
+        - http.server
+        - '8080'
+  strategy:
+    canary: {}
+```
+
+Apply it:
+
+```sh
+kubectl apply -f rollout-mission.yaml
+```
+
+Then check the result. The controller runs a normal release, because the template changed:
+
+```sh
+kubectl -n starfleet wait --for=jsonpath='{.status.phase}'=Healthy rollout/mission --timeout=240s
+kubectl -n starfleet get rollout mission -o jsonpath='{.spec.template.spec.containers[0].resources.requests.cpu} {.metadata.annotations.rollout\.argoproj\.io/revision}{"\n"}'
+```
+
+The first value is `100m`. The revision annotation has gone up by one, which shows that the request is part of the pod template.
 
 ## What you know now
 

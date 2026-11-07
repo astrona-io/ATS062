@@ -3,7 +3,7 @@ draft: true
 exam_objectives:
 - Describe Analysis Template and AnalysisRun
 ---
-# Execute A Job-Based Analysis Solution
+# Try A Metric In Dry Run Solution
 
 Select the private kubeconfig for this environment:
 
@@ -12,19 +12,24 @@ export KUBECONFIG="$(astrona kubeconfig ats-062-lab-030-01-01)"
 test "$(kubectl config current-context)" = "kind-astro-ats-062-lab-030-01-01" || exit 1
 ```
 
-Write the template and the run in one file. The template is a reusable definition. The run is the object that executes the metric once.
+The metric `experimental-check` fails, but the dry run records the failure and ignores it when the controller decides the phase of the run.
 
-Save this as `analysistemplate-probe-check.yaml`:
+Save this as `analysis-dry-run.yaml`:
 
 ```yaml
 apiVersion: argoproj.io/v1alpha1
 kind: AnalysisTemplate
 metadata:
-  name: probe-check
+  name: probe-dry
   namespace: starfleet
 spec:
+  dryRun:
+  - metricName: experimental-.*
+  measurementRetention:
+  - metricName: .*
+    limit: 5
   metrics:
-  - name: probe-available
+  - name: stable-check
     count: 1
     provider:
       job:
@@ -36,20 +41,31 @@ spec:
               containers:
               - name: check
                 image: docker.io/library/python:3.13-alpine
-                command:
-                - python
-                - -c
-                args:
-                - import urllib.request; text=urllib.request.urlopen("http://probe:8080/", timeout=4).read().decode(); assert "probe-ready" in text
+                command: ["python", "-c", "print(1)"]
+  - name: experimental-check
+    count: 1
+    provider:
+      job:
+        spec:
+          backoffLimit: 0
+          template:
+            spec:
+              restartPolicy: Never
+              containers:
+              - name: check
+                image: docker.io/library/python:3.13-alpine
+                command: ["python", "-c", "raise SystemExit(1)"]
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: AnalysisRun
 metadata:
-  name: mission-analysis
+  name: dry-run-check
   namespace: starfleet
 spec:
+  dryRun:
+  - metricName: experimental-.*
   metrics:
-  - name: probe-available
+  - name: stable-check
     count: 1
     provider:
       job:
@@ -61,34 +77,41 @@ spec:
               containers:
               - name: check
                 image: docker.io/library/python:3.13-alpine
-                command:
-                - python
-                - -c
-                args:
-                - import urllib.request; text=urllib.request.urlopen("http://probe:8080/", timeout=4).read().decode(); assert "probe-ready" in text
+                command: ["python", "-c", "print(1)"]
+  - name: experimental-check
+    count: 1
+    provider:
+      job:
+        spec:
+          backoffLimit: 0
+          template:
+            spec:
+              restartPolicy: Never
+              containers:
+              - name: check
+                image: docker.io/library/python:3.13-alpine
+                command: ["python", "-c", "raise SystemExit(1)"]
 ```
 
 Apply it:
 
 ```sh
-kubectl apply -f analysistemplate-probe-check.yaml
+kubectl apply -f analysis-dry-run.yaml
 ```
 
-Then wait for the run. The controller creates a Kubernetes Job for the measurement, and the Job result becomes the measurement result.
+Then check the result:
 
 ```sh
-kubectl -n starfleet wait --for=jsonpath='{.status.phase}'=Successful analysisrun/mission-analysis --timeout=240s
-kubectl -n starfleet get analysisrun mission-analysis -o jsonpath='{.status.metricResults}'
-kubectl -n starfleet get jobs
+kubectl -n starfleet wait --for=jsonpath='{.status.phase}'=Successful analysisrun/dry-run-check --timeout=240s
 ```
 
 ## Verify the result
 
-The AnalysisRun phase is `Successful`. `status.metricResults[0]` has `successful: 1` and one measurement in phase `Successful`.
+All required fields from the task are set, and the object reaches the final phase shown by the wait command.
 
 When you are done, remove the environment with `astrona destroy ats-062-lab-030-01-01`.
 
 ## Common pitfalls
 
 > [!WARNING]
-> An AnalysisTemplate alone runs nothing. Nothing executes until an AnalysisRun, or a Rollout that references the template, creates one.
+> Check every field name against the task. A field set at the wrong level of the spec is ignored or rejected, and the grader reads the live object.

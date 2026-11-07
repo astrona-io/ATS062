@@ -5,4 +5,4 @@ exam_objectives:
 ---
 # Starting Environment
 
-The Argo Rollouts controller runs in the `argo-rollouts` namespace. The `starfleet` namespace holds the `probe` Service, which answers HTTP requests on port 8080, and the `shuttle` pod. Nothing else exists yet.
+The Argo Rollouts controller runs in the `argo-rollouts` namespace. The `starfleet` namespace holds the `probe` Service, which answers HTTP requests on port 8080 with a body that contains `probe-ready`, and the `shuttle` pod. No AnalysisTemplate and no AnalysisRun exist.

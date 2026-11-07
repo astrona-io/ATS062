@@ -5,6 +5,7 @@ metadata:
 spec:
   args:
   - name: status
+  - name: hash
   metrics:
   - name: probe-ok
     count: 1
@@ -23,4 +24,4 @@ spec:
                 - python
                 - -c
                 args:
-                - import urllib.request; urllib.request.urlopen("http://probe:8080/work?status={{ args.status }}", timeout=4)
+                - import urllib.request; print("checking pod template hash {{ args.hash }}"); urllib.request.urlopen("http://probe:8080/work?status={{ args.status }}", timeout=4)

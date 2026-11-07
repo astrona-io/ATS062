@@ -3,16 +3,16 @@ draft: true
 exam_objectives:
 - Understand Argo Rollouts Fundamentals
 ---
-# Fundamentals Capstone: Run And Update A Rollout Behind A Service Solution
+# Run And Update A Rollout Behind A Service Solution
 
 Select the private kubeconfig for this environment:
 
 ```sh
-export KUBECONFIG="$(astrona kubeconfig ats-062-lab-010-cap-01)"
-test "$(kubectl config current-context)" = "kind-astro-ats-062-lab-010-cap-01" || exit 1
+export KUBECONFIG="$(astrona kubeconfig ats-062-capstone-010)"
+test "$(kubectl config current-context)" = "kind-astro-ats-062-capstone-010" || exit 1
 ```
 
-Write revision 1. The Service already selects `app: bridge`, so the pods join it when they are ready.
+Write revision 1. The Service already selects `app: bridge`, so the pods join it when they are ready. `rollbackWindow.revisions: 1` marks a return to the last revision as a fast rollback, which the controller completes without going through the steps of the strategy.
 
 Save this as `rollout-bridge.yaml`:
 
@@ -25,6 +25,8 @@ metadata:
 spec:
   replicas: 3
   revisionHistoryLimit: 2
+  rollbackWindow:
+    revisions: 1
   selector:
     matchLabels:
       app: bridge
@@ -73,6 +75,8 @@ metadata:
 spec:
   replicas: 3
   revisionHistoryLimit: 2
+  rollbackWindow:
+    revisions: 1
   selector:
     matchLabels:
       app: bridge
@@ -113,9 +117,9 @@ kubectl -n starfleet get endpoints bridge
 
 ## Verify the result
 
-The annotation `rollout.argoproj.io/revision` on the Rollout is `2`. `status.stableRS` equals `status.currentPodHash`. The Rollout reports 3 ready replicas and the Endpoints object `bridge` lists 3 addresses.
+The annotation `rollout.argoproj.io/revision` on the Rollout is `2`, and `spec.rollbackWindow.revisions` is `1`. `status.stableRS` equals `status.currentPodHash`. The Rollout reports 3 ready replicas and the Endpoints object `bridge` lists 3 addresses.
 
-When you are done, remove the environment with `astrona destroy ats-062-lab-010-cap-01`.
+When you are done, remove the environment with `astrona destroy ats-062-capstone-010`.
 
 ## Common pitfalls
 

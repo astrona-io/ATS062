@@ -34,6 +34,63 @@ kubectl -n starfleet describe pod <POD_NAME>
 
 Replace `<POD_NAME>` with a pod that is not ready. The events of the pod name the cause, for example an image that cannot be pulled or a readiness probe that fails.
 
+## Aborting on the deadline
+
+By default, a passed deadline only changes the conditions. The pods of the new revision stay where they are. The field `spec.progressDeadlineAbort: true` makes the controller abort the release as well, so the `Rollout` returns to the stable revision on its own. A canary `Rollout` with a short deadline and a step list shows both fields together.
+
+Save this as `rollout-scout.yaml`:
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: scout
+  namespace: starfleet
+spec:
+  replicas: 2
+  progressDeadlineSeconds: 90
+  progressDeadlineAbort: true
+  selector:
+    matchLabels:
+      app: scout
+  template:
+    metadata:
+      labels:
+        app: scout
+    spec:
+      containers:
+      - name: scout
+        image: docker.io/library/python:3.13-alpine
+        command:
+        - python
+        - -m
+        - http.server
+        - '8080'
+  strategy:
+    canary:
+      steps:
+      - setWeight: 50
+      - pause:
+          duration: 5s
+```
+
+The step list under `strategy.canary.steps` runs in order on every revision after the first: `setWeight: 50` moves half of the replicas to the new ReplicaSet, and `pause` with a `duration` waits 5 seconds before the controller continues. The first revision has no older version, so the controller skips the steps.
+
+Apply it:
+
+```sh
+kubectl apply -f rollout-scout.yaml
+```
+
+Then check the result:
+
+```sh
+kubectl -n starfleet wait --for=jsonpath='{.status.phase}'=Healthy rollout/scout --timeout=240s
+kubectl -n starfleet get rollout scout -o jsonpath='{.spec.progressDeadlineSeconds} {.spec.progressDeadlineAbort} {.status.phase}{"\n"}'
+```
+
+The three values should be `90`, `true` and `Healthy`. If a later revision of `scout` makes no progress for 90 seconds, the controller sets `status.abort` to `true` and scales the new ReplicaSet down, with no action from an operator.
+
 ## Recovery paths
 
 There are three ways to leave a `Degraded` state, and the right one depends on the cause.

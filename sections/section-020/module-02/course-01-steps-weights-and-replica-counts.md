@@ -78,8 +78,8 @@ Without a traffic router, the controller can only change how many pods each Repl
 
 Two settings limit how fast the controller can change the counts:
 
-- `maxSurge` is the number of pods above the wanted total that may exist during the update. The default is 1. It can be a number or a percentage, and percentages round up.
-- `maxUnavailable` is the number of pods that may be unavailable during the update. The default is 1. Percentages round down.
+- `maxSurge` is the number of pods above the wanted total that may exist during the update. The default is 25 percent. It can be a number or a percentage, and percentages round up.
+- `maxUnavailable` is the number of pods that may be unavailable during the update. The default is 25 percent. Percentages round down.
 
 Both cannot be 0 at the same time, because the controller would have no room to start a new pod or stop an old one.
 
@@ -98,7 +98,7 @@ The diagram shows that the controller runs the steps in order and stops at an op
 
 When you change the pod template, the controller starts at step 0 for the new revision. At 25 percent it scales the new ReplicaSet to 1 pod and the old ReplicaSet to 3. It waits 30 seconds. At 50 percent it scales to 2 and 2, and it pauses with no time limit: the phase is `Paused` and the pause reason is `CanaryPauseStep`. After a promotion it goes to 100 percent, then scales the old ReplicaSet down after `scaleDownDelaySeconds` (default 30 seconds).
 
-Throughout, the Service that selects only `app` reaches both versions. The share of requests that each version gets follows the pod counts only roughly. The next part shows how a router makes the share exact.
+Throughout, the Service that selects only `app` reaches both versions. The share of requests that each version gets follows the pod counts only roughly. A traffic router makes the share exact, because it splits requests by weight instead of by pod count.
 
 ## Other step types
 

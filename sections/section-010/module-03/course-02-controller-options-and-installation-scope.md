@@ -35,7 +35,11 @@ spec:
         args:
         - --loglevel
         - debug
+        - --logformat
+        - json
 ```
+
+The patch sets two options at once: `--loglevel debug` for more detail and `--logformat json` so that each log line is one JSON object.
 
 <!-- astrona:playground:renew -->
 
@@ -53,7 +57,7 @@ kubectl -n argo-rollouts get deployment argo-rollouts -o jsonpath='{.spec.templa
 kubectl -n argo-rollouts logs deployment/argo-rollouts --tail=20
 ```
 
-The log now contains lines with `level=debug`. A debug log is large, so return to `info` after the investigation.
+Each log line is now a JSON object with a `level` field, and lines with the level `debug` appear. A debug log is large, so return to `info` after the investigation.
 
 ## Cluster-wide and namespace-scoped installation
 

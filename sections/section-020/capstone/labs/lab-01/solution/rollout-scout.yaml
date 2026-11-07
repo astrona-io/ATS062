@@ -30,4 +30,10 @@ spec:
     blueGreen:
       activeService: scout-active
       previewService: scout-preview
-      autoPromotionEnabled: false
+      autoPromotionEnabled: true
+      prePromotionAnalysis:
+        templates:
+        - templateName: probe-gate
+        args:
+        - name: status
+          value: "200"

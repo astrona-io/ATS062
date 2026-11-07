@@ -3,7 +3,7 @@ draft: true
 exam_objectives:
 - Describe Analysis Template and AnalysisRun
 ---
-# Run An AnalysisRun With An Argument Solution
+# Run A Job-Based Analysis With An Argument Solution
 
 Select the private kubeconfig for this environment:
 
@@ -12,7 +12,7 @@ export KUBECONFIG="$(astrona kubeconfig ats-062-lab-030-02-02)"
 test "$(kubectl config current-context)" = "kind-astro-ats-062-lab-030-02-02" || exit 1
 ```
 
-The argument `service` has no default, so the run must set it. The controller replaces `{{ args.service }}` in the Job command with `probe` before it creates the Job.
+Write the template and the run in one file. The template is a reusable definition, and nothing runs until an AnalysisRun exists. The argument `service` has no default, so the run must set it. The controller replaces `{{ args.service }}` in the Job command with `probe` before it creates the Job.
 
 Save this as `analysis-probe-args.yaml`:
 
@@ -41,7 +41,7 @@ spec:
                 command:
                 - python
                 - -c
-                - "import urllib.request; urllib.request.urlopen('http://{{ args.service }}:8080/', timeout=5)"
+                - "import urllib.request; text=urllib.request.urlopen('http://{{ args.service }}:8080/', timeout=5).read().decode(); assert 'probe-ready' in text"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: AnalysisRun
@@ -68,7 +68,7 @@ spec:
                 command:
                 - python
                 - -c
-                - "import urllib.request; urllib.request.urlopen('http://{{ args.service }}:8080/', timeout=5)"
+                - "import urllib.request; text=urllib.request.urlopen('http://{{ args.service }}:8080/', timeout=5).read().decode(); assert 'probe-ready' in text"
 ```
 
 Apply it:
@@ -77,19 +77,21 @@ Apply it:
 kubectl apply -f analysis-probe-args.yaml
 ```
 
-Then check the result:
+Then wait for the run. The controller creates a Kubernetes Job for the measurement, and the Job result becomes the measurement result:
 
 ```sh
 kubectl -n starfleet wait --for=jsonpath='{.status.phase}'=Successful analysisrun/manual-run --timeout=240s
+kubectl -n starfleet get analysisrun manual-run -o jsonpath='{.status.metricResults}'
+kubectl -n starfleet get jobs
 ```
 
 ## Verify the result
 
-All required fields from the task are set, and the object reaches the final phase shown by the wait command.
+The AnalysisRun phase is `Successful`. `status.metricResults[0]` is named `probe-up`, has `successful: 1` and one measurement in phase `Successful`. The template keeps `{{ args.service }}` in its Job command.
 
 When you are done, remove the environment with `astrona destroy ats-062-lab-030-02-02`.
 
 ## Common pitfalls
 
 > [!WARNING]
-> Check every field name against the task. A field set at the wrong level of the spec is ignored or rejected, and the grader reads the live object.
+> An AnalysisTemplate alone runs nothing. Nothing executes until an AnalysisRun, or a Rollout that references the template, creates one. A run made by hand has no template to supply argument values, so an argument without a `value` in the run ends it in `Error`.

@@ -61,7 +61,7 @@ An inline analysis tests the canary that already receives its weight. An experim
 
 ## What you know now
 
-An `experiment` step starts an owned `Experiment` with templates copied from the stable and canary ReplicaSets. The result continues, aborts or pauses the release. The last part shows how to read and debug an experiment.
+An `experiment` step starts an owned `Experiment` with templates copied from the stable and canary ReplicaSets. The result continues, aborts or pauses the release. The question still open is how to read and debug an experiment that did not end well.
 
 ## Common pitfalls
 

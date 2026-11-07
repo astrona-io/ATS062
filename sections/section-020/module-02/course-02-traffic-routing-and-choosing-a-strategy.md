@@ -72,7 +72,7 @@ A release that stops moving has one of three causes. The pause has no duration a
 
 ## Releasing a second revision and watching it
 
-Use the Rollout from the previous part. Change the `REVISION` value in `rollout-canary.yaml` from `one` to `two` and apply the file again:
+The `Rollout` `canary-demo` in `rollout-canary.yaml` has 4 replicas and the steps `setWeight: 25`, `pause: {duration: 30s}`, `setWeight: 50`, `pause: {}` and `setWeight: 100`, and it is healthy on revision one. Change the `REVISION` value in the file from `one` to `two` and apply it again:
 
 ```sh
 kubectl apply -f rollout-canary.yaml
