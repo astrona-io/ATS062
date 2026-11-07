@@ -64,6 +64,18 @@ The HPA reads the current count and the selector from the scale subresource, cal
 
 The controller then applies the count to the strategy. This split of work is the main point: the HPA decides how many pods in total, and the Rollouts controller decides how they are divided between versions.
 
+```mermaid
+flowchart TB
+    M["metrics server"] -->|"CPU use"| H["HPA"]
+    H -->|"reads count and selector"| S["scale subresource"]
+    H -->|"writes spec.replicas"| R["Rollout"]
+    R --> C["Rollouts controller"]
+    C -->|"stable share"| A["stable ReplicaSet"]
+    C -->|"canary share"| B["canary ReplicaSet"]
+```
+
+The diagram shows the HPA writing one total and the controller dividing it between the ReplicaSets.
+
 ## Adding a CPU request
 
 A pod template change creates a new revision. Adding a request is such a change. The field `resources.requests.cpu` under the container in the `Rollout` template is what makes `Utilization` meaningful, so teams add requests before they add an HPA.

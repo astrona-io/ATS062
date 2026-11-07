@@ -31,6 +31,19 @@ The controls are the same as for any release. A promotion ends the current pause
 
 Two details help in practice. A timed pause continues alone, so promotion only matters for open-ended pauses. And a change of the pod template during a canary starts a new release at step 0. The new revision becomes the canary, and the controller does not finish the earlier one.
 
+```mermaid
+flowchart TB
+    S["step runs"] -->|"pause"| P["Paused"]
+    P -->|"promote"| N["next step"]
+    P -->|"promote --full"| H["weight 100, Healthy"]
+    P -->|"abort"| D["weight 0, Degraded"]
+    D -->|"retry"| Z["step 0"]
+    D -->|"new template"| Z
+    N --> S
+```
+
+The diagram shows the states a canary moves through and which control moves it.
+
 ## Canary or blue-green
 
 The two strategies suit different needs. The table below compares them on the points that matter in an exam question.

@@ -115,6 +115,18 @@ kubectl -n argo-rollouts logs deployment/argo-rollouts --tail=300 | grep -i noti
 4. **Is the trigger true?** Compare the condition with the real `status.phase`.
 5. **Is the template valid?** A template error appears in the log.
 
+```mermaid
+flowchart TB
+    A["Rollout status change"] --> B["subscription annotation"]
+    B -->|"names trigger and service"| C["trigger condition"]
+    C -->|"true and oncePer new"| D["template"]
+    D --> E["service"]
+    E -->|"HTTP request"| F["receiver"]
+    E -->|"on failure"| L["controller log"]
+```
+
+The diagram shows the path of one message, and the log as the only place where a failed step appears.
+
 The plugin has a command that sends a test message from a template to a service, which helps to test credentials without a release. It is not available in the playground.
 
 ## What you know now

@@ -20,6 +20,18 @@ On an abort, the controller sets `status.abort: true` and moves the weight back 
 
 An inconclusive result is a request for a human decision. The phase becomes `Paused`, and a promotion continues the release, while an abort stops it. Use `inconclusiveLimit` to allow a few inconclusive measurements before the pause.
 
+```mermaid
+flowchart TB
+    A["AnalysisRun final phase"] -->|"Successful"| N["next step or promotion"]
+    A -->|"Failed or Error"| D["abort: weight 0, Degraded"]
+    A -->|"Inconclusive"| P["Paused"]
+    P -->|"promote"| N
+    P -->|"abort"| D
+    D -->|"retry or new template"| Z["step 0"]
+```
+
+The diagram shows what the controller does with each final phase of a run and how a person moves a paused or aborted release on.
+
 ## Finding the reason for a result
 
 Read the run in three steps. First, read `status.phase` and `status.message` of the run. Second, read `status.metricResults`, where each metric has a `phase`, the counters `successful`, `failed`, `inconclusive` and `error`, and the list `measurements` with the value and the time of each. Third, for a `job` provider, read the Job and its pod logs in the namespace of the run, because the log holds the output of the check.

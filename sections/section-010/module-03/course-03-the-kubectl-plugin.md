@@ -46,6 +46,17 @@ These commands change a release. Each one edits the `Rollout` object, and the co
 - `set image mission mission=<image>` changes the image of a container in the pod template, which creates a new revision.
 - `pause mission` sets `spec.paused` to true.
 
+```mermaid
+flowchart TB
+    P["kubectl argo rollouts"] -->|"patch field"| A["API server"]
+    A -->|"stores"| R["Rollout"]
+    R -->|"watch event"| C["controller"]
+    C -->|"scales"| S["ReplicaSets"]
+    C -->|"writes status"| R
+```
+
+The diagram shows that the plugin only writes a field through the API server, and the controller does the work when it sees the change.
+
 Because these commands edit fields, `kubectl patch` gives the same effect. For a restart, patch the field directly:
 
 ```sh

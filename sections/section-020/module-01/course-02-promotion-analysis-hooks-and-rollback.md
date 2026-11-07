@@ -39,6 +39,19 @@ A person can approve a promotion, and an AnalysisRun can approve it too. The `bl
 
 `prePromotionAnalysis` runs after the new ReplicaSet is ready and before the active Service moves. If the analysis succeeds, the controller promotes. If it fails, the controller aborts, and the active Service never moved. `postPromotionAnalysis` runs after the active Service moved. If it fails, the controller aborts and returns to the old ReplicaSet, which is why the old ReplicaSet stays up for `scaleDownDelaySeconds`.
 
+```mermaid
+flowchart TB
+    A["new ReplicaSet ready"] --> B["pause or auto promotion"]
+    B --> C["prePromotionAnalysis"]
+    C -->|"Failed"| X["abort, active unchanged"]
+    C -->|"Successful"| D["active Service moves"]
+    D --> E["postPromotionAnalysis"]
+    E -->|"Failed"| Y["active Service moves back"]
+    E -->|"Successful"| F["old ReplicaSet scales down"]
+```
+
+The diagram shows where each analysis sits in the release and what a failure does at that point.
+
 Both fields take `templates` (a list of AnalysisTemplate names) and `args`. A typical pre-promotion check runs a smoke test against the preview Service. The argument can carry the name of the preview Service, so one template works for every application:
 
 ```yaml

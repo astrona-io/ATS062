@@ -27,8 +27,8 @@ flowchart TB
     PC["provider controller"] -->|"reads"| P
     PC -->|"configures"| D["proxy"]
     U["requests"] --> D
-    D -->|"weight"| S["stable Service"]
-    D -->|"1 - weight"| C["canary Service"]
+    D -->|"100 - weight"| S["stable Service"]
+    D -->|"weight"| C["canary Service"]
 ```
 
 The diagram shows that the Rollouts controller only writes an object, and the proxy that another component configures splits the requests.

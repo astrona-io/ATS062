@@ -19,6 +19,18 @@ A run is terminal when it reaches a final phase. The controller does not change 
 
 A run can also be stopped from outside. When the release is aborted or replaced by a newer revision, the controller sets `spec.terminate: true` on the run. The run then ends early, and the controller treats a run that was terminated by the controller as successful, because the stop was not caused by a bad measurement.
 
+```mermaid
+flowchart TB
+    P["Pending"] -->|"controller starts measuring"| R["Running"]
+    R -->|"all metrics succeed"| S["Successful"]
+    R -->|"failureLimit exceeded"| F["Failed"]
+    R -->|"consecutiveErrorLimit exceeded"| E["Error"]
+    R -->|"inconclusiveLimit exceeded"| I["Inconclusive"]
+    R -->|"spec.terminate by controller"| S
+```
+
+The diagram shows the phases of one run and which limit moves it into each final phase.
+
 ## The template the examples use
 
 Every run below comes from one `AnalysisTemplate`. It takes an argument `status` with the default `"200"`, and its single metric runs a Job that requests `/work?status=<status>` from the `probe` Service. The `probe` Service answers with the HTTP status that the request names, so `200` makes the Job succeed and `500` makes it fail.

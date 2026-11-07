@@ -30,6 +30,20 @@ The metric can have `successCondition`, `failureCondition` or both. The controll
 3. Else, if both fields exist, the measurement is inconclusive.
 4. If only `successCondition` exists and is false, the measurement fails.
 
+```mermaid
+flowchart TB
+    V["result"] --> F{"failureCondition true"}
+    F -->|"yes"| X["Failed"]
+    F -->|"no"| S{"successCondition true"}
+    S -->|"yes"| OK["Successful"]
+    S -->|"no, both set"| I["Inconclusive"]
+    S -->|"no, only success set"| X
+```
+
+The diagram shows the order of the checks: the failure condition wins, then the success condition, and the rest depends on which fields exist.
+
+The order matters when the two conditions overlap. With `successCondition: result[0] >= 0.9` and `failureCondition: result[0] < 0.95`, a value of 0.92 meets both, and the measurement is `Failed`, because the controller checks the failure condition first. Write the two conditions so that no value meets both, and leave the gap between them for the inconclusive case.
+
 Use both fields when a value can be good, bad or in between. For a latency metric, a `successCondition` of `result[0] < 0.2` and a `failureCondition` of `result[0] > 0.5` give three outcomes. A value of 0.3 is inconclusive, and `inconclusiveLimit` decides how many of these the run accepts.
 
 ## Testing a condition

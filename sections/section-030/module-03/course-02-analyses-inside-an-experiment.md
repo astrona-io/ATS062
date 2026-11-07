@@ -88,6 +88,18 @@ Without `requiredForCompletion`, the analyses run during the duration, and the e
 
 A `Failed` analysis fails the whole experiment at once, and the controller scales the template ReplicaSets down. An `Inconclusive` analysis makes the experiment `Inconclusive`. An `Error` analysis makes it `Error`.
 
+```mermaid
+flowchart TB
+    A["templates ready"] --> B["analyses run"]
+    B -->|"Failed"| F["experiment Failed"]
+    B -->|"Error"| E["experiment Error"]
+    B -->|"Inconclusive"| I["experiment Inconclusive"]
+    B -->|"duration passes, none required"| S["experiment Successful"]
+    B -->|"requiredForCompletion ends Successful"| S
+```
+
+The diagram shows how the phase of the analyses decides the phase of the experiment.
+
 ## Where the AnalysisRuns come from
 
 The `AnalysisRun` objects have the experiment as their owner. They carry the arguments of the entry, and a template that needs the address of the experiment pods can read it through a Service. This is how the analysis measures the experiment pods and not the production pods.

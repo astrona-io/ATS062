@@ -13,6 +13,18 @@ An Ingress is an object that maps hosts and paths to Services. The NGINX Ingress
 
 The Rollouts controller uses this. It reads the stable Ingress that the team wrote. It then creates a second Ingress, the canary Ingress, with the same rules but with the canary Service as backend and the canary annotations.
 
+```mermaid
+flowchart TB
+    R["Rollouts controller"] -->|"creates, sets canary-weight"| CI["canary Ingress"]
+    T["team"] -->|"writes"| SI["stable Ingress"]
+    N["NGINX Ingress controller"] -->|"reads both"| SI
+    N --> CI
+    N -->|"canary-weight"| C["canary Service"]
+    N -->|"rest"| S["stable Service"]
+```
+
+The diagram shows the two Ingresses, who writes each one, and the NGINX Ingress controller that reads both and splits the requests.
+
 ## Configuring the Rollout
 
 The `nginx` block names the stable Ingress. The controller names the canary Ingress `<rollout>-<stable ingress>-canary`. The block `additionalIngressAnnotations` adds more annotations to the canary Ingress; the key is written without the NGINX prefix, and the controller adds `nginx.ingress.kubernetes.io/`.
