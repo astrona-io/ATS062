@@ -72,7 +72,7 @@ def behavior_check(check):
 
 def main():
     requirements = json.loads((DIRECTORY / 'requirements.json').read_text())
-    assert kubectl('config', 'current-context') == requirements['context'], 'Refusing to operate on another Kubernetes context'
+    assert kubectl('config', 'current-context') in (requirements['context'], requirements['context'].replace('kind-astro-', 'kind-astro-test-', 1)), 'Refusing to operate on another Kubernetes context'
     for check in requirements['resources']:
         resource_check(check)
     for check in requirements.get('behavior', []):
