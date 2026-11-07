@@ -101,7 +101,13 @@ Apply it:
 kubectl apply -f rollout-mission.yaml
 ```
 
-Then check the result:
+The restarted controller needs a few seconds to win leader election, and until then the Rollout status still shows the old revision as `Healthy`. Wait until the controller has observed the new generation and promoted it:
+
+```sh
+kubectl -n starfleet get rollout mission -o jsonpath='{.metadata.generation} {.status.observedGeneration} {.status.phase} {.status.stableRS} {.status.currentPodHash}{"\n"}'
+```
+
+Repeat until the two generation numbers match, the phase is `Healthy` and the last two hashes are equal. Then check the result:
 
 ```sh
 kubectl -n starfleet exec shuttle -- python -c 'import urllib.request; print(urllib.request.urlopen("http://probe:8080/hooks").read().decode())'
