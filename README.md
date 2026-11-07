@@ -39,7 +39,7 @@ See [curriculum coverage](CURRICULUM.md), [primary sources](SOURCES.md), [questi
 
 ## Hands-On Coverage
 
-This course has 12 ungraded playgrounds, 17 module labs and 3 capstone labs. Each module has one lab, and five modules have a second one. Each lab task follows the part it practises, and the solution is not listed as a reading. Static checks (`astrona validate`, `bash -n`, YAML and JSON parsing) are done. No lab or playground has been run on a cluster, so all are untested.
+This course has 12 ungraded playgrounds, 17 module labs and 3 capstone labs. Each module has one lab, and five modules have a second one. Each lab task follows the part it practises, and the solution is not listed as a reading. Static checks (`astrona validate`, `bash -n`, YAML and JSON parsing) are done, and every lab and playground was booted and run with the Astrona CLI on kind (podman) on 2026-11-07.
 
 | Section / module | Graded lab |
 | --- | --- |

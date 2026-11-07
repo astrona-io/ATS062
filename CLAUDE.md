@@ -205,7 +205,7 @@ The official objectives are listed in `astrona.yaml` and mapped in `CURRICULUM.m
 
 ### Playground and graded lab scope
 
-Each module has one private ungraded playground (docs/overview.md is its guide), one graded lab and a landing page with the playground marker. Each section has a capstone lab. Labs are final-state graders that read the live cluster. The kubectl-argo-rollouts plugin is not installed in the lab clusters, so no step may require it. Every lab and playground carries a README marked UNTESTED: they are built and checked statically only (`astrona validate`, `bash -n`, YAML and JSON parsing) and have not been run.
+Each module has one private ungraded playground (docs/overview.md is its guide), one graded lab and a landing page with the playground marker. Each section has a capstone lab. Labs are final-state graders that read the live cluster. The kubectl-argo-rollouts plugin is not installed in the lab clusters, so no step may require it. Every lab and playground carries a README with its test status: all were booted and run with `astrona test` on 2026-11-07 (kind, podman) after the static checks (`astrona validate`, `bash -n`, YAML and JSON parsing).
 
 ### Teaching structure and depth
 
