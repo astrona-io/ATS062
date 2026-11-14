@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://astrona.io/courses/certified-argo-project-associate-capa">
+    <img src="https://astrona.io/courses/certified-argo-project-associate-capa/domains/ATS062.svg" alt="ATS062: Argo Rollouts, part of the Certified Argo Project Associate course on Astrona" width="100%">
+  </a>
+</p>
+
 # Argo Rollouts (ATS062)
 
 Certified Argo Project Associate (CAPA): Argo Rollouts, worth 18% of the official curriculum. This course belongs to ATP012.
